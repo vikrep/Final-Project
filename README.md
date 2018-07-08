@@ -4,11 +4,15 @@
 
 # Requirements
 
-[Node.js](https://nodejs.org/en/docs/)
-[SQlite3](https://www.npmjs.com/package/sqlite3)
+[Node.js](https://nodejs.org/en/docs/), 
+[SQlite3](https://www.npmjs.com/package/sqlite3), 
 [React-Bootstrap](https://react-bootstrap.github.io/getting-started/introduction)
 
 # Setup
+
+1. Fork this repo
+2. Clone it to your machine
+3. Open it in your code editor.
 
 ```bash
 $ npm install # install project dependencies
@@ -24,7 +28,7 @@ $ npm start # start application on localhost:3000
 3. Hidden page Admin for database management.
 
 ### Welcome page structure:
-1. Creative (dynamic) Bacground with a brief description of the collection and the button to enter the search page.
+1. Creative (dynamic) background with a brief description of the collection and the button to enter the search page.
 
 ### Structure of the search page:
 1. Header.
