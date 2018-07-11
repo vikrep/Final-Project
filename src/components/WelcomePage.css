@@ -1,0 +1,39 @@
+.jumbotron {
+    font-family: 'Prata', serif;
+    background-color: black;
+    text-align: center;
+    color:white;
+    opacity: 0.7;
+    z-index: -1; 
+  }
+  .jumbotron p {
+    color:white;
+    text-shadow: 0 0 10px;
+  }
+
+  .bg {
+    background-image: url("/assets/welcome.jpg");
+    background-position: center right;
+    position: absolute;
+    left:0; top:0;
+    background-size: cover;
+    min-height: 768px;
+    width: 100%;
+    /* height:auto */
+  }
+  .btn{
+      color:black;
+      text-shadow: 0 0 10px;
+  }
+  /* html, body{
+    height: 100%;
+  } */
+  /* body { 
+              background-image: url(/assets/welcome.jpg) ;
+              background-position: center center;
+              background-repeat:  no-repeat;
+              background-attachment: fixed;
+              background-size:  cover;
+              background-color: #999;
+    
+  } */
