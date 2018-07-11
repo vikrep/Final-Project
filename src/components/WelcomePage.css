@@ -1,39 +1,46 @@
-.jumbotron {
+.welcomebg{
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items:center
+}
+.welcomebg .jumbotron {
     font-family: 'Prata', serif;
-    background-color: black;
+    /* background-color: black; */
     text-align: center;
-    color:white;
-    opacity: 0.7;
-    z-index: -1; 
+    opacity: .9;
+    background: rgba(0, 0, 0, 0.8); 
+    color:#f1f1f1;
+    width:100%;
+    margin:auto;
   }
-  .jumbotron p {
+  .welcomebg .jumbotron p {
     color:white;
     text-shadow: 0 0 10px;
   }
-
-  .bg {
-    background-image: url("/assets/welcome.jpg");
-    background-position: center right;
+  .welcomebg h1{
+    font-size:5rem;
+  }
+  .welcomebg {
+    background: linear-gradient(rgba(26,26,26,0.3),rgba(26,26,26,0.3)),url("/assets/welcome.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     position: absolute;
     left:0; top:0;
-    background-size: cover;
-    min-height: 768px;
     width: 100%;
-    /* height:auto */
+    height:100%;
   }
   .btn{
       color:black;
       text-shadow: 0 0 10px;
   }
-  /* html, body{
-    height: 100%;
-  } */
-  /* body { 
-              background-image: url(/assets/welcome.jpg) ;
-              background-position: center center;
-              background-repeat:  no-repeat;
-              background-attachment: fixed;
-              background-size:  cover;
-              background-color: #999;
+  @media only screen and (max-width: 600px) {
+        .welcomebg h1 {
+          font-size: 3rem;
+        }
+        .welcomebg p{
+          font-size:1.5rem;
+        }
     
-  } */
+}
