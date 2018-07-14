@@ -52,7 +52,7 @@ $ npm start # start application on localhost:3000
 
 # The Database
 
-## The database is based on SQlight3.
+## The database is based on Sqlite3.
 
 ## The database must have two tables.
 1. The main catalog table that includes brief (basic) information about the disc (singer).
