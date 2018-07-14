@@ -1,0 +1,46 @@
+.welcomebg{
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items:center
+}
+.welcomebg .jumbotron {
+    font-family: 'Prata', serif;
+    /* background-color: black; */
+    text-align: center;
+    opacity: .9;
+    background: rgba(0, 0, 0, 0.8); 
+    color:#f1f1f1;
+    width:100%;
+    margin:auto;
+  }
+  .welcomebg .jumbotron p {
+    color:white;
+    text-shadow: 0 0 10px;
+  }
+  .welcomebg h1{
+    font-size:5rem;
+  }
+  .welcomebg {
+    background: linear-gradient(rgba(26,26,26,0.3),rgba(26,26,26,0.3)),url("/assets/welcome.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    left:0; top:0;
+    width: 100%;
+    height:100%;
+  }
+  .btn{
+      color:black;
+      text-shadow: 0 0 10px;
+  }
+  @media only screen and (max-width: 600px) {
+        .welcomebg h1 {
+          font-size: 3rem;
+        }
+        .welcomebg p{
+          font-size:1.5rem;
+        }
+    
+}
