@@ -6,20 +6,22 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
 import './ResultTable.css';
+import FormExample from './FormExample';
 import fakeAlbums from '../data/fakeAlbums.json'
-import columns from '../data/columns.json'
+// import columns from '../data/columns.json'
 
 export default class ResultTable extends React.Component {
-    render() {
-        // const options = {
-        //     defaultSortName: 'artist',
-        //     defaultSortOrder: 'asc',
-        //     clearSearch: true
-        //   };
+     render() {
+    //     (cover) => {
+    //         return <div><img src="http://25.io/smaller/img/smaller_256x256.png"/></div>},
         const columns = [
             {
-                dataField: 'cover',
-                text: 'Cover'
+                dataField: 'cover', 
+                text:'Cover',
+                align:'center',
+                events: {
+                    onClick: () => alert('Go to another page to show the album')
+                  }
             }, {
                 dataField: 'artist',
                 text: 'Artist',
@@ -45,15 +47,11 @@ export default class ResultTable extends React.Component {
         ]
         return (
             <div>
-                {/* <Image src=https://image.ibb.co/h3GdjJ/Webp_net_resizeimage.jpg responsive/>
-                <BootstrapTable data={fakeAlbums} striped hover condensed pagination search headerStyle={ { background: '#B0C4DE' } } options={ options } >
-                    <TableHeaderColumn dataField='cover' width='20%'>Cover</TableHeaderColumn>
-                    <TableHeaderColumn dataField='artist' dataSort={ true } width='20%'>Artist</TableHeaderColumn>
-                    <TableHeaderColumn dataField='title' width='20%'>Title</TableHeaderColumn>
-                    <TableHeaderColumn dataField='year' width='10%'>Year</TableHeaderColumn>
-                    <TableHeaderColumn dataField='rating'width='20%'>Rating</TableHeaderColumn>
-                    <TableHeaderColumn dataField='id' isKey width='10%'>Catalog ID</TableHeaderColumn>
-                </BootstrapTable> */}
+                <FormExample />
+                {/* <Image src="https://image.ibb.co/h3GdjJ/Webp_net_resizeimage.jpg" responsive/>
+                <div className="rating">
+<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+</div> */}
                 <BootstrapTable keyField='id' data={fakeAlbums} columns={columns}
                     pagination={paginationFactory()}
                     headerClasses="header-class" rowClasses="custom-row-class" />

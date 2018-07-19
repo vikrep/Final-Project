@@ -40,6 +40,15 @@
 .pagination>li>a, .pagination>li>span{
     color:black;
 }
+.rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+  }
+  .rating > span:hover:before,
+  .rating > span:hover ~ span:before {
+     content: "\2605";
+     position: absolute;
+  }
 @media only screen and (max-width: 600px) {
     .custom-row-class{
        font-size: 1rem;;

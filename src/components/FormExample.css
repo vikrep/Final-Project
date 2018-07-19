@@ -1,0 +1,8 @@
+.form-control{
+    width:20%;
+}
+@media only screen and (max-width: 600px) {
+   .form-control{
+       width:40%;
+   }
+}
