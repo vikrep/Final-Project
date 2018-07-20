@@ -11,17 +11,30 @@ import fakeAlbums from '../data/fakeAlbums.json'
 // import columns from '../data/columns.json'
 
 export default class ResultTable extends React.Component {
-     render() {
-    //     (cover) => {
-    //         return <div><img src="http://25.io/smaller/img/smaller_256x256.png"/></div>},
+    render() {
+        // style={{width:'50px'}}
+        function imageFormatter(cell, row) {
+            return (<img className="album" style={{ borderRadius: "50%" }} src={cell} />)
+        }
+        //rating is just for design purpose, not accepted
+        function starFormatter(cell, row) {
+            return <div>
+                <span className="yellow">⭐</span><span>⭐</span><span>⭐</span><span>☆</span><span>☆</span>
+            </div>}
+               
         const columns = [
             {
-                dataField: 'cover', 
-                text:'Cover',
-                align:'center',
+                dataField: 'cover',
+                text: 'Cover',
+                align: 'center',
                 events: {
                     onClick: () => alert('Go to another page to show the album')
-                  }
+                },
+                formatter: imageFormatter,
+                headerStyle: {
+                    width: '14%',
+                }
+
             }, {
                 dataField: 'artist',
                 text: 'Artist',
@@ -36,22 +49,30 @@ export default class ResultTable extends React.Component {
             }, {
                 dataField: 'year',
                 text: 'Year',
-                sort: true
+                sort: true,
+                headerStyle: {
+                    width: '10%',
+                }
             }, {
                 dataField: 'rating',
-                text: 'Rating'
+                text: 'Rating',
+                headerStyle: {
+                    width: '20%',
+                },
+                formatter: starFormatter,
+                // hidden:true
+
             }, {
                 dataField: 'id',
-                text: 'Catalog ID'
+                text: 'Catalog ID',
+                headerStyle: {
+                    width: '15%',
+                }
             }
         ]
         return (
             <div>
                 <FormExample />
-                {/* <Image src="https://image.ibb.co/h3GdjJ/Webp_net_resizeimage.jpg" responsive/>
-                <div className="rating">
-<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-</div> */}
                 <BootstrapTable keyField='id' data={fakeAlbums} columns={columns}
                     pagination={paginationFactory()}
                     headerClasses="header-class" rowClasses="custom-row-class" />

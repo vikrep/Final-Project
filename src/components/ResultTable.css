@@ -1,12 +1,29 @@
 * {
     box-sizing: border-box;
 }
+.yellow{
+    /* background-color:yellow; */
+}
 .header-class {
     background-color: #C0C0C0;
     font-size: 1.7rem;
+    text-align: center;
 }
 .custom-row-class{
     /* background-color: lightblue; */
+    text-align: center;
+    /* vertical-align:-webkit-baseline-middle; */
+}
+th{
+    text-align: center;
+}
+/* if i wanna text-align by default (left)should remove line above and line below */
+.table>tbody>tr>td {
+    vertical-align: middle;
+}
+.album{
+    border:1px solid blue;
+    width:50px;
 }
 .social i {
     margin:5px;
@@ -55,5 +72,12 @@
     }
     .header-class{
         font-size: 1.3rem;
+    }
+    .album{
+        width:40px;
+        /* max-width:100% */
+    }
+    .yellow{
+        /* display: none; */
     }
 }
