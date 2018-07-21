@@ -1,6 +1,10 @@
-
+body {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto
+}
 #carousel img{
   width:100%;
-  height:230px;
+  height:150px;
   margin:auto;
 }
