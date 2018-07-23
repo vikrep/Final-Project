@@ -1,11 +1,41 @@
 import React, { Component } from 'react'
-import { Header, Table, Rating, Image } from 'semantic-ui-react'
+import { Table, Rating, Image } from 'semantic-ui-react'
 import fakeAlbums from '../data/fakeAlbums.json'
 import './TableElement.css'
 import _ from 'lodash'
 
-export default class SearchPage extends Component {
+
+export default class TableElement extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			column: null,
+			data: fakeAlbums,
+			direction: null,
+		}
+	};
+
+	handleSort = clickedColumn => () => {
+		const { column, data, direction } = this.state
+		if (column !== clickedColumn) {
+			this.setState({
+				column: clickedColumn,
+				data: _.sortBy(data, [clickedColumn]),
+				direction: 'ascending',
+			})
+			return
+		}
+		this.setState({
+			data: data.reverse(),
+			direction: direction === 'ascending' ? 'descending' : 'ascending',
+		})
+	}
+
+
 	render() {
+
+		const { column, direction } = this.state;
+
 		const renderBodyRow = ({ cover, artist, title, year, rating, id }, i) => ({
 			key: `result-row-${i}`,
 			cells: [
@@ -16,27 +46,9 @@ export default class SearchPage extends Component {
 				<td><Rating icon='star' defaultRating={rating} maxRating={5} size='small' disabled='true' /></td>,
 				{ content: id, width: '1' }
 			],
-		})
-		this.state = {
-			column: null,
-			data: fakeAlbums,
-			direction: null,
-		}
-		const { column, data, direction } = this.state;
-		this.handleSort = clickedColumn => () => {
-			const { column, data, direction } = this.state
-		
-			if (column !== clickedColumn) {
-			  this.setState({
-				column: clickedColumn,
-				data: _.sortBy(data, [clickedColumn]),
-				direction: 'ascending',
-			  })
-		
-			  return
-			}
-		}
-		const altHead = [
+		});
+
+		const headerRow = [
 			{ content: 'Cover' },
 			{ content: 'Artist', sorted: column === 'artist' ? direction : null, onClick: this.handleSort('artist') },
 			{ content: 'Title', sorted: column === 'title' ? direction : null, onClick: this.handleSort('title') },
@@ -44,17 +56,14 @@ export default class SearchPage extends Component {
 			{ content: 'Rating' },
 			{ content: 'catalog #' }
 		]
-		this.setState({
-			data: data.reverse(),
-			direction: direction === 'ascending' ? 'descending' : 'ascending',
-		  })
 
 		return (
 			<Table singleLine
 				verticalAlign='middle' textAlign='center'
-				headerRow={altHead}
+				headerRow={headerRow}
 				renderBodyRow={renderBodyRow}
-				tableData={fakeAlbums} sortable/>
+				tableData={this.state.data} sortable />
 		)
 	}
 }
+
