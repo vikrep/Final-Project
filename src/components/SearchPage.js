@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './SearchPage.css'
 // import SearchTable from './SearchTable'
 import TableElement from './TableElement'
-
+import 'font-awesome/css/font-awesome.min.css';
 
 export default class SearchPage extends Component {
     render() {
@@ -24,6 +24,12 @@ export default class SearchPage extends Component {
                     </Carousel>
                 </div>
                 <TableElement />
+                <div className="social">
+                    <a href="http://www.google.com"><i className="fa fa-skype fa-2x skype"></i></a>
+                    <a href="http://www.google.com"><i className="fa fa-envelope fa-2x gmail"></i></a>
+                    <a href="http://www.google.com"><i className="fa fa-facebook-square fa-2x facebook"></i> </a>
+                    <p> <strong>Follow me on:</strong> </p>
+                </div>
             </div>
 
         )

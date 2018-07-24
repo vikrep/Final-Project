@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Rating, Image } from 'semantic-ui-react'
+import { Table, Rating, Image} from 'semantic-ui-react'
 import fakeAlbums from '../data/fakeAlbums.json'
 import './TableElement.css'
 import _ from 'lodash'
@@ -31,8 +31,6 @@ export default class TableElement extends Component {
 			direction: direction === 'ascending' ? 'descending' : 'ascending',
 		})
 	}
-
-
 	render() {
 
 		const { column, direction } = this.state;
@@ -44,26 +42,37 @@ export default class TableElement extends Component {
 				{ content: artist, width: '1' },
 				{ content: title },
 				{ content: year, width: '1' },
-				<td><Rating icon='star' defaultRating={rating} maxRating={5} size='small' disabled='true' /></td>,
+				<td><Rating icon='star' defaultRating={rating} maxRating={5} 
+				size='small' disabled='true' /></td>,
 				{ content: id, width: '1' }
 			],
 		});
 
 		const headerRow = [
 			{ content: 'Cover' },
-			{ content: 'Artist', sorted: column === 'artist' ? direction : null, onClick: this.handleSort('artist'), className: column === 'artist' ? `sorted ${direction}` : `sorted ${null}` },
-			{ content: 'Title', sorted: column === 'title' ? direction : null, onClick: this.handleSort('title'), className: column === 'title' ? `sorted ${direction}` : `sorted ${null}` },
-			{ content: 'Year', sorted: column === 'year' ? direction : null, onClick: this.handleSort('year'), className: column === 'year' ? `sorted ${direction}` : `sorted ${null}` },
+			{ content: 'Artist', sorted: column === 'artist' ? direction : null,
+			 onClick: this.handleSort('artist'),
+			  className: column === 'artist' ? `sorted ${direction}` : `sorted ${null}` },
+			{ content: 'Title', sorted: column === 'title' ? direction : null,
+			 onClick: this.handleSort('title'),
+			  className: column === 'title' ? `sorted ${direction}` : `sorted ${null}` },
+			{ content: 'Year', sorted: column === 'year' ? direction : null,
+			 onClick: this.handleSort('year'), 
+			 className: column === 'year' ? `sorted ${direction}` : `sorted ${null}` },
 			{ content: 'Rating' },
 			{ content: 'Catalog #' }
 		]
 
 		return (
+			<div>
 			<Table singleLine sortable
 				verticalAlign='middle' textAlign='center'
 				headerRow={headerRow}
 				renderBodyRow={renderBodyRow}
-				tableData={this.state.data} />
+				tableData={this.state.data}
+				 />
+				
+	</div>
 		)
 	}
 }
