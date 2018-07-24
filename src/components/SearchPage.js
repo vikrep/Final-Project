@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { Button, Carousel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './SearchPage.css'
-// import SearchTable from './SearchTable'
 import TableElement from './TableElement'
 import 'font-awesome/css/font-awesome.min.css';
+import { Input,Segment} from 'semantic-ui-react'
 
 export default class SearchPage extends Component {
     render() {
+        const findIt = (e) => {
+            console.log("hi");
+        }
         return (
             <div>
                 <div id="carousel">
@@ -23,6 +26,9 @@ export default class SearchPage extends Component {
                         </Carousel.Item>
                     </Carousel>
                 </div>
+                <Segment inverted>
+                <Input action={{ icon: 'search' }} onChange={findIt} size='large' placeholder='Search...' />
+                </Segment>
                 <TableElement />
                 <div className="social">
                     <a href="http://www.google.com"><i className="fa fa-skype fa-2x skype"></i></a>

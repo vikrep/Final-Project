@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Rating, Image} from 'semantic-ui-react'
+import { Table, Rating, Image, Pagination} from 'semantic-ui-react'
 import fakeAlbums from '../data/fakeAlbums.json'
 import './TableElement.css'
 import _ from 'lodash'
@@ -71,7 +71,7 @@ export default class TableElement extends Component {
 				renderBodyRow={renderBodyRow}
 				tableData={this.state.data}
 				 />
-				
+				<Pagination defaultActivePage={5} totalPages={10} />
 	</div>
 		)
 	}
