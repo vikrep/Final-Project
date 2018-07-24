@@ -13,6 +13,7 @@ export default class TableElement extends Component {
 			data: fakeAlbums,
 			direction: null,
 		}
+		this.handleSort = this.handleSort.bind(this)
 	};
 
 	handleSort = clickedColumn => () => {
@@ -50,19 +51,19 @@ export default class TableElement extends Component {
 
 		const headerRow = [
 			{ content: 'Cover' },
-			{ content: 'Artist', sorted: column === 'artist' ? direction : null, onClick: this.handleSort('artist') },
-			{ content: 'Title', sorted: column === 'title' ? direction : null, onClick: this.handleSort('title') },
-			{ content: 'Year', sorted: column === 'year' ? direction : null, onClick: this.handleSort('year') },
+			{ content: 'Artist', sorted: column === 'artist' ? direction : null, onClick: this.handleSort('artist'), className: `sorted ${direction}` },
+			{ content: 'Title', sorted: column === 'title' ? direction : null, onClick: this.handleSort('title'), className: `sorted ${direction}` },
+			{ content: 'Year', sorted: column === 'year' ? direction : null, onClick: this.handleSort('year'), className: `sorted ${direction}` },
 			{ content: 'Rating' },
-			{ content: 'catalog #' }
+			{ content: 'Catalog #' }
 		]
 
 		return (
-			<Table singleLine
+			<Table singleLine sortable
 				verticalAlign='middle' textAlign='center'
 				headerRow={headerRow}
 				renderBodyRow={renderBodyRow}
-				tableData={this.state.data} sortable />
+				tableData={this.state.data} />
 		)
 	}
 }
