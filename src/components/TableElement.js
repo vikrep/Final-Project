@@ -51,9 +51,9 @@ export default class TableElement extends Component {
 
 		const headerRow = [
 			{ content: 'Cover' },
-			{ content: 'Artist', sorted: column === 'artist' ? direction : null, onClick: this.handleSort('artist'), className: `sorted ${direction}` },
-			{ content: 'Title', sorted: column === 'title' ? direction : null, onClick: this.handleSort('title'), className: `sorted ${direction}` },
-			{ content: 'Year', sorted: column === 'year' ? direction : null, onClick: this.handleSort('year'), className: `sorted ${direction}` },
+			{ content: 'Artist', sorted: column === 'artist' ? direction : null, onClick: this.handleSort('artist'), className: column === 'artist' ? `sorted ${direction}` : `sorted ${null}` },
+			{ content: 'Title', sorted: column === 'title' ? direction : null, onClick: this.handleSort('title'), className: column === 'title' ? `sorted ${direction}` : `sorted ${null}` },
+			{ content: 'Year', sorted: column === 'year' ? direction : null, onClick: this.handleSort('year'), className: column === 'year' ? `sorted ${direction}` : `sorted ${null}` },
 			{ content: 'Rating' },
 			{ content: 'Catalog #' }
 		]
