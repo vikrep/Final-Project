@@ -32,18 +32,23 @@ export default class TableElement extends Component {
 			direction: direction === 'ascending' ? 'descending' : 'ascending',
 		})
 	}
+	// eventHandler for simple search
 	updateSearch=(e)=>{
         this.setState({
-            search: e.target.value.substr(0,20)
+            search: e.target.value.substr(0,20) //it accepts only 20 chars
         })
         console.log("sth typed in simple react", this.state);
-    }
+	}
+	
 	render() {
+
+		//filteringData based on input in simple search
 		let filteredData = this.state.data.filter(
 			(album) => {
 				return album.artist.toLowerCase().indexOf(this.state.search.toLowerCase()) !==-1
 			}
 		)
+
 		const { column, direction } = this.state;
 
 		const renderBodyRow = ({ cover, artist, title, year, rating, id }, i) => ({
@@ -80,12 +85,14 @@ export default class TableElement extends Component {
                 <input type="text" placeholder="Search ..."
                 value={this.state.search}
                  onChange={this.updateSearch} />
+
 			<Table singleLine sortable
 				verticalAlign='middle' textAlign='center'
 				headerRow={headerRow}
 				renderBodyRow={renderBodyRow}
 				tableData={this.state.data}
 				 />
+				 {/* Pagination */}
 				<Pagination defaultActivePage={5} totalPages={10} />
 	</div>
 		)

@@ -8,9 +8,12 @@ import { Input,Segment} from 'semantic-ui-react'
 
 export default class SearchPage extends Component {
     render() {
+
+        // test eventHandler for semantic Search 
         const findIt = (e) => {
             console.log("sth typed in semantic");
         }
+
         return (
             <div>
                 <div id="carousel">
@@ -32,7 +35,10 @@ export default class SearchPage extends Component {
                 onChange={findIt} size='large' 
                 placeholder='Search...' />
                 </Segment>
+
                 <TableElement />
+
+                {/* Footer: social medias */}
                 <div className="social">
                     <a href="http://www.google.com"><i className="fa fa-skype fa-2x skype"></i></a>
                     <a href="http://www.google.com"><i className="fa fa-envelope fa-2x gmail"></i></a>
