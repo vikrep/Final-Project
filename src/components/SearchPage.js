@@ -9,7 +9,7 @@ import { Input,Segment} from 'semantic-ui-react'
 export default class SearchPage extends Component {
     render() {
         const findIt = (e) => {
-            console.log("hi");
+            console.log("sth typed in semantic");
         }
         return (
             <div>
@@ -26,8 +26,11 @@ export default class SearchPage extends Component {
                         </Carousel.Item>
                     </Carousel>
                 </div>
+                {/* Search with semantic UI */}
                 <Segment inverted>
-                <Input action={{ icon: 'search' }} onChange={findIt} size='large' placeholder='Search...' />
+                <Input action={{ icon: 'search' }} 
+                onChange={findIt} size='large' 
+                placeholder='Search...' />
                 </Segment>
                 <TableElement />
                 <div className="social">
@@ -37,7 +40,6 @@ export default class SearchPage extends Component {
                     <p> <strong>Follow me on:</strong> </p>
                 </div>
             </div>
-
         )
 
     }

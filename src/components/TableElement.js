@@ -12,6 +12,7 @@ export default class TableElement extends Component {
 			column: null,
 			data: fakeAlbums,
 			direction: null,
+			search:''
 		}
 		this.handleSort = this.handleSort.bind(this)
 	};
@@ -31,8 +32,18 @@ export default class TableElement extends Component {
 			direction: direction === 'ascending' ? 'descending' : 'ascending',
 		})
 	}
+	updateSearch=(e)=>{
+        this.setState({
+            search: e.target.value.substr(0,20)
+        })
+        console.log("sth typed in simple react", this.state);
+    }
 	render() {
-
+		let filteredData = this.state.data.filter(
+			(album) => {
+				return album.artist.toLowerCase().indexOf(this.state.search.toLowerCase()) !==-1
+			}
+		)
 		const { column, direction } = this.state;
 
 		const renderBodyRow = ({ cover, artist, title, year, rating, id }, i) => ({
@@ -65,6 +76,10 @@ export default class TableElement extends Component {
 
 		return (
 			<div>
+				{/* Search with simple React */}
+                <input type="text" placeholder="Search ..."
+                value={this.state.search}
+                 onChange={this.updateSearch} />
 			<Table singleLine sortable
 				verticalAlign='middle' textAlign='center'
 				headerRow={headerRow}
