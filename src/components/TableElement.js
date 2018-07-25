@@ -14,11 +14,9 @@ export default class TableElement extends Component {
 			column: null,
 			direction: null,
 			searchName: '',
-			data:  fakeAlbums,
+			data: fakeAlbums,
 			currentPage: 1,
-			// albumsPerPage: 10  // I dont know why if i uncomment this everything in page disappears,
-			// all u see about pagination is based on an example i saw on codePen
-
+			// albumsPerPage: 5
 		}
 		this.handleSort = this.handleSort.bind(this)
 		this.handleClickPage = this.handleClickPage.bind(this)

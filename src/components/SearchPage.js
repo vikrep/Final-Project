@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
-import {Carousel } from 'react-bootstrap';
-// import { Link } from 'react-router-dom';
+import { Carousel } from 'react-bootstrap';
 import './SearchPage.css'
-import TableElement from './TableElement'
+import DataTable from './DataTable'
 import 'font-awesome/css/font-awesome.min.css';
-// import { Input, Segment } from 'semantic-ui-react'
+import fakeAlbums from '../data/fakeAlbums.json'
 
 export default class SearchPage extends Component {
     render() {
-
-        // test eventHandler for semantic Search 
-        // const findIt = (e) => {
-        //     console.log("sth typed in semantic");
-        // }
 
         return (
             <div>
@@ -29,16 +23,14 @@ export default class SearchPage extends Component {
                         </Carousel.Item>
                     </Carousel>
                 </div>
-                {/* Search with semantic UI */}
-                {/* <Segment inverted>
-                    <Input action={{ icon: 'search' }}
-                        onChange={findIt} size='large'
-                        placeholder='Search...' />
-                </Segment> */}
+             
 
-                <TableElement />
+                {/* <TableElement /> */}
+
+                <DataTable data={fakeAlbums} />
 
                 {/* Footer: social medias */}
+
                 <div className="social">
                     <a href="http://www.google.com"><i className="fa fa-skype fa-2x skype"></i></a>
                     <a href="http://www.google.com"><i className="fa fa-envelope fa-2x gmail"></i></a>
