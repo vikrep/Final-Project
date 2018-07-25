@@ -3,6 +3,8 @@ import { Table, Rating, Image, Pagination } from 'semantic-ui-react'
 import fakeAlbums from '../data/fakeAlbums.json'
 import './TableElement.css'
 import _ from 'lodash'
+// import { Input, Segment } from 'semantic-ui-react'
+import Search from './Search'
 
 
 export default class TableElement extends Component {
@@ -10,12 +12,22 @@ export default class TableElement extends Component {
 		super(props);
 		this.state = {
 			column: null,
-			data: fakeAlbums,
 			direction: null,
-			search: ''
+			searchName: '',
+			data:  fakeAlbums,
+			currentPage: 1,
+			// albumsPerPage: 10  // I dont know why if i uncomment this everything in page disappears,
+			// all u see about pagination is based on an example i saw on codePen
+
 		}
 		this.handleSort = this.handleSort.bind(this)
-	};
+		this.handleClickPage = this.handleClickPage.bind(this)
+	}
+	handleClickPage(event) {
+		this.setState({
+			currentPage: Number(event.target.id)
+		});
+	}
 
 	handleSort = clickedColumn => () => {
 		const { column, data, direction } = this.state
@@ -32,26 +44,80 @@ export default class TableElement extends Component {
 			direction: direction === 'ascending' ? 'descending' : 'ascending',
 		})
 	}
-	// eventHandler for simple search
-	//filteringData based on input in simple search
-	
-	updateSearch = (e) => {
+	// updateSearch = (e) => {
+	// 	this.setState({
+	// 		search: e.target.value.substr(0, 20) //it accepts max 20 chars
+	// 	})
+	// 	let filteredData = this.state.data.filter(
+	// 		(album) => {
+	// 			return album.artist.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+	// 		}
+	// 	)
+	// 	this.setState({
+	// 		data: filteredData
+	// 	})
+	// }
+	setSearchName = (ev) => {
+		const searchName = ev.target.value;
 		this.setState({
-			search: e.target.value.substr(0, 20) //it accepts max 20 chars
+			searchName
 		})
-		let filteredData = this.state.data.filter(
-			(album) => {
-				return album.artist.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
-			}
-		)
+	}
+	searchByName = () => {
+		const { searchName } = this.state
+		const filteredData = this.getFilteredDataByName(searchName);
 		this.setState({
 			data: filteredData
 		})
 	}
-
+	getFilteredDataByName = (name) => {
+		let { data } = this.state;
+		if (name !== '') {
+			const returnData = data.filter(album => {
+				return (album.artist.toLowerCase()) === this.state.searchName.toLowerCase();
+			});
+			return returnData;
+		}
+		else {
+			return this.showAll;
+		}
+	}
+	showAll = () => {
+		this.setState({
+			data: fakeAlbums,
+			searchName: ''
+		})
+	}
 	render() {
+		const { data, currentPage, albumsPerPage } = this.state; //pagination 
+		const { column, direction } = this.state; //sort
 
-		const { column, direction } = this.state;
+		// Logic for displaying current albums
+		const indexOfLastAlbum = currentPage * albumsPerPage;
+		const indexOfFirstAlbum = indexOfLastAlbum - albumsPerPage;
+		const currentAlbums = data.slice(indexOfFirstAlbum, indexOfLastAlbum);
+
+		const renderAlbums = currentAlbums.map((album, index) => {
+			return <li key={index}>{album}</li>;
+		});
+
+		// Logic for displaying page numbers
+		const pageNumbers = [];
+		for (let i = 1; i <= Math.ceil(data.length / albumsPerPage); i++) {
+			pageNumbers.push(i);
+		}
+
+		const renderPageNumbers = pageNumbers.map(number => {
+			return (
+				<li
+					key={number}
+					id={number}
+					onClick={this.handleClickPage}
+				>
+					{number}
+				</li>
+			);
+		});
 
 		const renderBodyRow = ({ cover, artist, title, year, rating, id }, i) => ({
 			key: `result-row-${i}`,
@@ -90,9 +156,15 @@ export default class TableElement extends Component {
 		return (
 			<div>
 				{/* Search with simple React */}
-				<input type="text" placeholder="Search ..."
+				{/* <input type="text" placeholder="Search ..."
 					value={this.state.search}
-					onChange={this.updateSearch} />
+					onChange={this.updateSearch} /> */}
+
+				{/* Search Component based on artist name */}
+				<Search setSearchName={this.setSearchName}
+					searchName={this.state.searchName}
+					searchByName={this.searchByName}
+					showAll={this.showAll} />
 
 				<Table singleLine sortable
 					verticalAlign='middle' textAlign='center'
@@ -101,7 +173,15 @@ export default class TableElement extends Component {
 					tableData={this.state.data}
 				/>
 				{/* Pagination */}
-				<Pagination defaultActivePage={5} totalPages={10} />
+				{/* <Pagination defaultActivePage={1} totalPages={10} /> */}
+
+				{/* Pagination with simple react */}
+				<ul>
+					{renderAlbums}
+				</ul>
+				<ul id="page-numbers">
+					{renderPageNumbers}
+				</ul>
 			</div>
 		)
 	}

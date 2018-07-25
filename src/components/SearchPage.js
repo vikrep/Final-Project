@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Button, Carousel } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import {Carousel } from 'react-bootstrap';
+// import { Link } from 'react-router-dom';
 import './SearchPage.css'
 import TableElement from './TableElement'
 import 'font-awesome/css/font-awesome.min.css';
-import { Input, Segment } from 'semantic-ui-react'
+// import { Input, Segment } from 'semantic-ui-react'
 
 export default class SearchPage extends Component {
     render() {
