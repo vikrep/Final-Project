@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Rating, Image, Pagination} from 'semantic-ui-react'
+import { Table, Rating, Image, Pagination } from 'semantic-ui-react'
 import fakeAlbums from '../data/fakeAlbums.json'
 import './TableElement.css'
 import _ from 'lodash'
@@ -12,7 +12,7 @@ export default class TableElement extends Component {
 			column: null,
 			data: fakeAlbums,
 			direction: null,
-			search:''
+			search: ''
 		}
 		this.handleSort = this.handleSort.bind(this)
 	};
@@ -33,21 +33,23 @@ export default class TableElement extends Component {
 		})
 	}
 	// eventHandler for simple search
-	updateSearch=(e)=>{
-        this.setState({
-            search: e.target.value.substr(0,20) //it accepts only 20 chars
-        })
-        console.log("sth typed in simple react", this.state);
-	}
+	//filteringData based on input in simple search
 	
-	render() {
-
-		//filteringData based on input in simple search
+	updateSearch = (e) => {
+		this.setState({
+			search: e.target.value.substr(0, 20) //it accepts max 20 chars
+		})
 		let filteredData = this.state.data.filter(
 			(album) => {
-				return album.artist.toLowerCase().indexOf(this.state.search.toLowerCase()) !==-1
+				return album.artist.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
 			}
 		)
+		this.setState({
+			data: filteredData
+		})
+	}
+
+	render() {
 
 		const { column, direction } = this.state;
 
@@ -58,23 +60,29 @@ export default class TableElement extends Component {
 				{ content: artist, width: '1' },
 				{ content: title },
 				{ content: year, width: '1' },
-				<td><Rating icon='star' defaultRating={rating} maxRating={5} 
-				size='small' disabled='true' /></td>,
+				<td><Rating icon='star' defaultRating={rating} maxRating={5}
+					size='small' disabled='true' /></td>,
 				{ content: id, width: '1' }
 			],
 		});
 
 		const headerRow = [
 			{ content: 'Cover' },
-			{ content: 'Artist', sorted: column === 'artist' ? direction : null,
-			 onClick: this.handleSort('artist'),
-			  className: column === 'artist' ? `sorted ${direction}` : `sorted ${null}` },
-			{ content: 'Title', sorted: column === 'title' ? direction : null,
-			 onClick: this.handleSort('title'),
-			  className: column === 'title' ? `sorted ${direction}` : `sorted ${null}` },
-			{ content: 'Year', sorted: column === 'year' ? direction : null,
-			 onClick: this.handleSort('year'), 
-			 className: column === 'year' ? `sorted ${direction}` : `sorted ${null}` },
+			{
+				content: 'Artist', sorted: column === 'artist' ? direction : null,
+				onClick: this.handleSort('artist'),
+				className: column === 'artist' ? `sorted ${direction}` : `sorted ${null}`
+			},
+			{
+				content: 'Title', sorted: column === 'title' ? direction : null,
+				onClick: this.handleSort('title'),
+				className: column === 'title' ? `sorted ${direction}` : `sorted ${null}`
+			},
+			{
+				content: 'Year', sorted: column === 'year' ? direction : null,
+				onClick: this.handleSort('year'),
+				className: column === 'year' ? `sorted ${direction}` : `sorted ${null}`
+			},
 			{ content: 'Rating' },
 			{ content: 'Catalog #' }
 		]
@@ -82,19 +90,19 @@ export default class TableElement extends Component {
 		return (
 			<div>
 				{/* Search with simple React */}
-                <input type="text" placeholder="Search ..."
-                value={this.state.search}
-                 onChange={this.updateSearch} />
+				<input type="text" placeholder="Search ..."
+					value={this.state.search}
+					onChange={this.updateSearch} />
 
-			<Table singleLine sortable
-				verticalAlign='middle' textAlign='center'
-				headerRow={headerRow}
-				renderBodyRow={renderBodyRow}
-				tableData={this.state.data}
-				 />
-				 {/* Pagination */}
+				<Table singleLine sortable
+					verticalAlign='middle' textAlign='center'
+					headerRow={headerRow}
+					renderBodyRow={renderBodyRow}
+					tableData={this.state.data}
+				/>
+				{/* Pagination */}
 				<Pagination defaultActivePage={5} totalPages={10} />
-	</div>
+			</div>
 		)
 	}
 }

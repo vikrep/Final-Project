@@ -4,15 +4,15 @@ import { Link } from 'react-router-dom';
 import './SearchPage.css'
 import TableElement from './TableElement'
 import 'font-awesome/css/font-awesome.min.css';
-import { Input,Segment} from 'semantic-ui-react'
+import { Input, Segment } from 'semantic-ui-react'
 
 export default class SearchPage extends Component {
     render() {
 
         // test eventHandler for semantic Search 
-        const findIt = (e) => {
-            console.log("sth typed in semantic");
-        }
+        // const findIt = (e) => {
+        //     console.log("sth typed in semantic");
+        // }
 
         return (
             <div>
@@ -30,11 +30,11 @@ export default class SearchPage extends Component {
                     </Carousel>
                 </div>
                 {/* Search with semantic UI */}
-                <Segment inverted>
-                <Input action={{ icon: 'search' }} 
-                onChange={findIt} size='large' 
-                placeholder='Search...' />
-                </Segment>
+                {/* <Segment inverted>
+                    <Input action={{ icon: 'search' }}
+                        onChange={findIt} size='large'
+                        placeholder='Search...' />
+                </Segment> */}
 
                 <TableElement />
 
