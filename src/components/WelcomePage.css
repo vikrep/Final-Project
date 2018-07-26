@@ -19,7 +19,7 @@
     text-shadow: 0 0 10px;
   }
   .welcomebg h1{
-    font-size:5rem;
+    font-size:4rem;
   }
   .welcomebg {
     background: linear-gradient(rgba(26,26,26,0.3),rgba(26,26,26,0.3)),url("/assets/welcome.jpg");

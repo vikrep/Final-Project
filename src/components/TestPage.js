@@ -90,24 +90,35 @@ const dataParser = (obj) => {
 * Semantic-UI DataTable
 *
 * --- Options ---
-* columns: This is the table definition. The default behavior (if no columns option is defined) tries to parse the data, 
+* columns: This is the table definition. The default behavior
+ (if no columns option is defined) tries to parse the data, 
 * figure out what type of fields are in it and format it to the correct "schema".
 *
 * Example Schema:[{
 *	key: 'name', // the key of the object
 *	type: 'string', // native type of the data
 *	display: 'Name' // the column header 
-*	defaults: 'N/A' // if a value is not found what should we show? Can be anything but needs to be a resolved value
-*	accessor: (fullObject, key) => {} // optional: if theirs some special way to access the data or if it's nested use an accessor function
-*	decorator: (value) => {} // optional: after a value has been retrieved (either by the default object[key] or with an accessor) it'll be passed to this function, i.e. formating time stamps with MomentJS 
+*	defaults: 'N/A' // if a value is not found what should we show? 
+Can be anything but needs to be a resolved value
+*	accessor: (fullObject, key) => {} // optional:
+ if theirs some special way to access the data or if it's nested use an accessor function
+*	decorator: (value) => {} // optional: 
+after a value has been retrieved (either by the default object[key] or with an accessor)
+ it'll be passed to this function, i.e. formating time stamps with MomentJS 
 * }, {...}, {...}]
 * 
-* renderHeaderRow: The function called to render the header row with the data provided by the columns schema. A default is provided but if you want to change the headers or nest them. 
-* The function is passed 3 params, the columns array, the onClick handler for handling the sorting logic and the classNameGenerator for adding the ascending/descending header class.
-* Note: It's possible to override the onClick handler but make sure to call it after your own logic if you want the default sorting to work.
+* renderHeaderRow: The function called to render the header row with the data provided by the columns schema.
+ A default is provided but if you want to change the headers or nest them. 
+* The function is passed 3 params, the columns array,
+ the onClick handler for handling the sorting logic and 
+ the classNameGenerator for adding the ascending/descending header class.
+* Note: It's possible to override the onClick handler but make sure
+ to call it after your own logic if you want the default sorting to work.
 * 
-* renderBodyRow: This is the function your probably going to want to override. The default function thakes the column and renders the data. 
-* First, if there is a accessor function it uses that to grab the data (use column schema definition above) if theres not then it's a simple (data[key] || defaults)
+* renderBodyRow: This is the function your probably going to want to override.
+ The default function thakes the column and renders the data. 
+* First, if there is a accessor function it uses that to grab the data
+ (use column schema definition above) if theres not then it's a simple (data[key] || defaults)
 * Second, if there's a decorator, it... decorates...
 * Lastly, it renders the Table.Cell with the value 
 *

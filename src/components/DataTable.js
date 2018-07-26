@@ -4,6 +4,7 @@ import flatten from 'lodash/flatten'
 import debounce from 'lodash/debounce'
 import _ from 'lodash'
 import './TableElement.css'
+// import fakeAlbums from '../data/fakeAlbums.json'
 
 
 class DataTable extends Component {
@@ -16,35 +17,17 @@ class DataTable extends Component {
 
 		const data = this.paginate(this.data)
 
-		this.orignalPagedData = data
+		// this.orignalPagedData = data //doesent make a difference
 		this.pagedData = data
 
 		this.state = {
 			index: 0,
 			data: data[0],
+			// data:fakeAlbums, //if so, sort works on all data before using pagination 
 			column: null,
 			direction: null
 		}
 	}
-
-	// componentWillReceiveProps(newProps) {
-	// 	this.data = newProps.data
-	// 	this.renderRow = newProps.renderBodyRow
-	// 	this.renderHeader = newProps.renderHeaderRow
-	// 	this.columns = newProps.columns
-	// 	this.paginationLimit = newProps.pageLimit || this.defaultPageLimit
-
-	// 	const data = this.paginate(this.data)
-
-	// 	this.orignalPagedData = data
-	// 	this.pagedData = data
-
-	// 	this.setState({
-	// 		index: 0,
-	// 		sort: {},
-	// 		data: data[this.state.index]
-	// 	})
-	// }
 
 	pageChange = index => {
 		let newIndex = this.state.index
@@ -54,9 +37,8 @@ class DataTable extends Component {
 		else if (index === 'back') newIndex--
 		else newIndex = index
 
-		this.setState({ data: this.pagedData[newIndex], index: newIndex })
+		this.setState({ data: this.pagedData[newIndex], index: newIndex }) //first place data becomes pagedData
 	}
-
 
 	search = (data, query) => {
 		let searchedData = data
@@ -87,11 +69,11 @@ class DataTable extends Component {
 		return data
 	}
 
-	debouncedSearch = debounce((data, query) => (this.search(data, query)), 250)
+	debouncedSearch = debounce((data, query) => (this.search(data, query)), 250) //debounce from lodash, delay 250ms
 
 	onSearch = (event, term) => {
 		this.setState(Object.assign(this.state, { query: term.value }))
-		this.debouncedSearch(flatten(this.pagedData), this.state.query)
+		this.debouncedSearch(flatten(this.pagedData), this.state.query) //Flattens array a single level deep
 	}
 
 	handleSort = clickedColumn => () => {
@@ -99,7 +81,7 @@ class DataTable extends Component {
 		if (column !== clickedColumn) {
 			this.setState({
 				column: clickedColumn,
-				data: _.sortBy(data, [clickedColumn]),
+				data: _.sortBy(data, [clickedColumn]), //Lodash ascending sort
 				direction: 'ascending',
 			})
 			return
@@ -193,3 +175,23 @@ class DataTable extends Component {
 	}
 }
 export default DataTable
+
+
+	// componentWillReceiveProps(newProps) {
+	// 	this.data = newProps.data
+	// 	this.renderRow = newProps.renderBodyRow
+	// 	this.renderHeader = newProps.renderHeaderRow
+	// 	this.columns = newProps.columns
+	// 	this.paginationLimit = newProps.pageLimit || this.defaultPageLimit
+
+	// 	const data = this.paginate(this.data)
+
+	// 	this.orignalPagedData = data
+	// 	this.pagedData = data
+
+	// 	this.setState({
+	// 		index: 0,
+	// 		sort: {},
+	// 		data: data[this.state.index]
+	// 	})
+	// }

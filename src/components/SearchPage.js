@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Carousel } from 'react-bootstrap';
 import './SearchPage.css'
 import DataTable from './DataTable'
+// import TableElement from './TableElement'
 import 'font-awesome/css/font-awesome.min.css';
 import fakeAlbums from '../data/fakeAlbums.json'
 
@@ -30,7 +31,6 @@ export default class SearchPage extends Component {
                 <DataTable data={fakeAlbums} />
 
                 {/* Footer: social medias */}
-
                 <div className="social">
                     <a href="http://www.google.com"><i className="fa fa-skype fa-2x skype"></i></a>
                     <a href="http://www.google.com"><i className="fa fa-envelope fa-2x gmail"></i></a>

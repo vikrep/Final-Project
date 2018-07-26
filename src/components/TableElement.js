@@ -14,17 +14,9 @@ export default class TableElement extends Component {
 			column: null,
 			direction: null,
 			searchName: '',
-			data: fakeAlbums,
-			currentPage: 1,
-			// albumsPerPage: 5
+			data: fakeAlbums
 		}
 		this.handleSort = this.handleSort.bind(this)
-		this.handleClickPage = this.handleClickPage.bind(this)
-	}
-	handleClickPage(event) {
-		this.setState({
-			currentPage: Number(event.target.id)
-		});
 	}
 
 	handleSort = clickedColumn => () => {
@@ -87,35 +79,7 @@ export default class TableElement extends Component {
 		})
 	}
 	render() {
-		const { data, currentPage, albumsPerPage } = this.state; //pagination 
 		const { column, direction } = this.state; //sort
-
-		// Logic for displaying current albums
-		const indexOfLastAlbum = currentPage * albumsPerPage;
-		const indexOfFirstAlbum = indexOfLastAlbum - albumsPerPage;
-		const currentAlbums = data.slice(indexOfFirstAlbum, indexOfLastAlbum);
-
-		const renderAlbums = currentAlbums.map((album, index) => {
-			return <li key={index}>{album}</li>;
-		});
-
-		// Logic for displaying page numbers
-		const pageNumbers = [];
-		for (let i = 1; i <= Math.ceil(data.length / albumsPerPage); i++) {
-			pageNumbers.push(i);
-		}
-
-		const renderPageNumbers = pageNumbers.map(number => {
-			return (
-				<li
-					key={number}
-					id={number}
-					onClick={this.handleClickPage}
-				>
-					{number}
-				</li>
-			);
-		});
 
 		const renderBodyRow = ({ cover, artist, title, year, rating, id }, i) => ({
 			key: `result-row-${i}`,
@@ -172,14 +136,6 @@ export default class TableElement extends Component {
 				/>
 				{/* Pagination */}
 				{/* <Pagination defaultActivePage={1} totalPages={10} /> */}
-
-				{/* Pagination with simple react */}
-				<ul>
-					{renderAlbums}
-				</ul>
-				<ul id="page-numbers">
-					{renderPageNumbers}
-				</ul>
 			</div>
 		)
 	}
