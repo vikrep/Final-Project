@@ -5,6 +5,7 @@ import DataTable from './DataTable'
 import 'font-awesome/css/font-awesome.min.css';
 import fakeAlbums from '../data/fakeAlbums.json'
 
+
 export default class SearchPage extends Component {
     render() {
 
@@ -28,7 +29,7 @@ export default class SearchPage extends Component {
                 {/* <TableElement /> */}
 
                 <DataTable data={fakeAlbums} />
-
+                {/* <TableElement /> */}
                 {/* Footer: social medias */}
 
                 <div className="social">

@@ -1,119 +1,133 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Table, Menu, Icon, Segment, Input, Image, Rating } from 'semantic-ui-react'
 import flatten from 'lodash/flatten'
-import debounce from 'lodash/debounce'
 import _ from 'lodash'
-import './TableElement.css'
-
+import debounce from 'lodash/debounce'
+import './DataTable.css'
 
 class DataTable extends Component {
 	defaultPageLimit = 10
 
 	constructor(props) {
 		super(props)
+		this.originalData = props.data
 		this.data = props.data
 		this.paginationLimit = props.pageLimit || this.defaultPageLimit
 
 		const data = this.paginate(this.data)
-
-		this.orignalPagedData = data
 		this.pagedData = data
 
 		this.state = {
 			index: 0,
 			data: data[0],
+			sortedData: {},
 			column: null,
 			direction: null
 		}
 	}
 
-	// componentWillReceiveProps(newProps) {
-	// 	this.data = newProps.data
-	// 	this.renderRow = newProps.renderBodyRow
-	// 	this.renderHeader = newProps.renderHeaderRow
-	// 	this.columns = newProps.columns
-	// 	this.paginationLimit = newProps.pageLimit || this.defaultPageLimit
+	static propTypes = {
+		data: PropTypes.arrayOf(PropTypes.object).isRequired,
+		pageLimit: PropTypes.number,
+	};
 
-	// 	const data = this.paginate(this.data)
 
-	// 	this.orignalPagedData = data
-	// 	this.pagedData = data
+	componentWillReceiveProps(newProps) {
+		this.data = newProps.data
+		this.renderRow = newProps.renderBodyRow
+		this.renderHeader = newProps.renderHeaderRow
+		this.columns = newProps.columns
+		this.paginationLimit = newProps.pageLimit || this.defaultPageLimit
 
-	// 	this.setState({
-	// 		index: 0,
-	// 		sort: {},
-	// 		data: data[this.state.index]
-	// 	})
-	// }
+		const data = this.paginate(this.data)
+		this.pagedData = data
 
+		this.setState({
+			index: 0,
+			sortedData: {},
+			column: null,
+			direction: null,
+			data: data[this.state.index]
+		});
+	};
+	// Changing page table for rendering
 	pageChange = index => {
 		let newIndex = this.state.index
-
 		if (index === newIndex) return null
 		else if (index === 'next') newIndex++
 		else if (index === 'back') newIndex--
 		else newIndex = index
-
 		this.setState({ data: this.pagedData[newIndex], index: newIndex })
-	}
-
-
+	};
+	// function search element - any data
 	search = (data, query) => {
 		let searchedData = data
-
 		if (data && Array.isArray(data) && query && query !== '') {
 			const regex = new RegExp(query, 'i')
 			searchedData = data.filter(row => Object.values(row).some(prop => regex.test(prop)))
 		} else {
-			searchedData = this.data
+			searchedData = this.originalData
+			this.setState({
+				column: null,
+				direction: null,
+			})
 		}
-
 		return this.setPagedData(searchedData)
-	}
-
+	};
+	// function of partitioning table data into pages
 	paginate = (data) => {
 		const dataCopy = [...data]
 		const pages = []
-
 		while (dataCopy.length) pages.push(dataCopy.splice(0, this.paginationLimit))
-
 		return pages
-	}
-
+	};
+	// function update paged data in state
 	setPagedData = (data) => {
 		data = this.paginate(data)
 		this.pagedData = data
 		this.setState(Object.assign(this.state, { data: this.pagedData[this.state.index] }))
 		return data
-	}
+	};
 
-	debouncedSearch = debounce((data, query) => (this.search(data, query)), 250)
+	debouncedSearch = debounce((data, query) => (this.search(data, query)), 250) // function execution delay
 
+	// function handler search
 	onSearch = (event, term) => {
 		this.setState(Object.assign(this.state, { query: term.value }))
 		this.debouncedSearch(flatten(this.pagedData), this.state.query)
-	}
+		console.log(event)
+	};
 
+	// function handler sort 
 	handleSort = clickedColumn => () => {
-		const { column, data, direction } = this.state
+		const { column, direction } = this.state
+		let dataSort = flatten(this.pagedData)
 		if (column !== clickedColumn) {
+			dataSort = _.sortBy(dataSort, [clickedColumn]) //Lodash ascending sort
+			const data = this.paginate(dataSort)
+			this.pagedData = data
 			this.setState({
 				column: clickedColumn,
-				data: _.sortBy(data, [clickedColumn]),
+				data: this.pagedData[this.state.index],
 				direction: 'ascending',
 			})
 			return
 		}
+		dataSort = flatten(this.pagedData)
+		let dataReverse = dataSort.reverse()
+		const data = this.paginate(dataReverse)
+		this.pagedData = data
 		this.setState({
-			data: data.reverse(),
+			data: this.pagedData[this.state.index],
 			direction: direction === 'ascending' ? 'descending' : 'ascending',
 		})
-	}
+	};
 
 	render() {
 
 		const { column, direction } = this.state; //sort
-
+		// const for rendering table body
 		const renderBodyRow = ({ cover, artist, title, year, rating, id }, i) => ({
 			key: `result-row-${i}`,
 			cells: [
@@ -126,6 +140,7 @@ class DataTable extends Component {
 				{ content: id, width: '1' }
 			],
 		});
+		// const for rendering table header
 		const headerRow = [
 			{ content: 'Cover' },
 			{
@@ -145,14 +160,15 @@ class DataTable extends Component {
 			},
 			{ content: 'Rating' },
 			{ content: 'Catalog #' }
-		]
+		];
 
 		return (
 
 			<div>
-				<Segment attached='top' floated="right">
+				<Segment attached='top' floated="left">
 					<Input icon='search' value={this.state.query || ''} onChange={this.onSearch} placeholder='Search...' />
 				</Segment>
+
 				<Table singleLine sortable
 					verticalAlign='middle' textAlign='center'
 					headerRow={headerRow}
@@ -187,7 +203,6 @@ class DataTable extends Component {
 						</Table.Row>
 					</Table.Footer>
 				}
-
 			</div>
 		)
 	}
