@@ -3,7 +3,7 @@
 setup_git() {
   # Set the user name and email to match the API token holder
   # This will make sure the git commits will have the correct photo
-  # and the user gets the credit for a checkin
+  # and the user gets the credit for a checkin user
   git config --global user.email "protsenko.viktor@gmail.com"
   git config --global user.name "vikrep"
   git config --global push.default matching
