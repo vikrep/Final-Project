@@ -96,7 +96,6 @@ class DataTable extends Component {
 	onSearch = (event, term) => {
 		this.setState(Object.assign(this.state, { query: term.value }))
 		this.debouncedSearch(flatten(this.pagedData), this.state.query)
-		console.log(event)
 	};
 
 	// function handler sort 
@@ -208,3 +207,5 @@ class DataTable extends Component {
 	}
 }
 export default DataTable
+
+

@@ -24,14 +24,10 @@ export default class SearchPage extends Component {
                         </Carousel.Item>
                     </Carousel>
                 </div>
-             
-
-                {/* <TableElement /> */}
 
                 <DataTable data={fakeAlbums} />
-                {/* <TableElement /> */}
+            
                 {/* Footer: social medias */}
-
                 <div className="social">
                     <a href="http://www.google.com"><i className="fa fa-skype fa-2x skype"></i></a>
                     <a href="http://www.google.com"><i className="fa fa-envelope fa-2x gmail"></i></a>
@@ -40,7 +36,5 @@ export default class SearchPage extends Component {
                 </div>
             </div>
         )
-
     }
-
 }
