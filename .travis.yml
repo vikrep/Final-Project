@@ -13,12 +13,10 @@ script:
 branches:
   only:
     - master
- 
-
+  
+  skip_cleanup: true
 deploy:
   provider: heroku
+  api_key: "20a351e7-b49a-405e-9ec0-e5258c4cb10c"
   app: "pure-wildwood-16458"
-  api_key:
-  secure: "20a351e7-b49a-405e-9ec0-e5258c4cb10c"
-  skip_cleanup: true
   
