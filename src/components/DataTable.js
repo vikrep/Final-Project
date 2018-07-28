@@ -32,7 +32,6 @@ class DataTable extends Component {
 		pageLimit: PropTypes.number,
 	};
 
-
 	componentWillReceiveProps(newProps) {
 		this.data = newProps.data
 		this.renderRow = newProps.renderBodyRow
@@ -71,6 +70,7 @@ class DataTable extends Component {
 			this.setState({
 				column: null,
 				direction: null,
+				index: 0,
 			})
 		}
 		return this.setPagedData(searchedData)
@@ -86,7 +86,7 @@ class DataTable extends Component {
 	setPagedData = (data) => {
 		data = this.paginate(data)
 		this.pagedData = data
-		this.setState(Object.assign(this.state, { data: this.pagedData[this.state.index] }))
+		this.setState( { index: 0, data: this.pagedData[0] })
 		return data
 	};
 

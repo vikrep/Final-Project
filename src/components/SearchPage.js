@@ -5,9 +5,13 @@ import DataTable from './DataTable'
 import 'font-awesome/css/font-awesome.min.css';
 import fakeAlbums from '../data/fakeAlbums.json'
 
+// import databaseInterface from './helpers/myDbClass'
+
 
 export default class SearchPage extends Component {
     render() {
+
+        // const fakeAlbums= databaseInterface.getAlbumsFromSqlLite3();
 
         return (
             <div>
