@@ -51,18 +51,31 @@ class DataTable extends Component {
 			data: data[this.state.index]
 		});
 	};
+	// helper function to set state
+	// setStateHelper(newPageIndex) {
+	// 	this.setState({ data: this.pagedData[newPageIndex], index: newPageIndex });
+	// };
+
 	// Changing page table for rendering
-	pageChange = index => {
-		let newIndex = this.state.index
-		if (index === newIndex) return null
-		else if (index === 'next') newIndex++
-		else if (index === 'back') newIndex--
-		else newIndex = index
-		this.setState({ data: this.pagedData[newIndex], index: newIndex })
+	pageChange(clickedPageNumber) {
+		 const currentPage = this.state.index;
+		console.log("hi pageChange is called",clickedPageNumber)
+		 if (clickedPageNumber === 'next') this.setState({ data: this.pagedData[currentPage + 1], index: currentPage + 1 })
+		 if (clickedPageNumber === 'back') this.setState({ data: this.pagedData[currentPage - 1], index: currentPage - 1 })
+		 if (clickedPageNumber !== currentPage) this.setState({ data: this.pagedData[clickedPageNumber], index: clickedPageNumber })
+
+		// let newPage = this.state.index;  //suppose newpage is currentpage
+
+		// if (clickedPageNumber === newPage) return  //stop execution of this function
+		// else if (clickedPageNumber === 'next') newPage++ //go to nextpage of currentPage
+		// else if (clickedPageNumber === 'back') newPage-- //go to previouspage of currentPage
+		// else newPage = clickedPageNumber //go to pageNumber which is clicked on 
+
+		// this.setState({ data: this.pagedData[newPage], index: newPage })
 	};
 	// function search element - any data
 	search = (data, query) => {
-		let searchedData = data
+		let searchedData = data //make a safe copy of data
 		if (data && Array.isArray(data) && query && query !== '') {
 			const regex = new RegExp(query, 'i')
 			searchedData = data.filter(row => Object.values(row).some(prop => regex.test(prop)))
@@ -77,7 +90,7 @@ class DataTable extends Component {
 	};
 	// function of partitioning table data into pages
 	paginate = (data) => {
-		const dataCopy = [...data]
+		const dataCopy = [...data] //copy of an array
 		const pages = []
 		while (dataCopy.length) pages.push(dataCopy.splice(0, this.paginationLimit))
 		return pages
@@ -86,7 +99,7 @@ class DataTable extends Component {
 	setPagedData = (data) => {
 		data = this.paginate(data)
 		this.pagedData = data
-		this.setState(Object.assign(this.state, { data: this.pagedData[this.state.index] }))
+		this.setState( { index: 0, data: this.pagedData[0] })
 		return data
 	};
 
@@ -178,26 +191,7 @@ class DataTable extends Component {
 					<Table.Footer>
 						<Table.Row>
 							<Table.HeaderCell>
-								<Menu floated='right' pagination>
-									{this.state.index !== 0 && this.pagedData.length > 1 &&
-										<Menu.Item onClick={() => this.pageChange('back')} as='a' icon>
-											<Icon name='left chevron' />
-										</Menu.Item>
-									}
-									{this.pagedData.map((dataSet, index) => {
-										const active = index === this.state.index
-										return (
-											<Menu.Item key={index} active={active} onClick={() => this.pageChange(index)} as='a'>
-												{index + 1}
-											</Menu.Item>
-										)
-									})}
-									{this.state.index + 1 < this.pagedData.length &&
-										<Menu.Item onClick={() => this.pageChange('next')} as='a' icon>
-											<Icon name='right chevron' />
-										</Menu.Item>
-									}
-								</Menu>
+								<PaginationNav currentPage={this.state.index} pagedData={this.pagedData} clickHandler={(index) => this.pageChange(index)} />
 							</Table.HeaderCell>
 						</Table.Row>
 					</Table.Footer>
@@ -209,3 +203,28 @@ class DataTable extends Component {
 export default DataTable
 
 
+class PaginationNav extends React.Component {
+	render() {
+		return (<Menu floated='right' pagination>
+			{this.props.currentPage !== 0 && this.props.pagedData.length > 1 &&
+				<Menu.Item onClick={() => this.props.clickHandler('back')} as='a' icon>
+					<Icon name='left chevron' />
+				</Menu.Item>
+			}
+			{this.props.pagedData.map((dataSet, index) => {
+				const active = index === this.props.currentPage //active is a boolean variable
+				return (
+					<Menu.Item key={index} active={active} onClick={() => this.props.clickHandler(index)} as='a'>
+						{index + 1}
+					</Menu.Item>
+				)
+			})}
+			{this.props.currentPage + 1 < this.props.pagedData.length &&
+				<Menu.Item onClick={() => this.props.clickHandler('next')} as='a' icon>
+					<Icon name='right chevron' />
+				</Menu.Item>
+			}
+		</Menu>
+		)
+	}
+}
