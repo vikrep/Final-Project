@@ -7,7 +7,7 @@ import debounce from 'lodash/debounce'
 import './DataTable.css'
 
 class DataTable extends Component {
-	defaultPageLimit = 10
+	defaultPageLimit = 5
 
 	constructor(props) {
 		super(props)
@@ -134,8 +134,8 @@ class DataTable extends Component {
 				{ content: artist, width: '4' },
 				{ content: title },
 				{ content: year, width: '1' },
-				<td width="1"><Rating icon='star' defaultRating={rating} maxRating={5}
-					size='small' disabled='true' /></td>,
+				<td width="1"><Rating icon='star' rating={rating} maxRating={5}
+					size='small' disabled /></td>,
 				{ content: id, width: '1' }
 			],
 		});
