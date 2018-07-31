@@ -1,13 +1,20 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Table, Menu, Icon, Segment, Input, Image, Rating } from 'semantic-ui-react'
+import { Table, Icon, Input, Image, Rating, Pagination, Dropdown, Segment } from 'semantic-ui-react'
 import flatten from 'lodash/flatten'
 import _ from 'lodash'
 import debounce from 'lodash/debounce'
 import './DataTable.css'
 
+
 class DataTable extends Component {
 	defaultPageLimit = 5
+	options = [
+		{ key: "1", value: '5', text: '5 per pages' },
+		{ key: "2", value: '10', text: '10 per pages' },
+		{ key: "3", value: '20', text: '20 per pages' },
+		{ key: "4", value: '50', text: '50 per pages' },
+	]
 
 	constructor(props) {
 		super(props)
@@ -23,8 +30,13 @@ class DataTable extends Component {
 			data: data[0],
 			sortedData: {},
 			column: null,
-			direction: null
+			direction: null,
+			totalPages: this.pagedData.length,
+			pageLimits: this.paginationLimit,
+
+
 		}
+		this.handleOnPerPage = this.handleOnPerPage.bind(this)
 	}
 
 	static propTypes = {
@@ -47,18 +59,29 @@ class DataTable extends Component {
 			sortedData: {},
 			column: null,
 			direction: null,
-			data: data[this.state.index]
+			data: data[this.state.index],
+			activePage: 1,
+			totalPages: this.pagedData.length,
+			pageLimits: this.paginationLimit
 		});
 	};
+
 	// Changing page table for rendering
-	pageChange = index => {
-		let newIndex = this.state.index
-		if (index === newIndex) return null
-		else if (index === 'next') newIndex++
-		else if (index === 'back') newIndex--
-		else newIndex = index
-		this.setState({ data: this.pagedData[newIndex], index: newIndex })
-	};
+	handlePaginationChange = (e, { activePage }) => {
+		let newIndex = activePage - 1
+		this.setState({ activePage: activePage, index: newIndex, data: this.pagedData[newIndex] })
+	}
+
+	handleOnPerPage = (e, data) => {
+		this.paginationLimit = parseInt(data.value, 10)
+		console.log(this.paginationLimit)
+		let newPagedData = flatten(this.pagedData)
+		this.setPagedData(newPagedData)
+		this.setState({
+			pageLimits: parseInt(data.value, 10),
+		})
+	}
+
 	// function search element - any data
 	search = (data, query) => {
 		let searchedData = data
@@ -86,7 +109,7 @@ class DataTable extends Component {
 	setPagedData = (data) => {
 		data = this.paginate(data)
 		this.pagedData = data
-		this.setState( { index: 0, data: this.pagedData[0] })
+		this.setState({ index: 0, data: this.pagedData[0], totalPages: this.pagedData.length })
 		return data
 	};
 
@@ -125,7 +148,7 @@ class DataTable extends Component {
 
 	render() {
 
-		const { column, direction } = this.state; //sort
+		const { column, direction, activePage, totalPages, } = this.state; //sort
 		// const for rendering table body
 		const renderBodyRow = ({ cover, artist, title, year, rating, id }, i) => ({
 			key: `result-row-${i}`,
@@ -159,48 +182,37 @@ class DataTable extends Component {
 			},
 			{ content: 'Rating' },
 			{ content: 'Catalog #' }
-		];
+		]
 
 		return (
 
 			<div>
-				<Segment attached='top' floated="left">
+				<Segment>
 					<Input icon='search' value={this.state.query || ''} onChange={this.onSearch} placeholder='Search...' />
 				</Segment>
-
 				<Table singleLine sortable
 					verticalAlign='middle' textAlign='center'
 					headerRow={headerRow}
 					renderBodyRow={renderBodyRow}
 					tableData={this.state.data}
 				/>
+				<Dropdown selection placeholder='Per page...'
+					onChange={this.handleOnPerPage}
+					options={this.options}
+				/>
 				{this.pagedData.length > 1 &&
-					<Table.Footer>
-						<Table.Row>
-							<Table.HeaderCell>
-								<Menu floated='right' pagination>
-									{this.state.index !== 0 && this.pagedData.length > 1 &&
-										<Menu.Item onClick={() => this.pageChange('back')} as='a' icon>
-											<Icon name='left chevron' />
-										</Menu.Item>
-									}
-									{this.pagedData.map((dataSet, index) => {
-										const active = index === this.state.index
-										return (
-											<Menu.Item key={index} active={active} onClick={() => this.pageChange(index)} as='a'>
-												{index + 1}
-											</Menu.Item>
-										)
-									})}
-									{this.state.index + 1 < this.pagedData.length &&
-										<Menu.Item onClick={() => this.pageChange('next')} as='a' icon>
-											<Icon name='right chevron' />
-										</Menu.Item>
-									}
-								</Menu>
-							</Table.HeaderCell>
-						</Table.Row>
-					</Table.Footer>
+					<Pagination
+						ActivePage={activePage}
+						defaultActivePage={1}
+						firstItem={{ content: <Icon name='angle double left' />, icon: true }}
+						lastItem={{ content: <Icon name='angle double right' />, icon: true }}
+						prevItem={{ content: <Icon name='angle left' />, icon: true }}
+						nextItem={{ content: <Icon name='angle right' />, icon: true }}
+						pointing
+						secondary
+						totalPages={totalPages}
+						onPageChange={this.handlePaginationChange}
+					/>
 				}
 			</div>
 		)
