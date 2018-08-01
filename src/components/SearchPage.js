@@ -18,13 +18,13 @@ export default class SearchPage extends Component {
                 <div id="carousel">
                     <Carousel>
                         <Carousel.Item>
-                            <img alt="1" src="/assets/1.jpg" responsive />
+                            <img alt="1" src="/assets/1.jpg" responsive="true" />
                         </Carousel.Item>
                         <Carousel.Item>
-                            <img alt="2" src="/assets/2.jpg" responsive />
+                            <img alt="2" src="/assets/2.jpg" responsive="true" />
                         </Carousel.Item>
                         <Carousel.Item>
-                            <img alt="3" src="/assets/3.jpg" responsive />
+                            <img alt="3" src="/assets/3.jpg" responsive="true" />
                         </Carousel.Item>
                     </Carousel>
                 </div>

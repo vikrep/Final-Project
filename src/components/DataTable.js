@@ -29,7 +29,6 @@ class DataTable extends Component {
 		this.state = {
 			index: 0,
 			data: data[0],
-			sortedData: {},
 			column: null,
 			direction: null,
 			totalPages: this.pagedData.length,
@@ -57,7 +56,6 @@ class DataTable extends Component {
 
 		this.setState({
 			index: 0,
-			sortedData: {},
 			column: null,
 			direction: null,
 			data: data[this.state.index],
@@ -85,12 +83,16 @@ class DataTable extends Component {
 
 	// handler show all records 
 	handleOnAllRecords = (e) => {
-		this.setState({
-			headerOn: false,
-		})
 		const data = this.paginate(this.data)
 		this.pagedData = data
-		this.setState({ index: 0, data: this.pagedData[0], totalPages: this.pagedData.length })
+		this.setState({ 
+			index: 0, 
+			data: this.pagedData[0], 
+			totalPages: this.pagedData.length,
+			headerOn: false,
+			column: null,
+			direction: null,
+		 })
 	}
 	// function search element - any data
 	search = (data, query) => {
@@ -173,35 +175,38 @@ class DataTable extends Component {
 		const renderBodyRow = ({ cover, artist, title, year, rating, id }, i) => ({
 			key: `result-row-${i}`,
 			cells: [
-				<td width="1"><Image src={cover} size='tiny' verticalAlign='middle' bordered /></td>,
+				<td key='td-row-1' width="1"><Image src={cover} size='tiny' verticalAlign='middle' bordered /></td>,
 				{ content: artist, width: '4' },
 				{ content: title },
 				{ content: year, width: '1' },
-				<td width="1"><Rating icon='star' rating={rating} maxRating={5}
+				<td  key='td-row-2'  width="1"><Rating icon='star' rating={rating} maxRating={5}
 					size='small' disabled /></td>,
 				{ content: id, width: '1' }
 			],
 		});
 		// const for rendering table header
 		const headerRow = [
-			{ content: 'Cover' },
+			{   key: 'header1', content: 'Cover' },
 			{
+				key: 'header2',
 				content: 'Artist', sorted: column === 'artist' ? direction : null,
 				onClick: this.handleSort('artist'),
 				className: column === 'artist' ? `sorted ${direction}` : `sorted ${null}`
 			},
 			{
+				key: 'header3',
 				content: 'Title', sorted: column === 'title' ? direction : null,
 				onClick: this.handleSort('title'),
 				className: column === 'title' ? `sorted ${direction}` : `sorted ${null}`
 			},
 			{
+				key: 'header4',
 				content: 'Year', sorted: column === 'year' ? direction : null,
 				onClick: this.handleSort('year'),
 				className: column === 'year' ? `sorted ${direction}` : `sorted ${null}`
 			},
-			{ content: 'Rating' },
-			{ content: 'Catalog #' }
+			{ key: 'header5', content: 'Rating' },
+			{ key: 'header6', content: 'Catalog #' }
 		]
 
 		return (
@@ -219,7 +224,7 @@ class DataTable extends Component {
 							Total records in the collection : {this.data.length}
 						</GridColumn>
 						<GridColumn verticalAlign="middle" textAlign="center">
-							<Button basic textAlign="center" onClick={this.handleOnAllRecords}>Show all records</Button>
+							<Button basic onClick={this.handleOnAllRecords}>Show all records</Button>
 						</GridColumn>
 					</Grid>
 				</Segment>
@@ -239,7 +244,7 @@ class DataTable extends Component {
 				/>
 				{this.pagedData.length > 1 &&
 					<Pagination
-						ActivePage={activePage}
+						activePage={activePage}
 						defaultActivePage={1}
 						firstItem={{ content: <Icon name='angle double left' />, icon: true }}
 						lastItem={{ content: <Icon name='angle double right' />, icon: true }}
