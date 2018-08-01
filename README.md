@@ -4,11 +4,13 @@
 
 Awesome factory line manager!
 
-[build-badge]: https://img.shields.io/travis/vikrep/final-project/master.png?style=flat-square
+[build-badge]: https://travis-ci.org/vikrep/Final-Project.svg?branch=master
 [build]: https://travis-ci.org/vikrep/final-project
 
-[coveralls-badge]: https://img.shields.io/coveralls/vikrep/final-project/master.png?style=flat-square
-[coveralls]: https://coveralls.io/github/vikrep/final-project
+[coveralls-badge]: https://coveralls.io/repos/github/vikrep/Final-Project/badge.svg?branch=masterstyle=flat-square
+[coveralls]: https://coveralls.io/github/vikrep/Final-Project?branch=master
+
+
 
 ### This is the final project for the CodeYourFuture course class 1 Manchester 2018 [codeyourfuture.io](https://codeyourfuture.io)
 
