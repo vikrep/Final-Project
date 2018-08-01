@@ -1,3 +1,15 @@
+# Factory line manager
+[![Travis][build-badge]][build]
+[![Coveralls][coveralls-badge]][coveralls]
+
+Awesome factory line manager!
+
+[build-badge]: https://img.shields.io/travis/vikrep/final-project/master.png?style=flat-square
+[build]: https://travis-ci.org/vikrep/final-project
+
+[coveralls-badge]: https://img.shields.io/coveralls/vikrep/final-project/master.png?style=flat-square
+[coveralls]: https://coveralls.io/github/vikrep/final-project
+
 ### This is the final project for the CodeYourFuture course class 1 Manchester 2018 [codeyourfuture.io](https://codeyourfuture.io)
 
 ### This project collaborated by Mahsa: ukmahjour@gmail.com , Khaled: ksawalme@gmail.com and Viktor: protsenko.viktor@gmail.com

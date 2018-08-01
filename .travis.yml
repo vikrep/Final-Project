@@ -20,3 +20,6 @@ deploy:
   api_key: "20a351e7-b49a-405e-9ec0-e5258c4cb10c"
   app: "pure-wildwood-16458"
   
+after_success:
+  - cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js
+  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js

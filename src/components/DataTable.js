@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Table, Icon, Input, Image, Rating, Pagination, Dropdown, Segment } from 'semantic-ui-react'
+import { Table, Icon, Input, Image, Rating, Pagination, Dropdown, Segment, Grid, GridColumn, Header, Button } from 'semantic-ui-react'
 import flatten from 'lodash/flatten'
 import _ from 'lodash'
 import debounce from 'lodash/debounce'
@@ -8,21 +8,22 @@ import './DataTable.css'
 
 
 class DataTable extends Component {
-	defaultPageLimit = 5
+	defaultPageLimit = 10
+	// options for pagination
 	options = [
-		{ key: "1", value: '5', text: '5 per pages' },
-		{ key: "2", value: '10', text: '10 per pages' },
-		{ key: "3", value: '20', text: '20 per pages' },
-		{ key: "4", value: '50', text: '50 per pages' },
+		{ key: "1", value: '10', text: '10 per pages' },
+		{ key: "2", value: '20', text: '20 per pages' },
+		{ key: "3", value: '50', text: '50 per pages' },
 	]
 
 	constructor(props) {
 		super(props)
-		this.originalData = props.data
-		this.data = props.data
-		this.paginationLimit = props.pageLimit || this.defaultPageLimit
 
-		const data = this.paginate(this.data)
+		this.data = props.data // input data
+
+		this.paginationLimit = this.defaultPageLimit
+		this.twentyLastRows = this.twentyLastData(this.data)
+		const data = this.paginate(this.twentyLastRows)
 		this.pagedData = data
 
 		this.state = {
@@ -33,10 +34,10 @@ class DataTable extends Component {
 			direction: null,
 			totalPages: this.pagedData.length,
 			pageLimits: this.paginationLimit,
-
-
+			headerOn: true,
 		}
 		this.handleOnPerPage = this.handleOnPerPage.bind(this)
+		this.handleOnAllRecords = this.handleOnAllRecords.bind(this)
 	}
 
 	static propTypes = {
@@ -62,7 +63,8 @@ class DataTable extends Component {
 			data: data[this.state.index],
 			activePage: 1,
 			totalPages: this.pagedData.length,
-			pageLimits: this.paginationLimit
+			pageLimits: this.paginationLimit,
+			headerOn: true
 		});
 	};
 
@@ -71,17 +73,25 @@ class DataTable extends Component {
 		let newIndex = activePage - 1
 		this.setState({ activePage: activePage, index: newIndex, data: this.pagedData[newIndex] })
 	}
-
+	// handler changing amount rows per page in the table
 	handleOnPerPage = (e, data) => {
 		this.paginationLimit = parseInt(data.value, 10)
-		console.log(this.paginationLimit)
 		let newPagedData = flatten(this.pagedData)
 		this.setPagedData(newPagedData)
 		this.setState({
 			pageLimits: parseInt(data.value, 10),
 		})
-	}
+	};
 
+	// handler show all records 
+	handleOnAllRecords = (e) => {
+		this.setState({
+			headerOn: false,
+		})
+		const data = this.paginate(this.data)
+		this.pagedData = data
+		this.setState({ index: 0, data: this.pagedData[0], totalPages: this.pagedData.length })
+	}
 	// function search element - any data
 	search = (data, query) => {
 		let searchedData = data
@@ -89,11 +99,12 @@ class DataTable extends Component {
 			const regex = new RegExp(query, 'i')
 			searchedData = data.filter(row => Object.values(row).some(prop => regex.test(prop)))
 		} else {
-			searchedData = this.originalData
+			searchedData = this.data
 			this.setState({
 				column: null,
 				direction: null,
 				index: 0,
+				headerOn: false
 			})
 		}
 		return this.setPagedData(searchedData)
@@ -105,6 +116,13 @@ class DataTable extends Component {
 		while (dataCopy.length) pages.push(dataCopy.splice(0, this.paginationLimit))
 		return pages
 	};
+
+	// function initially sliced last twenty records
+	twentyLastData = (data) => {
+		const slicedData = data.slice(-20)
+		return slicedData
+	};
+
 	// function update paged data in state
 	setPagedData = (data) => {
 		data = this.paginate(data)
@@ -118,7 +136,7 @@ class DataTable extends Component {
 	// function handler search
 	onSearch = (event, term) => {
 		this.setState(Object.assign(this.state, { query: term.value }))
-		this.debouncedSearch(flatten(this.pagedData), this.state.query)
+		this.debouncedSearch(this.data, this.state.query)
 	};
 
 	// function handler sort 
@@ -148,7 +166,9 @@ class DataTable extends Component {
 
 	render() {
 
-		const { column, direction, activePage, totalPages, } = this.state; //sort
+		const { column, direction, activePage, totalPages } = this.state; //sort
+		let totalFound = flatten(this.pagedData).length
+
 		// const for rendering table body
 		const renderBodyRow = ({ cover, artist, title, year, rating, id }, i) => ({
 			key: `result-row-${i}`,
@@ -188,14 +208,31 @@ class DataTable extends Component {
 
 			<div>
 				<Segment>
-					<Input icon='search' value={this.state.query || ''} onChange={this.onSearch} placeholder='Search...' />
+					<Grid centered columns={4} divided>
+						<GridColumn verticalAlign="middle" >
+							<Input icon='search' value={this.state.query || ''} onChange={this.onSearch} placeholder='Search...' />
+						</GridColumn>
+						<GridColumn verticalAlign="middle" textAlign="center">
+							Found in search table: {totalFound}
+						</GridColumn>
+						<GridColumn verticalAlign="middle" textAlign="center">
+							Total records in the collection : {this.data.length}
+						</GridColumn>
+						<GridColumn verticalAlign="middle" textAlign="center">
+							<Button basic textAlign="center" onClick={this.handleOnAllRecords}>Show all records</Button>
+						</GridColumn>
+					</Grid>
 				</Segment>
+				{this.state.headerOn &&
+					<Header size="medium" dividing>20 last added records</Header>
+				}
 				<Table singleLine sortable
 					verticalAlign='middle' textAlign='center'
 					headerRow={headerRow}
 					renderBodyRow={renderBodyRow}
 					tableData={this.state.data}
 				/>
+
 				<Dropdown selection placeholder='Per page...'
 					onChange={this.handleOnPerPage}
 					options={this.options}

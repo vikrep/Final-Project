@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.2.0",
+    "codecov.io": "^0.1.6",
+    "coveralls": "^3.0.2",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.10",
     "react": "^16.4.1",
@@ -18,7 +20,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --env=jsdom --coverage --collectCoverageFrom=src/**/*js --collectCoverageFrom=!src/registerServiceWorker.js",
     "eject": "react-scripts eject"
   }
 }
