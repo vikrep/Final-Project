@@ -109,6 +109,12 @@ class DataTable extends Component {
 				headerOn: false
 			})
 		}
+		this.setState({
+			column: null,
+			direction: null,
+			index: 0,
+			headerOn: false
+		})
 		return this.setPagedData(searchedData)
 	};
 	// function of partitioning table data into pages
