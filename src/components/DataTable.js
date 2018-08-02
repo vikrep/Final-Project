@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Table, Icon, Input, Image, Rating, Pagination, Dropdown, Segment, Grid, GridColumn, Header, Button } from 'semantic-ui-react'
+import { Table, Icon, Input, Image, Rating, Pagination, Dropdown, Header, Button, TableBody, TableRow, TableCell } from 'semantic-ui-react'
 import flatten from 'lodash/flatten'
 import _ from 'lodash'
 import debounce from 'lodash/debounce'
@@ -8,7 +8,8 @@ import './DataTable.css'
 
 
 class DataTable extends Component {
-	defaultPageLimit = 10
+	defaultPageLimit = 5
+
 	// options for pagination
 	options = [
 		{ key: "1", value: '10', text: '10 per pages' },
@@ -62,7 +63,7 @@ class DataTable extends Component {
 			activePage: 1,
 			totalPages: this.pagedData.length,
 			pageLimits: this.paginationLimit,
-			headerOn: true
+			headerOn: true,
 		});
 	};
 
@@ -85,14 +86,14 @@ class DataTable extends Component {
 	handleOnAllRecords = (e) => {
 		const data = this.paginate(this.data)
 		this.pagedData = data
-		this.setState({ 
-			index: 0, 
-			data: this.pagedData[0], 
+		this.setState({
+			index: 0,
+			data: this.pagedData[0],
 			totalPages: this.pagedData.length,
 			headerOn: false,
 			column: null,
 			direction: null,
-		 })
+		})
 	}
 	// function search element - any data
 	search = (data, query) => {
@@ -185,14 +186,14 @@ class DataTable extends Component {
 				{ content: artist, width: '4' },
 				{ content: title },
 				{ content: year, width: '1' },
-				<td  key='td-row-2'  width="1"><Rating icon='star' rating={rating} maxRating={5}
+				<td key='td-row-2' width="1"><Rating icon='star' rating={rating} maxRating={5}
 					size='small' disabled /></td>,
 				{ content: id, width: '1' }
 			],
 		});
 		// const for rendering table header
 		const headerRow = [
-			{   key: 'header1', content: 'Cover' },
+			{ key: 'header1', content: 'Cover' },
 			{
 				key: 'header2',
 				content: 'Artist', sorted: column === 'artist' ? direction : null,
@@ -218,22 +219,24 @@ class DataTable extends Component {
 		return (
 
 			<div>
-				<Segment>
-					<Grid centered columns={4} divided>
-						<GridColumn verticalAlign="middle" >
-							<Input icon='search' value={this.state.query || ''} onChange={this.onSearch} placeholder='Search...' />
-						</GridColumn>
-						<GridColumn verticalAlign="middle" textAlign="center">
-							Found in search table: {totalFound}
-						</GridColumn>
-						<GridColumn verticalAlign="middle" textAlign="center">
-							Total records in the collection : {this.data.length}
-						</GridColumn>
-						<GridColumn verticalAlign="middle" textAlign="center">
-							<Button basic onClick={this.handleOnAllRecords}>Show all records</Button>
-						</GridColumn>
-					</Grid>
-				</Segment>
+				<Table celled textAlign="center">
+					<TableBody>
+						<TableRow>
+							<TableCell>
+								<Input icon='search' value={this.state.query || ''} onChange={this.onSearch} placeholder='Search...' />
+							</TableCell>
+							<TableCell>
+								Found in search table: {totalFound}
+							</TableCell>
+							<TableCell>
+								Total records in the collection : {this.data.length}
+							</TableCell>
+							<TableCell>
+								<Button basic onClick={this.handleOnAllRecords}>Show all records</Button>
+							</TableCell>
+						</TableRow>
+					</TableBody>
+				</Table>
 				{this.state.headerOn &&
 					<Header size="medium" dividing>20 last added records</Header>
 				}
@@ -244,7 +247,7 @@ class DataTable extends Component {
 					tableData={this.state.data}
 				/>
 
-				<Dropdown selection placeholder='Per page...'
+				<Dropdown compact selection placeholder='Per page...'
 					onChange={this.handleOnPerPage}
 					options={this.options}
 				/>
@@ -256,6 +259,7 @@ class DataTable extends Component {
 						lastItem={{ content: <Icon name='angle double right' />, icon: true }}
 						prevItem={{ content: <Icon name='angle left' />, icon: true }}
 						nextItem={{ content: <Icon name='angle right' />, icon: true }}
+						size="mini"
 						pointing
 						secondary
 						totalPages={totalPages}
