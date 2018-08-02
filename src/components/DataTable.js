@@ -8,7 +8,7 @@ import './DataTable.css'
 
 
 class DataTable extends Component {
-	defaultPageLimit = 5
+	defaultPageLimit = 10
 
 	// options for pagination
 	options = [
