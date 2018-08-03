@@ -1,5 +1,21 @@
 [
     {
+        "cover": "/assets/200001-3.jpg",
+        "artist": "Boney M.",
+        "title": "For Dancin'",
+        "year": 2000,
+        "rating": 5,
+        "id": "200001-3"
+    },
+    {
+        "cover": "/assets/200201-2.jpg",
+        "artist": "Marcella Bella",
+        "title": "Marcella Bella",
+        "year": 2002,
+        "rating": 5,
+        "id": "200201-2"
+    },
+    {
         "cover": "/assets/eva.jpg",
         "artist": "Csepregi Éva",
         "title": "Kek Korszak",

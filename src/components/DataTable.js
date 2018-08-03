@@ -20,8 +20,7 @@ class DataTable extends Component {
 	constructor(props) {
 		super(props)
 
-		this.data = props.data // input data
-
+		this.data = props.data // input data collection
 		this.paginationLimit = this.defaultPageLimit
 		this.twentyLastRows = this.twentyLastData(this.data)
 		const data = this.paginate(this.twentyLastRows)
@@ -38,6 +37,7 @@ class DataTable extends Component {
 		}
 		this.handleOnPerPage = this.handleOnPerPage.bind(this)
 		this.handleOnAllRecords = this.handleOnAllRecords.bind(this)
+		// this.tableRowClickFunc = this.tableRowClickFunc.bind(this)
 	}
 
 	static propTypes = {
@@ -172,6 +172,9 @@ class DataTable extends Component {
 			direction: direction === 'ascending' ? 'descending' : 'ascending',
 		})
 	};
+	// tableRowClickFunc = (idrow) => {
+	// 	console.log(idrow)
+	// }
 
 	render() {
 
@@ -182,7 +185,7 @@ class DataTable extends Component {
 		const renderBodyRow = ({ cover, artist, title, year, rating, id }, i) => ({
 			key: `result-row-${i}`,
 			cells: [
-				<td key='td-row-1' width="1"><Image src={cover} size='tiny' verticalAlign='middle' bordered /></td>,
+				<td key='td-row-1' width="1" onClick={() => this.props.tableRowClickFunc(id)}><Image src={cover} size='tiny' verticalAlign='middle' bordered /></td>,
 				{ content: artist, width: '4' },
 				{ content: title },
 				{ content: year, width: '1' },

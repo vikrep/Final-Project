@@ -1,0 +1,64 @@
+[
+    {
+        "cover": "/assets/200001-3.jpg",
+        "artist": "Boney M.",
+        "title": "For Dancin'",
+        "year": 2000,
+        "rating": 5,
+        "Genre": "Electronic",
+        "Style": "Disko",
+        "Tracklist": {
+            "1": "Felicidad (Margherita) (Long Version)",
+            "2": "Strange",
+            "3": "Gadda - Da - Vida (Long Version)",
+            "4": "Children Of Paradise (Long Version)"
+        },
+        "Tracktime": {
+            "1": "11:47",
+            "2": "3:30",
+            "3": "8:55",
+            "4": "5:20"
+        },
+        "Credits": "Producer - Frank Farian",
+        "Notes": "Digital Remastering from Original Vinyl",
+
+        "id": "200001-3"
+    },
+    {
+        "cover": "/assets/200201-2.jpg",
+        "artist": "Marcella Bella",
+        "title": "Marcella Bella",
+        "year": 2002,
+        "rating": 5,
+        "Genre": "Pop",
+        "Style": "Europop",
+        "Tracklist": {
+            "1": "Canto Straniero",
+            "2": "Strange",
+            "3": "Rio De Janeiro",
+            "4": "Oh, Johnny",
+            "5": "Baciami",
+            "6": "Malinconia",
+            "7": "Pensa Per Te",
+            "8": "Una Vampata Di Te",
+            "9": "Coriandoli",
+            "10": "Cosi Piccolo"
+        },
+        "Tracktime": {
+            "1": "4:00",
+            "2": "4:15",
+            "3": "3:54",
+            "4": "3:58",
+            "5": "4:02",
+            "6": "4:45",
+            "7": "3:30",
+            "8": "3:36",
+            "9": "3:46",
+            "10": "4:34"
+        },
+        "Credits": "Arranged By – Beppe Cantarelli, Dario Baldan Bembo, Tony Mimms, Producer – Gianni Bella",
+        "Notes": "Digital Remastering from Original Vinyl",
+
+        "id": "200201-2"
+    }
+]
