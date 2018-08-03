@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Table, Icon, Input, Image, Rating, Pagination, Dropdown, Header, Button, TableBody, TableRow, TableCell } from 'semantic-ui-react'
-import flatten from 'lodash/flatten'
-import _ from 'lodash'
-import debounce from 'lodash/debounce'
+import flatten from 'lodash/flatten';
+import _ from 'lodash';
+import debounce from 'lodash/debounce';
+import DiskTable from './DiskTable';
 import './DataTable.css'
 
 
@@ -21,6 +22,7 @@ class DataTable extends Component {
 		super(props)
 
 		this.data = props.data // input data collection
+		this.disk = props.disk // input data disk
 		this.paginationLimit = this.defaultPageLimit
 		this.twentyLastRows = this.twentyLastData(this.data)
 		const data = this.paginate(this.twentyLastRows)
@@ -34,10 +36,11 @@ class DataTable extends Component {
 			totalPages: this.pagedData.length,
 			pageLimits: this.paginationLimit,
 			headerOn: true,
+			diskTable: false
 		}
 		this.handleOnPerPage = this.handleOnPerPage.bind(this)
 		this.handleOnAllRecords = this.handleOnAllRecords.bind(this)
-		// this.tableRowClickFunc = this.tableRowClickFunc.bind(this)
+		this.tableRowClickFunc = this.tableRowClickFunc.bind(this)
 	}
 
 	static propTypes = {
@@ -64,6 +67,7 @@ class DataTable extends Component {
 			totalPages: this.pagedData.length,
 			pageLimits: this.paginationLimit,
 			headerOn: true,
+			diskTable: false
 		});
 	};
 
@@ -172,9 +176,18 @@ class DataTable extends Component {
 			direction: direction === 'ascending' ? 'descending' : 'ascending',
 		})
 	};
-	// tableRowClickFunc = (idrow) => {
-	// 	console.log(idrow)
-	// }
+	tableRowClickFunc = (rowid) => {
+		console.log(rowid)
+		this.setState({
+			diskTable: true,
+		})
+	}
+	handleBack = () => {
+		console.log("Hello back")
+		this.setState({
+			diskTable: false,
+		})
+	}
 
 	render() {
 
@@ -185,13 +198,13 @@ class DataTable extends Component {
 		const renderBodyRow = ({ cover, artist, title, year, rating, id }, i) => ({
 			key: `result-row-${i}`,
 			cells: [
-				<td key='td-row-1' width="1" onClick={() => this.props.tableRowClickFunc(id)}><Image src={cover} size='tiny' verticalAlign='middle' bordered /></td>,
-				{ content: artist, width: '4' },
-				{ content: title },
-				{ content: year, width: '1' },
-				<td key='td-row-2' width="1"><Rating icon='star' rating={rating} maxRating={5}
+				<td key='td-row-1' width="1" onClick={() => this.tableRowClickFunc(id)}><Image src={cover} size='tiny' verticalAlign='middle' bordered /></td>,
+				{ content: artist, width: '4', onClick: () => this.tableRowClickFunc(id) },
+				{ content: title, onClick: () => this.tableRowClickFunc(id) },
+				{ content: year, width: '1', onClick: () => this.tableRowClickFunc(id) },
+				<td key='td-row-2' width="1" onClick={() => this.tableRowClickFunc(id)}><Rating icon='star' rating={rating} maxRating={5}
 					size='small' disabled /></td>,
-				{ content: id, width: '1' }
+				{ content: id, width: '1', onClick: () => this.tableRowClickFunc(id) }
 			],
 		});
 		// const for rendering table header
@@ -220,54 +233,59 @@ class DataTable extends Component {
 		]
 
 		return (
-
 			<div>
-				<Table celled textAlign="center">
-					<TableBody>
-						<TableRow>
-							<TableCell>
-								<Input icon='search' value={this.state.query || ''} onChange={this.onSearch} placeholder='Search...' />
-							</TableCell>
-							<TableCell>
-								Found in search table: {totalFound}
-							</TableCell>
-							<TableCell>
-								Total records in the collection : {this.data.length}
-							</TableCell>
-							<TableCell>
-								<Button basic onClick={this.handleOnAllRecords}>Show all records</Button>
-							</TableCell>
-						</TableRow>
-					</TableBody>
-				</Table>
-				{this.state.headerOn &&
-					<Header size="medium" dividing>20 last added records</Header>
-				}
-				<Table singleLine sortable
-					verticalAlign='middle' textAlign='center'
-					headerRow={headerRow}
-					renderBodyRow={renderBodyRow}
-					tableData={this.state.data}
-				/>
+				{!this.state.diskTable && 
+					<div>
+						<Table celled textAlign="center">
+							<TableBody>
+								<TableRow>
+									<TableCell>
+										<Input icon='search' value={this.state.query || ''} onChange={this.onSearch} placeholder='Search...' />
+									</TableCell>
+									<TableCell>
+										Found in search table: {totalFound}
+									</TableCell>
+									<TableCell>
+										Total records in the collection : {this.data.length}
+									</TableCell>
+									<TableCell>
+										<Button basic onClick={this.handleOnAllRecords}>Show all records</Button>
+									</TableCell>
+								</TableRow>
+							</TableBody>
+						</Table>
+						{this.state.headerOn &&
+							<Header size="medium" dividing>20 last added records</Header>
+						}
+						<Table singleLine sortable
+							verticalAlign='middle' textAlign='center'
+							headerRow={headerRow}
+							renderBodyRow={renderBodyRow}
+							tableData={this.state.data}
+						/>
 
-				<Dropdown compact selection placeholder='Per page...'
-					onChange={this.handleOnPerPage}
-					options={this.options}
-				/>
-				{this.pagedData.length > 1 &&
-					<Pagination
-						activePage={activePage}
-						defaultActivePage={1}
-						firstItem={{ content: <Icon name='angle double left' />, icon: true }}
-						lastItem={{ content: <Icon name='angle double right' />, icon: true }}
-						prevItem={{ content: <Icon name='angle left' />, icon: true }}
-						nextItem={{ content: <Icon name='angle right' />, icon: true }}
-						size="mini"
-						pointing
-						secondary
-						totalPages={totalPages}
-						onPageChange={this.handlePaginationChange}
-					/>
+						<Dropdown compact selection placeholder='Per page...'
+							onChange={this.handleOnPerPage}
+							options={this.options}
+						/>
+						{this.pagedData.length > 1 &&
+							<Pagination
+								activePage={activePage}
+								defaultActivePage={1}
+								firstItem={{ content: <Icon name='angle double left' />, icon: true }}
+								lastItem={{ content: <Icon name='angle double right' />, icon: true }}
+								prevItem={{ content: <Icon name='angle left' />, icon: true }}
+								nextItem={{ content: <Icon name='angle right' />, icon: true }}
+								pointing
+								secondary
+								totalPages={totalPages}
+								onPageChange={this.handlePaginationChange}
+							/>
+						}
+					</div>
+				}
+				{this.state.diskTable &&
+					<DiskTable diskData={this.disk} backClickFunc={this.handleBack} />
 				}
 			</div>
 		)

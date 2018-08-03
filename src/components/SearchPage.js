@@ -1,36 +1,16 @@
 import React, { Component } from 'react';
 import { Carousel } from 'react-bootstrap';
 import DataTable from './DataTable';
-import DiskTable from './DiskTable';
 import 'font-awesome/css/font-awesome.min.css';
 import fakeAlbums from '../data/fakeAlbums.json';
 import fakeDisk from '../data/fakeDisk.json';
 import './SearchPage.css';
 
 class SearchPage extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            diskTable: true,
-        }
-    }
-    handleDiskTable = (rowid) => {
-        console.log(rowid)
-        this.setState({
-            diskTable: false,
-        })
-    }
-    handleBack = () => {
-        console.log("Hello back")
-        this.setState({
-            diskTable: true,
-        })
-    }
+  
+    
     render() {
         return (
-            <div>
-                {this.state.diskTable &&
                     <div>
                         <div id="carousel">
                             <Carousel>
@@ -46,7 +26,7 @@ class SearchPage extends Component {
                             </Carousel>
                         </div>
 
-                        <DataTable data={fakeAlbums} tableRowClickFunc={this.handleDiskTable} />
+                        <DataTable data={fakeAlbums} disk={fakeDisk}  />
 
                         {/* Footer: social medias */}
 
@@ -58,11 +38,6 @@ class SearchPage extends Component {
                         </div>
 
                     </div>
-                }
-
-                <DiskTable disk={fakeDisk} backClickFunc={this.handleBack} />
-
-            </div>
         )
     }
 }
