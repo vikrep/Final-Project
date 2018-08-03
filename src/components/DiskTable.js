@@ -1,62 +1,78 @@
 import React, { Component } from 'react'
-import { Table, Image, Rating, Button, TableBody, TableRow, TableCell, Segment } from 'semantic-ui-react'
-// import './DiskTable.css'
+import { Table, Image, Rating, Button, TableBody, TableRow, TableCell, Segment, Header, Grid, List, Divider } from 'semantic-ui-react'
+
 
 class DiskTable extends Component {
 
 
     render() {
+
+        const itemContent = this.props.diskData
+        const content = this.props.diskData.tracklist
+        const time = this.props.diskData.tracktime
+       
         return (
             <div>
-               <Segment><Button basic onClick={() => this.props.backClickFunc()}>Return to the collection</Button></Segment>
+                <Segment><Button basic onClick={() => this.props.backClickFunc()}>Return to the collection</Button></Segment>
 
                 <Table>
                     <TableBody>
                         <TableRow>
                             <TableCell width="5">
-                                <Image src={this.props.diskData[0].cover} size="medium" bordered />
+                                <Image src={itemContent.cover} size="medium" bordered />
                             </TableCell>
                             <TableCell>
                                 <TableRow>
                                     <TableCell>Artist: </TableCell>
-                                    <TableCell>{this.props.diskData[0].artist}</TableCell>
+                                    <TableCell>{itemContent.artist}</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Title: </TableCell>
-                                    <TableCell>{this.props.diskData[0].title}</TableCell>
+                                    <TableCell>{itemContent.title}</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Relased: </TableCell>
-                                    <TableCell>{this.props.diskData[0].year}</TableCell>
+                                    <TableCell>{itemContent.year}</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Label: </TableCell>
-                                    <TableCell>{this.props.diskData[0].label}</TableCell>
+                                    <TableCell>{itemContent.label}</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Genre: </TableCell>
-                                    <TableCell>{this.props.diskData[0].genre}</TableCell>
+                                    <TableCell>{itemContent.genre}</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Style: </TableCell>
-                                    <TableCell>{this.props.diskData[0].style}</TableCell>
+                                    <TableCell>{itemContent.style}</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Country: </TableCell>
-                                    <TableCell>{this.props.diskData[0].country}</TableCell>
+                                    <TableCell>{itemContent.country}</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Format: </TableCell>
-                                    <TableCell>{this.props.diskData[0].format}</TableCell>
+                                    <TableCell>{itemContent.format}</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Rating: </TableCell>
-                                    <TableCell><Rating icon='star' rating={this.props.diskData[0].rating} maxRating={5} size='small' disabled /></TableCell>
+                                    <TableCell><Rating icon='star' rating={itemContent.rating} maxRating={5} size='small' disabled /></TableCell>
                                 </TableRow>
                             </TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
+                <Header size="medium" dividing>Tracklist:</Header>    
+                
+                <Grid>
+                    <Grid.Column floated='left' width={5}>
+                    <List ordered items={content} />
+                    </Grid.Column>
+                    <Grid.Column floated='left' width={5}>
+                    <List items={time} />
+                    </Grid.Column>
+                </Grid>
+                <Divider />
             </div>
         )
     }

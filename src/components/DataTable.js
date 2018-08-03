@@ -23,6 +23,7 @@ class DataTable extends Component {
 
 		this.data = props.data // input data collection
 		this.disk = props.disk // input data disk
+		this.diskData = props.disk
 		this.paginationLimit = this.defaultPageLimit
 		this.twentyLastRows = this.twentyLastData(this.data)
 		const data = this.paginate(this.twentyLastRows)
@@ -177,13 +178,14 @@ class DataTable extends Component {
 		})
 	};
 	tableRowClickFunc = (rowid) => {
-		console.log(rowid)
 		this.setState({
 			diskTable: true,
 		})
+		const data = _.find(this.diskData, function (item){
+			return item.id ===  rowid});
+		this.disk = data
 	}
 	handleBack = () => {
-		console.log("Hello back")
 		this.setState({
 			diskTable: false,
 		})
@@ -257,7 +259,7 @@ class DataTable extends Component {
 						{this.state.headerOn &&
 							<Header size="medium" dividing>20 last added records</Header>
 						}
-						<Table singleLine sortable
+						<Table singleLine sortable selectable
 							verticalAlign='middle' textAlign='center'
 							headerRow={headerRow}
 							renderBodyRow={renderBodyRow}
