@@ -1,3 +1,7 @@
+[![Travis](https://travis-ci.org/vikrep/Final-Project.svg?branch=master)](https://travis-ci.org/vikrep/Final-Project)
+[![Coverage Status](https://coveralls.io/repos/github/vikrep/Final-Project/badge.svg?branch=master)](https://coveralls.io/github/vikrep/Final-Project?branch=master)
+
+
 ### This is the final project for the CodeYourFuture course class 1 Manchester 2018 [codeyourfuture.io](https://codeyourfuture.io)
 
 ### This project collaborated by Mahsa: ukmahjour@gmail.com , Khaled: ksawalme@gmail.com and Viktor: protsenko.viktor@gmail.com

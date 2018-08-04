@@ -4,7 +4,6 @@ import './App.css';
 import {browserHistory} from 'react-router';
 
 import SearchPage from './components/SearchPage';
-import TestPage from './components/TestPage';
 import Welcome from './components/WelcomePage';
 import LoginInput from './components/LoginInput';
 import RegisterInput from './components/RegisterInput';
@@ -41,8 +40,6 @@ class App extends Component {
 
          {/* <Route path="/login" component={LoginPage} /> */}
          {/* <Route path="/asd" component={registerServiceWorker} /> */}
-
-        
       </div>
        </Router>
     );
