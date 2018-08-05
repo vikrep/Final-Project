@@ -211,27 +211,27 @@ class DataTable extends Component {
 		});
 		// const for rendering table header
 		const headerRow = [
-			{ key: 'header1', content: 'Cover' },
+			{ key: 'header-1', content: 'Cover' },
 			{
-				key: 'header2',
+				key: 'header-2',
 				content: 'Artist', sorted: column === 'artist' ? direction : null,
 				onClick: this.handleSort('artist'),
 				className: column === 'artist' ? `sorted ${direction}` : `sorted ${null}`
 			},
 			{
-				key: 'header3',
+				key: 'header-3',
 				content: 'Title', sorted: column === 'title' ? direction : null,
 				onClick: this.handleSort('title'),
 				className: column === 'title' ? `sorted ${direction}` : `sorted ${null}`
 			},
 			{
-				key: 'header4',
+				key: 'header-4',
 				content: 'Year', sorted: column === 'year' ? direction : null,
 				onClick: this.handleSort('year'),
 				className: column === 'year' ? `sorted ${direction}` : `sorted ${null}`
 			},
-			{ key: 'header5', content: 'Rating' },
-			{ key: 'header6', content: 'Catalog #' }
+			{ key: 'header-5', content: 'Rating' },
+			{ key: 'header-6', content: 'Catalog #' }
 		]
 
 		return (
