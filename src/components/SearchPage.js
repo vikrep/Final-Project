@@ -2,13 +2,55 @@ import React, { Component } from 'react';
 import { Carousel } from 'react-bootstrap';
 import DataTable from './DataTable';
 import 'font-awesome/css/font-awesome.min.css';
-import fakeAlbums from '../data/fakeAlbums.json';
-import fakeDisk from '../data/fakeDisk.json';
+// import fakeAlbums from '../data/fakeAlbums.json';
+// import fakeDisk from '../data/fakeDisk.json';
 import './SearchPage.css';
 
 class SearchPage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            fakeAlbums: [],
+            fakeDisk: [],
+            isFetched: false,
+            isLoading: false,
+            error: ''
+        }
+    }
   
-    
+    // Ajax request
+    componentDidMount() {
+		if (this.state.isFetched === false) {
+			this.setState({ isLoading: true });
+			fetch(`http://localhost:5000/api/albums`)
+				.then((response) => {
+					if (response.status >= 200 && response.status < 300) {
+						return response;
+					} else {
+						throw new Error('HTTP error');
+					}
+				})
+				.then((response) => {
+					return response.json();
+				})
+				.then((data) => {
+					this.setState({
+						fakeAlbums: data, // data.rows for local data
+						isFetched: true,
+						isLoading: false
+					});
+				})
+				.catch((err) => {
+					this.setState({
+						isLoading: false,
+						error: err.toString()
+					});
+				});
+		}
+	}
+
+
+
     render() {
         return (
                     <div>
@@ -26,7 +68,7 @@ class SearchPage extends Component {
                             </Carousel>
                         </div>
 
-                        <DataTable data={fakeAlbums} disk={fakeDisk}  />
+                        <DataTable data={this.state.fakeAlbums}  />
 
                         {/* Footer: social medias */}
 
