@@ -49,28 +49,7 @@ class DataTable extends Component {
 		pageLimit: PropTypes.number,
 	};
 
-	componentWillReceiveProps(newProps) {
-		this.data = newProps.data
-		this.renderRow = newProps.renderBodyRow
-		this.renderHeader = newProps.renderHeaderRow
-		this.columns = newProps.columns
-		this.paginationLimit = newProps.pageLimit || this.defaultPageLimit
-
-		const data = this.paginate(this.data)
-		this.pagedData = data
-
-		this.setState({
-			index: 0,
-			column: null,
-			direction: null,
-			data: data[this.state.index],
-			activePage: 1,
-			totalPages: this.pagedData.length,
-			pageLimits: this.paginationLimit,
-			headerOn: true,
-			diskTable: false
-		});
-	};
+	
 
 	// Changing page table for rendering
 	handlePaginationChange = (e, { activePage }) => {
@@ -235,9 +214,9 @@ class DataTable extends Component {
 		]
 
 		return (
-			<div>
+			<div key="wrap-key">
 				{!this.state.diskTable && 
-					<div>
+					<div key="wrap-table-key">
 						<Table celled textAlign="center">
 							<TableBody>
 								<TableRow>
