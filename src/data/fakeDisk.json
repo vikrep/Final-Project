@@ -10,18 +10,24 @@
         "format": "CDr, Album, Unofficial Release ",
         "genre": "Electronic",
         "style": "Disko",
-        "tracklist": {
-            "1": "Felicidad (Margherita) (Long Version)",
-            "2": "Strange",
-            "3": "Gadda - Da - Vida (Long Version)",
-            "4": "Children Of Paradise (Long Version)"
-        },
-        "tracktime": {
-            "1": "11:47",
-            "2": "3:30",
-            "3": "8:55",
-            "4": "5:20"
-        },
+        "tracklist": [
+            {
+                "track": "Felicidad (Margherita) (Long Version)",
+                "time": "11:47"
+            },
+            {
+                "track": "Strange",
+                "time": "3:30"
+            },
+            {
+                "track": "Gadda - Da - Vida (Long Version)",
+                "time": "8:55"
+            },
+            {
+                "track": "Children Of Paradise (Long Version)",
+                "time": "5:20"
+            }
+        ],
         "credits": "Producer - Frank Farian",
         "notes": "Digital Remastering from Original Vinyl",
         "id": "200001-3"
@@ -37,30 +43,48 @@
         "format": "CDr, Album, Unofficial Release ",
         "genre": "Pop",
         "style": "Europop",
-        "tracklist": {
-            "1": "Canto Straniero",
-            "2": "Strange",
-            "3": "Rio De Janeiro",
-            "4": "Oh, Johnny",
-            "5": "Baciami",
-            "6": "Malinconia",
-            "7": "Pensa Per Te",
-            "8": "Una Vampata Di Te",
-            "9": "Coriandoli",
-            "10": "Cosi Piccolo"
-        },
-        "tracktime": {
-            "1": "4:00",
-            "2": "4:15",
-            "3": "3:54",
-            "4": "3:58",
-            "5": "4:02",
-            "6": "4:45",
-            "7": "3:30",
-            "8": "3:36",
-            "9": "3:46",
-            "10": "4:34"
-        },
+        "tracklist": [
+            {
+                "track": "Canto Straniero",
+                "time": "4:00"
+            },
+            {
+                "track": "Strange",
+                "time": "4:15"
+            },
+            {
+                "track": "Rio De Janeiro",
+                "time": "3:54"
+            },
+            {
+                "track": "Oh, Johnny",
+                "time": "3:58"
+            },
+            {
+                "track": "Baciami",
+                "time": "4:02"
+            },
+            {
+                "track": "Malinconia",
+                "time": "4:45"
+            },
+            {
+                "track": "Pensa Per Te",
+                "time": "3:30"
+            },
+            {
+                "track": "Una Vampata Di Te",
+                "time": "3:36"
+            },
+            {
+                "track": "Coriandoli",
+                "time": "3:46"
+            },
+            {
+                "track": "Cosi Piccolo",
+                "time": "4:34"
+            }
+        ],
         "credits": "Arranged By – Beppe Cantarelli, Dario Baldan Bembo, Tony Mimms, Producer – Gianni Bella",
         "notes": "Digital Remastering from Original Vinyl",
         "id": "200201-2"

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Image, Rating, Button, TableBody, TableRow, TableCell, Segment, Header, Grid, List, Divider } from 'semantic-ui-react'
+import { Table, Image, Rating, Button, TableBody, TableRow, TableCell, Segment, Header, Divider } from 'semantic-ui-react'
 
 
 class DiskTable extends Component {
@@ -9,8 +9,16 @@ class DiskTable extends Component {
 
         const itemContent = this.props.diskData
         const content = this.props.diskData.tracklist
-        const time = this.props.diskData.tracktime
-       
+        // create row for  tracklist table
+        const renderBodyRow = ({ track, time }, i) => ({
+            key: `result-row-${i}`,
+            cells: [
+                { content: `${i+1} .` },
+                { content: track },
+                { content: time }
+            ],
+        });
+
         return (
             <div>
                 <Segment><Button basic onClick={() => this.props.backClickFunc()}>Return to the collection</Button></Segment>
@@ -62,16 +70,14 @@ class DiskTable extends Component {
                         </TableRow>
                     </TableBody>
                 </Table>
-                <Header size="medium" dividing>Tracklist:</Header>    
-                
-                <Grid>
-                    <Grid.Column floated='left' width={5}>
-                    <List ordered items={content} />
-                    </Grid.Column>
-                    <Grid.Column floated='left' width={5}>
-                    <List items={time} />
-                    </Grid.Column>
-                </Grid>
+
+                <Header size="medium" dividing>Tracklist:</Header>
+
+                <Table singleLine collapsing basic="very"
+                    textAlign='left'
+                    renderBodyRow={renderBodyRow}
+                    tableData={content}
+                />
                 <Divider />
             </div>
         )
