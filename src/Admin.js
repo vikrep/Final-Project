@@ -83,47 +83,7 @@
               });
           };
       
-          // Signs in with popup
-          google = () => {
-              let provider = new firebase.auth.GoogleAuthProvider();
-      
-              // Use redirect instead of Popup for better mobile experience
-              let promise = firebase.auth().signInWithPopup(provider);
-      
-              promise.then(result => {
-                  let user = result.user;
-                  firebase.database().ref(`users/${user.uid}`).set({
-                      email: user.email,
-                      name: user.displayName,
-                  });
-                  this.setState({err: 'You are now sign in via Google', isLoggedIn: true});
-              });
-      
-              promise.catch(e => {
-                  let msg = e.message;
-                  this.setState({err: msg});
-              })
-          };
-      
-          // Signs in with redirect
-          googleRedirect = () => {
-              let provider = new firebase.auth.GoogleAuthProvider();
-              firebase.auth().signInWithRedirect(provider);
-      
-              firebase.auth().getRedirectResult().then( result => {
-                  let user = result.user;
-                  firebase.database().ref(`users/${user.uid}`).set({
-                      email: user.email,
-                      name: user.displayName,
-                  });
-                  this.setState({err: 'You are now sign in via Google', isLoggedIn: true});
-      
-              }).catch(err => {
-                  let msg = err.message;
-                  this.setState({err: msg});
-              });
-          };
-      
+          
           render(){
               return(
                   <div>
