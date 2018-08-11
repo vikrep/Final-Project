@@ -12,8 +12,5 @@
     <script src="/static/meta.js"></script>
     <script src="/static/vendor.js"></script>
     <script src="/static/main.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
-
   </body>
-  
 </html>
