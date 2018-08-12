@@ -9,7 +9,7 @@ import './DataTable.css'
 
 
 class DataTable extends Component {
-	defaultPageLimit = 10
+	defaultPageLimit = 5
 
 	// options for pagination
 	options = [
@@ -22,12 +22,11 @@ class DataTable extends Component {
 		super(props)
 
 		this.data = props.data // input data collection
-		this.disk = props.disk // input data disk
-		this.diskData = props.disk
 		this.paginationLimit = this.defaultPageLimit
 		this.twentyLastRows = this.twentyLastData(this.data)
 		const data = this.paginate(this.twentyLastRows)
 		this.pagedData = data
+		this.disk = []
 
 		this.state = {
 			index: 0,
@@ -37,7 +36,8 @@ class DataTable extends Component {
 			totalPages: this.pagedData.length,
 			pageLimits: this.paginationLimit,
 			headerOn: true,
-			diskTable: false
+			diskTable: false,
+			titleId: ''
 		}
 		this.handleOnPerPage = this.handleOnPerPage.bind(this)
 		this.handleOnAllRecords = this.handleOnAllRecords.bind(this)
@@ -157,12 +157,14 @@ class DataTable extends Component {
 		})
 	};
 	tableRowClickFunc = (rowid) => {
-		this.setState({
-			diskTable: true,
-		})
-		const data = _.find(this.diskData, function (item){
+		const data = _.find(this.data, function (item){
 			return item.id ===  rowid});
 		this.disk = data
+		this.setState({
+			diskTable: true,
+			titleId: rowid
+		})
+		
 	}
 	handleBack = () => {
 		this.setState({
@@ -266,7 +268,7 @@ class DataTable extends Component {
 					</div>
 				}
 				{this.state.diskTable &&
-					<DiskTable diskData={this.disk} backClickFunc={this.handleBack} />
+					<DiskTable titleId={this.state.titleId} backClickFunc={this.handleBack} diskItem={this.disk} />
 				}
 			</div>
 		)
