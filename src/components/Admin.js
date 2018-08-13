@@ -11,6 +11,7 @@ import firebase from "firebase"
 //     storageBucket: "collection-69f45.appspot.com",
 //     messagingSenderId: "775971698132"
 // };
+
 let config = {
     apiKey: "AIzaSyCIINtFQvyR8V2uXTsw8Zd4wa4Oa0p5fgQ",
     authDomain: "final-project-53d92.firebaseapp.com",
@@ -45,7 +46,6 @@ class Authen extends Component {
             });
 
         });
-
 
         promise.catch(e => {
             let err = e.message;
@@ -111,7 +111,5 @@ class Authen extends Component {
         );
     }
 }
-
-
 
 export default Authen;

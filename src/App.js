@@ -4,8 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import SearchPage from './components/SearchPage';
 import Welcome from './components/WelcomePage';
-import Admin from './Admin';
-
+import Admin from './components/Admin';
 
 
 class App extends Component {
@@ -15,7 +14,7 @@ class App extends Component {
         <div>
           <Route exact path="/" component={Welcome} />
           <Route path="/search" component={SearchPage} />
-          <Route path="/Admin" component={Admin} />
+          <Route path="/admin" component={Admin} />
         </div>
       </Router>
     );
