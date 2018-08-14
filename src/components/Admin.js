@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import firebase from "firebase"
+import './Admin.css'
 
 
 // let config = {
@@ -83,31 +84,38 @@ class Authen extends Component {
         });
     };
 
-
     render() {
         return (
-            <div>
-                <input
-                    id="email"
-                    onChange={(e) => { this.setState({ email: e.target.value }) }}
-                    type="email"
-                    placeholder="Enter your email"
-                /> <br />
-                <input
-                    id="pass"
-                    onChange={(e) => { this.setState({ password: e.target.value }) }}
-                    type="password"
-                    placeholder="Enter your password"
-                /> <br />
-                <p>{this.state.err}</p>
-                <button onClick={this.login}>Login</button>
-                <button
-                    id="logout"
-                    onClick={this.logout}
-                    className={this.state.isLoggedIn ? '' : 'hide'}>Logout</button>
-                <br />
-                <img alt="3" src="/assets/3.jpg" responsive="true" />
-            </div>
+            // <div className="backg">
+                <div class="container backg">
+                    <div class="row">
+                        <div class="Absolute-Center is-Responsive">
+                            <div class="col-sm-12 col-md-10 col-md-offset-1">
+                                <form action="" >
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                        <input class="form-control" name='username' id="email"
+                                            onChange={(e) => { this.setState({ email: e.target.value }) }}
+                                            type="email"
+                                            placeholder="Enter your email" />
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                        <input class="form-control" name='password' id="pass"
+                                            onChange={(e) => { this.setState({ password: e.target.value }) }}
+                                            type="password"
+                                            placeholder="Enter your password" />
+                                    </div>
+                                    <div class="form-group">
+                                        <p>{this.state.err}</p>
+                                        <button type="button" class="btn btn-def btn-block btn-dark login" onClick={this.login}>Login</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            // </div>
         );
     }
 }
