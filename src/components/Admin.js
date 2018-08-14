@@ -1,16 +1,14 @@
-
 import React, { Component } from 'react';
 import firebase from "firebase"
 import './Admin.css'
 
-
 // let config = {
-//     apiKey: "AIzaSyAjBd4hamvW4AsYwymdJOE5Tiw2BHlLZLQ",
-//     authDomain: "collection-69f45.firebaseapp.com",
-//     databaseURL: "https://collection-69f45.firebaseio.com",
-//     projectId: "collection-69f45",
-//     storageBucket: "collection-69f45.appspot.com",
-//     messagingSenderId: "775971698132"
+// apiKey: "AIzaSyAjBd4hamvW4AsYwymdJOE5Tiw2BHlLZLQ",
+// authDomain: "collection-69f45.firebaseapp.com",
+// databaseURL: "https://collection-69f45.firebaseio.com",
+// projectId: "collection-69f45",
+// storageBucket: "collection-69f45.appspot.com",
+// messagingSenderId: "775971698132"
 // };
 
 let config = {
@@ -87,34 +85,34 @@ class Authen extends Component {
     render() {
         return (
             // <div className="backg">
-                <div class="container backg">
-                    <div class="row">
-                        <div class="Absolute-Center is-Responsive">
-                            <div class="col-sm-12 col-md-10 col-md-offset-1">
-                                <form action="" >
-                                    <div class="form-group input-group">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                        <input class="form-control" name='username' id="email"
-                                            onChange={(e) => { this.setState({ email: e.target.value }) }}
-                                            type="email"
-                                            placeholder="Enter your email" />
-                                    </div>
-                                    <div class="form-group input-group">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                        <input class="form-control" name='password' id="pass"
-                                            onChange={(e) => { this.setState({ password: e.target.value }) }}
-                                            type="password"
-                                            placeholder="Enter your password" />
-                                    </div>
-                                    <div class="form-group">
-                                        <p>{this.state.err}</p>
-                                        <button type="button" class="btn btn-def btn-block btn-dark login" onClick={this.login}>Login</button>
-                                    </div>
-                                </form>
-                            </div>
+            <div class="container backg">
+                <div class="row">
+                    <div class="Absolute-Center is-Responsive">
+                        <div class="col-sm-12 col-md-10 col-md-offset-1">
+                            <form action="" >
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <input class="form-control" name='username' id="email"
+                                        onChange={(e) => { this.setState({ email: e.target.value }) }}
+                                        type="email"
+                                        placeholder="Enter your email" />
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                    <input class="form-control" name='password' id="pass"
+                                        onChange={(e) => { this.setState({ password: e.target.value }) }}
+                                        type="password"
+                                        placeholder="Enter your password" />
+                                </div>
+                                <div class="form-group">
+                                    <p>{this.state.err}</p>
+                                    <button type="button" class="btn btn-def btn-block btn-dark login" onClick={this.login}>Login</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
+            </div>
             // </div>
         );
     }
