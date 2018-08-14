@@ -40,7 +40,11 @@ class Authen extends Component {
             this.setState({ err: message, isLoggedIn: true });
             firebase.auth().onAuthStateChanged(user => {
                 if (user) {
-                    window.location = 'search'; //After successful login, user will be redirected to search
+                    this.props.onLogin({
+                        username: this.state.email,
+                        password: this.state.password
+                    });
+                    // window.location = 'input'; //After successful login, user will be redirected to search
                 }
             });
 
