@@ -182,7 +182,7 @@ class DataTable extends Component {
 			key: `result-row-${i}`,
 			cells: [
 				<td key='td-row-1' width="1" onClick={() => this.tableRowClickFunc(id)}><Image src={cover} size='tiny' verticalAlign='middle' bordered /></td>,
-				{ content: artist, width: '4', onClick: () => this.tableRowClickFunc(id) },
+				{ content: artist, width: '4',  onClick: () => this.tableRowClickFunc(id) },
 				{ content: title, onClick: () => this.tableRowClickFunc(id) },
 				{ content: year, width: '1', onClick: () => this.tableRowClickFunc(id) },
 				<td key='td-row-2' width="1" onClick={() => this.tableRowClickFunc(id)}><Rating icon='star' rating={rating} maxRating={5}
