@@ -5,10 +5,8 @@ import './App.css';
 import SearchPage from './components/SearchPage';
 import Welcome from './components/WelcomePage';
 import Admin from './components/Admin';
-import HeaderCarusel from './components/HeaderCarusel';
-import DataTable from './components/DataTable';
-import DiskTable from './components/DiskTable'
-import FooterMedia from './components/FooterMedia'
+
+
 
 class App extends Component {
   render() {
@@ -16,7 +14,7 @@ class App extends Component {
       <Router>
 
         <div className="app">
-          <HeaderCarusel />
+       
 
           <div className="content">
             <Route exact path="/" component={Welcome} />
@@ -24,7 +22,7 @@ class App extends Component {
             <Route path="/admin" component={Admin} />
           </div>
 
-          <FooterMedia />
+
         </div>
       </Router>
     );

@@ -3,6 +3,8 @@ import DataTable from './DataTable';
 import { Loader, Dimmer } from 'semantic-ui-react'
 import 'font-awesome/css/font-awesome.min.css';
 import './SearchPage.css';
+import HeaderCarusel from './HeaderCarusel'
+import FooterMedia from './FooterMedia'
 
 class SearchPage extends Component {
     constructor(props) {
@@ -63,9 +65,11 @@ class SearchPage extends Component {
             } else {
                 return (
                     <div>
-
-                        <DataTable data={this.state.fakeAlbums} />
-
+                        <HeaderCarusel />
+                        <div className="tadleData">
+                            <DataTable data={this.state.fakeAlbums} />
+                        </div>
+                        <FooterMedia />
                     </div>
                 )
             }
