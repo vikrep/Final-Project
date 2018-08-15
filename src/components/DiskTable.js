@@ -16,7 +16,7 @@ class DiskTable extends Component {
         }
     }
 
-    // https://fierce-refuge-31884.herokuapp.com/api/disk/:id  Heroku API URL
+    // https://fierce-refuge-31884.herokuapp.com/api/disk/${this.state.titleId}  Heroku API URL
     // http://localhost:5000/api/disk/${this.state.titleId} localhost
 
    
@@ -24,7 +24,7 @@ class DiskTable extends Component {
     componentDidMount() {
         if (this.state.isFetched === false) {
             this.setState({ isLoading: true });
-            fetch(`https://fierce-refuge-31884.herokuapp.com/api/disk/:id`) // fetch from Heroku database
+            fetch(`https://fierce-refuge-31884.herokuapp.com/api/disk/${this.state.titleId}`) // fetch from Heroku database
                 .then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
