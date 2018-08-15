@@ -1,28 +1,30 @@
 import React, { Component } from 'react'
-import { Table, Image, Rating, Button, TableBody, TableRow, TableCell, Segment, Header, Divider } from 'semantic-ui-react'
+import { Table, Image, Rating, TableBody, TableRow, TableCell, Header, Divider } from 'semantic-ui-react'
 
 
 class DiskTable extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
+        
         this.state = {
-            titleId: props.titleId,
+            titleId: props.match.params.id,
             diskData: [],
+            diskItem: [],
             isFetched: false,
             isLoading: false,
-            error: '',
-            diskItem: props.diskItem
+            error: ''
         }
     }
 
-// https://fierce-refuge-31884.herokuapp.com/api/disk/:id  Heroku API URL
-// http://localhost:5000/api/disk/${this.state.titleId} localhost
+    // https://fierce-refuge-31884.herokuapp.com/api/disk/:id  Heroku API URL
+    // http://localhost:5000/api/disk/${this.state.titleId} localhost
 
-// Ajax request
+   
+    // Ajax request
     componentDidMount() {
         if (this.state.isFetched === false) {
             this.setState({ isLoading: true });
-            fetch(`https://fierce-refuge-31884.herokuapp.com/api/disk/${this.state.titleId}`) // fetch from Heroku database
+            fetch(`http://localhost:5000/api/disk/${this.state.titleId}`) // fetch from Heroku database
                 .then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -34,8 +36,10 @@ class DiskTable extends Component {
                     return response.json();
                 })
                 .then((data) => {
+                    console.log(data[0].cover)
                     this.setState({
-                        diskData: data, // data.rows for local data
+                        diskData: data,  // data.rows for local data
+                        diskItem: data[0],
                         isFetched: true,
                         isLoading: false
                     });
@@ -55,15 +59,14 @@ class DiskTable extends Component {
         const renderBodyRow = ({ track, time }, i) => ({
             key: `result-row-${i}`,
             cells: [
-                { content: `${i+1} .` },
+                { content: `${i + 1} .` },
                 { content: track },
                 { content: time }
             ],
         });
-
+        
         return (
             <div>
-                <Segment><Button basic onClick={() => this.props.backClickFunc()}>Return to the collection</Button></Segment>
 
                 <Table>
                     <TableBody>

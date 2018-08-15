@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import DataTable from './DataTable';
+import { Route, Switch } from 'react-router-dom';
 import { Loader, Dimmer } from 'semantic-ui-react'
 import 'font-awesome/css/font-awesome.min.css';
 import './SearchPage.css';
-import HeaderCarusel from './HeaderCarusel'
-import FooterMedia from './FooterMedia'
+import HeaderCarusel from './HeaderCarusel';
+import FooterMedia from './FooterMedia';
+import DataTable from './DataTable';
+import DiskTable from './DiskTable';
 
 class SearchPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             fakeAlbums: [],
-            fakeDisk: [],
             isFetched: false,
             isLoading: false,
             error: ''
@@ -20,11 +21,12 @@ class SearchPage extends Component {
     // https://fierce-refuge-31884.herokuapp.com/api/albums  heroku API URL
     // http://localhost:5000/api/albums localhost
 
+
     // Ajax request
     componentDidMount() {
         if (this.state.isFetched === false) {
             this.setState({ isLoading: true });
-            fetch(`https://fierce-refuge-31884.herokuapp.com/api/albums`) // fetch from Heroku database
+            fetch(`http://localhost:5000/api/albums`) // fetch from Heroku database
                 .then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -66,9 +68,10 @@ class SearchPage extends Component {
                 return (
                     <div>
                         <HeaderCarusel />
-                        <div className="tadleData">
-                            <DataTable data={this.state.fakeAlbums} />
-                        </div>
+                        <Switch>
+                            <Route exact path="/search/" render={props => <DataTable data={this.state.fakeAlbums} />} />
+                            <Route path="/search/:id" component={DiskTable} />} />
+                        </Switch>
                         <FooterMedia />
                     </div>
                 )

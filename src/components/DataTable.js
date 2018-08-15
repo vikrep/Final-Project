@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Table, Icon, Input, Image, Rating, Pagination, Dropdown, Header, Button, TableBody, TableRow, TableCell } from 'semantic-ui-react'
 import flatten from 'lodash/flatten';
 import _ from 'lodash';
 import debounce from 'lodash/debounce';
-import DiskTable from './DiskTable';
 import './DataTable.css'
 
 
@@ -36,20 +36,15 @@ class DataTable extends Component {
 			totalPages: this.pagedData.length,
 			pageLimits: this.paginationLimit,
 			headerOn: true,
-			diskTable: false,
-			titleId: ''
 		}
 		this.handleOnPerPage = this.handleOnPerPage.bind(this)
 		this.handleOnAllRecords = this.handleOnAllRecords.bind(this)
-		this.tableRowClickFunc = this.tableRowClickFunc.bind(this)
 	}
 
 	static propTypes = {
 		data: PropTypes.arrayOf(PropTypes.object).isRequired,
 		pageLimit: PropTypes.number,
 	};
-
-	
 
 	// Changing page table for rendering
 	handlePaginationChange = (e, { activePage }) => {
@@ -156,21 +151,6 @@ class DataTable extends Component {
 			direction: direction === 'ascending' ? 'descending' : 'ascending',
 		})
 	};
-	tableRowClickFunc = (rowid) => {
-		const data = _.find(this.data, function (item){
-			return item.id ===  rowid});
-		this.disk = data
-		this.setState({
-			diskTable: true,
-			titleId: rowid
-		})
-		
-	}
-	handleBack = () => {
-		this.setState({
-			diskTable: false,
-		})
-	}
 
 	render() {
 
@@ -180,15 +160,16 @@ class DataTable extends Component {
 		// const for rendering table body
 		const renderBodyRow = ({ cover, artist, title, year, rating, id }, i) => ({
 			key: `result-row-${i}`,
+
 			cells: [
-				<td key='td-row-1' width="1" onClick={() => this.tableRowClickFunc(id)}><Image src={cover} size='tiny' verticalAlign='middle' bordered /></td>,
-				{ content: artist, width: '4',  onClick: () => this.tableRowClickFunc(id) },
+				<td key='td-row-1' width="1"><Link to={`/search/${id}`}><Image src={cover} size='tiny' verticalAlign='middle' bordered /></Link></td>,
+				{ content: artist, width: '4', onClick: () => this.tableRowClickFunc(id) },
 				{ content: title, onClick: () => this.tableRowClickFunc(id) },
 				{ content: year, width: '1', onClick: () => this.tableRowClickFunc(id) },
 				<td key='td-row-2' width="1" onClick={() => this.tableRowClickFunc(id)}><Rating icon='star' rating={rating} maxRating={5}
 					size='small' disabled /></td>,
 				{ content: id, width: '1', onClick: () => this.tableRowClickFunc(id) }
-			],
+			]
 		});
 		// const for rendering table header
 		const headerRow = [
@@ -217,7 +198,7 @@ class DataTable extends Component {
 
 		return (
 			<div key="wrap-key">
-				{!this.state.diskTable && 
+				{!this.state.diskTable &&
 					<div key="wrap-table-key">
 						<Table celled textAlign="center">
 							<TableBody>
@@ -267,9 +248,7 @@ class DataTable extends Component {
 						}
 					</div>
 				}
-				{this.state.diskTable &&
-					<DiskTable titleId={this.state.titleId} backClickFunc={this.handleBack} diskItem={this.disk} />
-				}
+
 			</div>
 		)
 	}
