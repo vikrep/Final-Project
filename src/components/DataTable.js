@@ -180,19 +180,19 @@ class DataTable extends Component {
 			{ key: 'header-1', content: 'Cover' },
 			{
 				key: 'header-2',
-				content: 'Artist', sorted: column === 'artist' ? direction : null,
+				content: 'Artist ⧫', sorted: column === 'artist' ? direction : null,
 				onClick: this.handleSort('artist'),
 				className: column === 'artist' ? `sorted ${direction}` : `sorted ${null}`
 			},
 			{
 				key: 'header-3',
-				content: 'Title', sorted: column === 'title' ? direction : null,
+				content: 'Title ⧫', sorted: column === 'title' ? direction : null,
 				onClick: this.handleSort('title'),
 				className: column === 'title' ? `sorted ${direction}` : `sorted ${null}`
 			},
 			{
 				key: 'header-4',
-				content: 'Year', sorted: column === 'year' ? direction : null,
+				content: 'Year ⧫', sorted: column === 'year' ? direction : null,
 				onClick: this.handleSort('year'),
 				className: column === 'year' ? `sorted ${direction}` : `sorted ${null}`
 			},
@@ -217,13 +217,15 @@ class DataTable extends Component {
 										Total records in the collection : {this.data.length}
 									</TableCell>
 									<TableCell>
+										<div className="showAll">
 										<Button basic onClick={this.handleOnAllRecords}>Show all records</Button>
+										</div>
 									</TableCell>
 								</TableRow>
 							</TableBody>
 						</Table>
 						{this.state.headerOn &&
-							<Header size="medium" dividing>20 last added records</Header>
+							<Header size="medium" >20 last added records</Header>
 						}
 						<Table singleLine sortable selectable
 							verticalAlign='middle' textAlign='center'

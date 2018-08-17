@@ -66,7 +66,7 @@ class SearchPage extends Component {
                 </Dimmer>;
             } else {
                 return (
-                    <div>
+                    <div class="backgro">
                         <HeaderCarusel />
                         <Switch>
                             <Route exact path="/search/" render={props => <DataTable data={this.state.fakeAlbums} {...props} />} />

@@ -1,6 +1,9 @@
 .table>tbody>tr>td {
     vertical-align: middle;
 }
+body{
+  font-family: 'Josefin Sans', sans-serif;
+}
 .ui.tiny.image,
 .ui.tiny.images
 .image, 
@@ -20,4 +23,20 @@
     user-select: none;
     cursor: pointer;
   }
-  
+  .showAll > .ui.basic.button{
+    color:black !important;
+    font-weight:600;
+    border:1px solid black;
+    font-style: oblique;
+    
+  }
+  .ui.celled.table tr td, .ui.celled.table tr th{
+    font-weight:600;
+    font-family: 'Do Hyeon', sans-serif; 
+  }
+  .ui.sortable.table thead th.sorted {
+    background: white;
+}
+.ui.table thead th{
+  background: white;
+}

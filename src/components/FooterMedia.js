@@ -9,7 +9,7 @@ class FooterMedia extends Component {
     render() {
         return (
             <div className="social">
-                <Divider />
+                {/* <Divider /> */}
                 <a href="http://www.google.com"><i className="fa fa-skype fa-2x skype"></i></a>
                 <a href="http://www.google.com"><i className="fa fa-envelope fa-2x gmail"></i></a>
                 <a href="http://www.google.com"><i className="fa fa-facebook-square fa-2x facebook"></i> </a>

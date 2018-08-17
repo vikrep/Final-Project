@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Table, Image, Rating, TableBody, TableRow, TableCell, Header, Divider } from 'semantic-ui-react'
-
+import './DiskTable.css'
 
 class DiskTable extends Component {
     constructor(props) {
@@ -66,7 +66,7 @@ class DiskTable extends Component {
         });
         
         return (
-            <div>
+            <div class="backgr">
 
                 <Table>
                     <TableBody>
@@ -76,7 +76,7 @@ class DiskTable extends Component {
                             </TableCell>
                             <TableCell>
                                 <TableRow>
-                                    <TableCell>Artist: </TableCell>
+                                    <TableCell className="headz">Artist: </TableCell>
                                     <TableCell>{this.state.diskItem.artist}</TableCell>
                                 </TableRow>
                                 <TableRow>
@@ -123,7 +123,7 @@ class DiskTable extends Component {
                     renderBodyRow={renderBodyRow}
                     tableData={this.state.diskData}
                 />
-                <Divider />
+                {/* <Divider /> */}
             </div>
         )
     }
