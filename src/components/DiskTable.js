@@ -36,7 +36,6 @@ class DiskTable extends Component {
                     return response.json();
                 })
                 .then((data) => {
-                    console.log(data[0].cover)
                     this.setState({
                         diskData: data,  // data.rows for local data
                         diskItem: data[0],
