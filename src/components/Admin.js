@@ -88,28 +88,28 @@ class Authen extends Component {
 
     render() {
         return (
-            <div class="container backg">
-                <div class="row">
-                    <div class="Absolute-Center is-Responsive">
-                        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <div className="container backg">
+                <div className="row">
+                    <div className="Absolute-Center is-Responsive">
+                        <div className="col-sm-12 col-md-10 col-md-offset-1">
                             <form action="" >
-                                <div class="form-group input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <input class="form-control" name='username' id="email"
+                                <div className="form-group input-group">
+                                    <span className="input-group-addon"><i className="glyphicon glyphicon-user"></i></span>
+                                    <input className="form-control" name='username' id="email"
                                         onChange={(e) => { this.setState({ email: e.target.value }) }}
                                         type="email"
                                         placeholder="Enter your email" />
                                 </div>
-                                <div class="form-group input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                    <input class="form-control" name='password' id="pass"
+                                <div className="form-group input-group">
+                                    <span className="input-group-addon"><i className="glyphicon glyphicon-lock"></i></span>
+                                    <input className="form-control" name='password' id="pass"
                                         onChange={(e) => { this.setState({ password: e.target.value }) }}
                                         type="password"
                                         placeholder="Enter your password" />
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <p>{this.state.err}</p>
-                                    <button type="button" class="btn btn-def btn-block btn-dark login" onClick={this.login}>Login</button>
+                                    <button type="button" className="btn btn-def btn-block btn-dark login" onClick={this.login}>Login</button>
                                 </div>
                             </form>
                         </div>

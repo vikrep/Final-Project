@@ -5,7 +5,6 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.2.0",
     "aws-amplify": "^1.0.2",
-    "axios": "^0.18.0",
     "codecov.io": "^0.1.6",
     "config": "^2.0.0",
     "coveralls": "^3.0.2",
@@ -15,6 +14,7 @@
     "react": "^16.4.1",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.4.1",
+    "react-dropzone": "^5.0.1",
     "react-form-material-ui": "^1.2.0",
     "react-router": "^3.2.1",
     "react-router-dom": "^4.3.1",
