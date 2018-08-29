@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'font-awesome/css/font-awesome.min.css';
-import './FooterMedia.css';
+import './styles/FooterMedia.css';
 import { Divider } from 'semantic-ui-react'
 
 

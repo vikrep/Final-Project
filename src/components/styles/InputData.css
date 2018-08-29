@@ -1,0 +1,28 @@
+body {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto
+  }
+
+.table-header-align-right{
+  text-align: right;  
+}
+.dropzone-cell{
+    position: relative;
+    width: auto;
+    height: auto;
+    border-width: 2px;
+    border-color: rgb(79, 102, 238);
+    border-style: dashed;
+    border-radius: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+.dropzone-cell-div{
+display: block;
+padding: 10px;
+}
+h2,h3,h4{
+    margin: 0px;
+    padding: 5px;
+}

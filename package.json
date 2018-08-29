@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.2.0",
-    "aws-amplify": "^1.0.2",
+    "axios": "^0.18.0",
     "codecov.io": "^0.1.6",
     "config": "^2.0.0",
     "coveralls": "^3.0.2",
@@ -23,6 +23,7 @@
     "semantic-ui": "^2.3.3",
     "semantic-ui-css": "^2.3.3",
     "semantic-ui-react": "^0.82.1",
+    "superagent": "^3.8.3",
     "validator": "^10.4.0"
   },
   "scripts": {

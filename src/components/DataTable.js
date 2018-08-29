@@ -4,7 +4,7 @@ import { Table, Icon, Input, Image, Rating, Pagination, Dropdown, Header, Button
 import flatten from 'lodash/flatten';
 import _ from 'lodash';
 import debounce from 'lodash/debounce';
-import './DataTable.css'
+import './styles/DataTable.css'
 
 
 class DataTable extends Component {

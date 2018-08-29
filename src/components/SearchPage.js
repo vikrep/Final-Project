@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Loader, Dimmer } from 'semantic-ui-react'
 import 'font-awesome/css/font-awesome.min.css';
-import './SearchPage.css';
+import './styles/SearchPage.css';
 import HeaderCarusel from './HeaderCarusel';
 import FooterMedia from './FooterMedia';
 import DataTable from './DataTable';

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Jumbotron, Button } from "react-bootstrap";
-import "./WelcomePage.css";
+import "./styles/WelcomePage.css";
 
 export default class WelcomePage extends Component {
     render() {

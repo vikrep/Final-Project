@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import firebase from "firebase"
-import './Admin.css'
+import './styles/Admin.css'
 
 // let config = {
 // apiKey: "AIzaSyAjBd4hamvW4AsYwymdJOE5Tiw2BHlLZLQ",

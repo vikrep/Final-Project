@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Carousel } from 'react-bootstrap';
 import 'font-awesome/css/font-awesome.min.css';
-import './HeaderCarusel.css';
+import './styles/HeaderCarusel.css';
 
 class HeaderCarusel extends Component {
 
