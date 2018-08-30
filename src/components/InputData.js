@@ -20,7 +20,8 @@ class InputData extends Component {
       format: '',
       genre: '',
       style: '',
-      credits: ''
+      credits: '',
+      notes: ''
     };
   }
 
@@ -49,7 +50,7 @@ class InputData extends Component {
         title: this.state.title, year: this.state.year, rating: this.state.rating,
         id: this.state.id, country: this.state.country, label: this.state.label,
         format: this.state.format, genre: this.state.genre, style: this.state.style,
-        credits: this.state.credits
+        credits: this.state.credits, notes: this.state.notes
       })
       .end((err, res) => {
         if (err) console.log(err);
@@ -137,8 +138,15 @@ class InputData extends Component {
                   <Form.Group unstackable widths='3'>
                     <Form.Input label='Genre' placeholder='Genre' width='3' name='genre' onChange={this.handleChange} />
                     <Form.Input label='Style' placeholder='Style' width='3' name='style' onChange={this.handleChange} />
-                    <Form.Input label='Credits' placeholder='Credits' width='10' name='credits' onChange={this.handleChange} />
+                    <Form.Input label='Notes' placeholder='Notes' width='10' name='notes' onChange={this.handleChange} />
                   </Form.Group>
+                </Form>
+              </TableCell>
+            </TableRow>
+            <TableRow key="credits">
+              <TableCell>
+                <Form>
+                  <Form.Input label='Credits' placeholder='Credits' widths='equal' name='credits' onChange={this.handleChange} />
                 </Form>
               </TableCell>
             </TableRow>
