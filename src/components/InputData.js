@@ -42,7 +42,7 @@ class InputData extends Component {
     this.setState({ imageUrl: `https://s3.eu-west-2.amazonaws.com/diskcovers/${this.state.files[0].name}` })
   }
   handleOnSubmitForm = (event) => {
-    upload.post('http://localhost:5000/upload/form')
+    upload.post('https://fierce-refuge-31884.herokuapp.com/upload/form')
       .type('form')
       .send({
         cover: this.state.imageUrl, artist: this.state.artist,
