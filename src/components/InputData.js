@@ -29,6 +29,13 @@ class InputData extends Component {
 
   handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
+  handleKeyPressLoad = (target) => {
+    if(target.charCode === 13){
+      console.log("target", target.charCode)
+      this.handleOnLoadRecord()
+    }
+  } 
+
   onDrop = (files) => {
     this.setState({ files });
   }
@@ -85,19 +92,19 @@ class InputData extends Component {
   }
 
   handleOnUpdateRecord = (event) => {
-        superagent.put(`https://fierce-refuge-31884.herokuapp.com/loadrecord`)
-        .type('form')
-        .send({
-          cover: this.state.imageUrl, artist: this.state.artist,
-          title: this.state.title, year: this.state.year, rating: this.state.rating,
-          id: this.state.id, country: this.state.country, label: this.state.label,
-          format: this.state.format, genre: this.state.genre, style: this.state.style,
-          credits: this.state.credits, notes: this.state.notes
-        })
-        .end((err, res) => {
-          if (err) console.log(err);
-          alert(`Record ${this.state.id} updated!`);
-        })
+    superagent.put(`https://fierce-refuge-31884.herokuapp.com/loadrecord`)
+      .type('form')
+      .send({
+        cover: this.state.imageUrl, artist: this.state.artist,
+        title: this.state.title, year: this.state.year, rating: this.state.rating,
+        id: this.state.id, country: this.state.country, label: this.state.label,
+        format: this.state.format, genre: this.state.genre, style: this.state.style,
+        credits: this.state.credits, notes: this.state.notes
+      })
+      .end((err, res) => {
+        if (err) console.log(err);
+        alert(`Record ${this.state.id} updated!`);
+      })
   }
 
   handleOnDeleteRecord = (event) => {
@@ -151,18 +158,22 @@ class InputData extends Component {
         </Table>
         <Table>
           <TableHeader>
-            <TableRow key='button-top'>
+            <TableRow key='button-header'>
               <TableHeaderCell>
-                <Input placeholder='Enter record by Catalog#' name='idrecord' onChange={this.handleChange} value={this.state.idrecord} />
+                <Input placeholder='Enter record by Catalog#' name='idrecord' onKeyPress={this.handleKeyPressLoad} onChange={this.handleChange} value={this.state.idrecord} />
                 <Button color='grey' onClick={this.handleOnLoadRecord}>Load record</Button>
-                <Button floated='right' color="green" onClick={this.handleOnSubmitForm}>Submit Form</Button>
-                <Button floated='right' color='blue'>Save Draft</Button>
                 <Button floated='right' color='red' onClick={this.handleOnDeleteRecord}>Delete record</Button>
                 <Button floated='right' color='olive' onClick={this.handleOnUpdateRecord}>Update record</Button>
               </TableHeaderCell>
             </TableRow>
           </TableHeader>
           <TableBody>
+            <TableRow key='button-top'>
+              <TableCell>
+                <Button floated='right' color="green" onClick={this.handleOnSubmitForm}>Submit Form</Button>
+                <Button floated='right' color='blue'>Save Draft Form</Button>
+              </TableCell>
+            </TableRow>
             <TableRow key="artist-title">
               <TableCell>
                 <Form>

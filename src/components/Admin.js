@@ -30,6 +30,12 @@ class Authen extends Component {
         isLoggedIn: false,
     };
 
+    handleKeyPress = (target) => {
+        if(target.charCode === 13){
+          this.login()
+        };
+      } ;
+
     login = () => {
         const email = this.state.email;
         const password = this.state.password;
@@ -56,36 +62,7 @@ class Authen extends Component {
         })
     };
 
-    signup = () => {
-        const email = this.state.email;
-        const password = this.state.password;
-        const auth = firebase.auth();
-        const promise = auth.createUserWithEmailAndPassword(email, password);
-
-        promise
-            .then(user => {
-                let err = `Welcome ${user.email}`;
-                firebase.database().ref(`users/${user.uid}`).set({
-                    email: user.email,
-                });
-                this.setState({ err });
-            })
-            .catch(e => {
-                let err = e.message;
-                this.setState({ err });
-            });
-    };
-
-    logout = () => {
-        let promise = firebase.auth().signOut();
-        promise.then(() => {
-            let message = 'You are now logged out!';
-            this.setState({ err: message, isLoggedIn: false });
-        }).catch(err => {
-            this.setState({ err: err.message });
-        });
-    };
-
+    
     render() {
         return (
             <div className="container backg">
@@ -105,7 +82,7 @@ class Authen extends Component {
                                     <input className="form-control" name='password' id="pass"
                                         onChange={(e) => { this.setState({ password: e.target.value }) }}
                                         type="password"
-                                        placeholder="Enter your password" />
+                                        placeholder="Enter your password" onKeyPress={this.handleKeyPress} />
                                 </div>
                                 <div className="form-group">
                                     <p>{this.state.err}</p>
