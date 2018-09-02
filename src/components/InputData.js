@@ -85,8 +85,7 @@ class InputData extends Component {
   }
 
   handleOnUpdateRecord = (event) => {
-    if (!this.state.id) {
-      superagent.put(`https://fierce-refuge-31884.herokuapp.com/loadrecord`)
+        superagent.put(`https://fierce-refuge-31884.herokuapp.com/loadrecord`)
         .type('form')
         .send({
           cover: this.state.imageUrl, artist: this.state.artist,
@@ -99,7 +98,6 @@ class InputData extends Component {
           if (err) console.log(err);
           alert(`Record ${this.state.id} updated!`);
         })
-    } else { alert('Catalog# is required!') }
   }
 
   handleOnDeleteRecord = (event) => {
