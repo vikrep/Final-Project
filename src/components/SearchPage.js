@@ -26,7 +26,7 @@ class SearchPage extends Component {
     componentDidMount() {
         if (this.state.isFetched === false) {
             this.setState({ isLoading: true });
-            fetch(`https://fierce-refuge-31884.herokuapp.com/api/albums `) // fetch from Heroku database
+            fetch(`https://fierce-refuge-31884.herokuapp.com/api/albums`) // fetch from Heroku database
                 .then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;

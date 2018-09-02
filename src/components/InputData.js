@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
-import upload from 'superagent'
-import { Table, Button, TableBody, TableRow, TableCell, TableHeader, Image, Form } from 'semantic-ui-react'
+import superagent from 'superagent'
+import { Table, Button, TableBody, TableRow, TableCell, TableHeader, Image, Form, Input, TableHeaderCell } from 'semantic-ui-react'
 import './styles/InputData.css'
+
 class InputData extends Component {
   constructor(props) {
     super(props);
@@ -12,8 +13,8 @@ class InputData extends Component {
       imageUrl: '',
       artist: '',
       title: '',
-      year: 0,
-      rating: 1,
+      year: '',
+      rating: '',
       id: '',
       country: '',
       label: '',
@@ -21,7 +22,8 @@ class InputData extends Component {
       genre: '',
       style: '',
       credits: '',
-      notes: ''
+      notes: '',
+      idrecord: ''
     };
   }
 
@@ -34,7 +36,7 @@ class InputData extends Component {
   // http://localhost:5000/upload
 
   handleOnSubmitImage = (event) => {
-    upload.post('https://fierce-refuge-31884.herokuapp.com/upload')
+    superagent.post('https://fierce-refuge-31884.herokuapp.com/upload')
       .attach('imageFile', this.state.files[0])
       .end((err, res) => {
         if (err) console.log(err);
@@ -42,8 +44,10 @@ class InputData extends Component {
       })
     this.setState({ imageUrl: `https://s3.eu-west-2.amazonaws.com/diskcovers/${this.state.files[0].name}` })
   }
+
   handleOnSubmitForm = (event) => {
-    upload.post('https://fierce-refuge-31884.herokuapp.com/upload/form')
+    if (this.state.id) {
+    superagent.post('https://fierce-refuge-31884.herokuapp.com/upload/form')
       .type('form')
       .send({
         cover: this.state.imageUrl, artist: this.state.artist,
@@ -56,11 +60,55 @@ class InputData extends Component {
         if (err) console.log(err);
         alert('Form uploaded!');
       })
+    } else { alert('Catalog# is required!')}
   }
 
   onMouseOver = (event) => {
     console.log(this.state.imageUrl)
     this.setState({ disabled: !this.state.disabled })
+  }
+
+  handleOnLoadRecord = (event) => {
+    superagent.get(`https://fierce-refuge-31884.herokuapp.com/loadrecord/${this.state.idrecord}`)
+      .end((err, res) => {
+        if (!err && res) {
+          const data = res.body[0];
+          this.setState({
+            artist: data.artist, title: data.title, year: data.year, rating: data.rating,
+            id: data.id, country: data.country, label: data.label, format: data.format, genre: data.genre,
+            style: data.style, credits: data.credits, notes: data.notes
+          })
+        } else {
+          console.log('There was an error fetching from Database', err)
+        }
+      })
+  }
+
+  handleOnUpdateRecord = (event) => {
+    if(!this.state.id){
+    superagent.put(`https://fierce-refuge-31884.herokuapp.com/loadrecord`)
+      .type('form')
+      .send({
+        cover: this.state.imageUrl, artist: this.state.artist,
+        title: this.state.title, year: this.state.year, rating: this.state.rating,
+        id: this.state.id, country: this.state.country, label: this.state.label,
+        format: this.state.format, genre: this.state.genre, style: this.state.style,
+        credits: this.state.credits, notes: this.state.notes
+      })
+      .end((err, res) => {
+        if (err) console.log(err);
+        alert(`Record ${this.state.id} updated!`);
+      })
+    } else { alert('Catalog# is required!')}
+  }
+
+  handleOnDeleteRecord = (event) => {
+    superagent.delete(`https://fierce-refuge-31884.herokuapp.com/loadrecord`)
+        .send({ id: this.state.id })
+      .end((err, res) => {
+        if (err) console.log(err);
+        alert(`Record ${this.state.id} deleted!`);
+      })
   }
 
   render() {
@@ -69,10 +117,10 @@ class InputData extends Component {
         <Table className="subform-table">
           <TableHeader className="table-header-align-right" >
             <TableRow>
-              <TableCell>
+              <TableHeaderCell>
                 <Button color="blue">Save Draft</Button>
                 <Button color="green" onClick={this.handleOnSubmitImage}>Submit Image</Button>
-              </TableCell>
+              </TableHeaderCell>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -100,12 +148,28 @@ class InputData extends Component {
                 </aside>
               </TableCell>
             </TableRow>
+          </TableBody>
+        </Table>
+        <Table>
+          <TableHeader>
+            <TableRow key='button-top'>
+              <TableHeaderCell>
+                <Input placeholder='Enter record by Catalog#' name='idrecord' onChange={this.handleChange} value={this.state.idrecord} />
+                <Button color='grey' onClick={this.handleOnLoadRecord}>Load record</Button>
+                <Button floated='right' color="green" onClick={this.handleOnSubmitForm}>Submit Form</Button>
+                <Button floated='right' color='blue'>Save Draft</Button>
+                <Button floated='right' color='red' onClick={this.handleOnDeleteRecord}>Delete record</Button>
+                <Button floated='right' color='olive' onClick={this.handleOnUpdateRecord}>Update record</Button>
+              </TableHeaderCell>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             <TableRow key="artist-title">
               <TableCell>
                 <Form>
                   <Form.Group unstackable widths='equal'>
-                    <Form.Input label='Artist' placeholder='Artist' name='artist' onChange={this.handleChange} />
-                    <Form.Input label='Title' placeholder='Title' name='title' onChange={this.handleChange} />
+                    <Form.Input label='Artist' placeholder='Artist' name='artist' onChange={this.handleChange} value={this.state.artist} />
+                    <Form.Input label='Title' placeholder='Title' name='title' onChange={this.handleChange} value={this.state.title} />
                   </Form.Group>
                 </Form>
               </TableCell>
@@ -114,9 +178,9 @@ class InputData extends Component {
               <TableCell>
                 <Form>
                   <Form.Group unstackable widths='equal'>
-                    <Form.Input type='number' label='Year' placeholder='Year' name='year' onChange={this.handleChange} />
-                    <Form.Input type='number' max='5' min='1' label='Rating' placeholder='Rating' name='rating' onChange={this.handleChange} />
-                    <Form.Input label='Catalog#' placeholder='Catalog#' name='id' onChange={this.handleChange} />
+                    <Form.Input type='number' min='1900' label='Year' placeholder='Year' name='year' onChange={this.handleChange} value={this.state.year} />
+                    <Form.Input type='number' max='5' min='1' label='Rating' placeholder='Rating' name='rating' onChange={this.handleChange} value={this.state.rating} />
+                    <Form.Input required label='Catalog#' placeholder='Catalog#' name='id' onChange={this.handleChange} value={this.state.id} />
                   </Form.Group>
                 </Form>
               </TableCell>
@@ -125,9 +189,9 @@ class InputData extends Component {
               <TableCell>
                 <Form>
                   <Form.Group unstackable widths='equal'>
-                    <Form.Input label='Country' placeholder='Country' name='country' onChange={this.handleChange} />
-                    <Form.Input label='Label' placeholder='Label' name='label' onChange={this.handleChange} />
-                    <Form.Input label='Format' placeholder='Format' name='format' onChange={this.handleChange} />
+                    <Form.Input label='Country' placeholder='Country' name='country' onChange={this.handleChange} value={this.state.country} />
+                    <Form.Input label='Label' placeholder='Label' name='label' onChange={this.handleChange} value={this.state.label} />
+                    <Form.Input label='Format' placeholder='Format' name='format' onChange={this.handleChange} value={this.state.format} />
                   </Form.Group>
                 </Form>
               </TableCell>
@@ -136,9 +200,9 @@ class InputData extends Component {
               <TableCell>
                 <Form>
                   <Form.Group unstackable widths='3'>
-                    <Form.Input label='Genre' placeholder='Genre' width='3' name='genre' onChange={this.handleChange} />
-                    <Form.Input label='Style' placeholder='Style' width='3' name='style' onChange={this.handleChange} />
-                    <Form.Input label='Notes' placeholder='Notes' width='10' name='notes' onChange={this.handleChange} />
+                    <Form.Input label='Genre' placeholder='Genre' width='3' name='genre' onChange={this.handleChange} value={this.state.genre} />
+                    <Form.Input label='Style' placeholder='Style' width='3' name='style' onChange={this.handleChange} value={this.state.style} />
+                    <Form.Input label='Notes' placeholder='Notes' width='10' name='notes' onChange={this.handleChange} value={this.state.notes} />
                   </Form.Group>
                 </Form>
               </TableCell>
@@ -146,14 +210,8 @@ class InputData extends Component {
             <TableRow key="credits">
               <TableCell>
                 <Form>
-                  <Form.Input label='Credits' placeholder='Credits' widths='equal' name='credits' onChange={this.handleChange} />
+                  <Form.Input label='Credits' placeholder='Credits' widths='equal' name='credits' onChange={this.handleChange} value={this.state.credits} />
                 </Form>
-              </TableCell>
-            </TableRow>
-            <TableRow className="table-header-align-right">
-              <TableCell>
-                <Button color="blue">Save Draft</Button>
-                <Button color="green" onClick={this.handleOnSubmitForm}>Submit Form</Button>
               </TableCell>
             </TableRow>
           </TableBody>
