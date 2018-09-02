@@ -47,20 +47,20 @@ class InputData extends Component {
 
   handleOnSubmitForm = (event) => {
     if (this.state.id) {
-    superagent.post('https://fierce-refuge-31884.herokuapp.com/upload/form')
-      .type('form')
-      .send({
-        cover: this.state.imageUrl, artist: this.state.artist,
-        title: this.state.title, year: this.state.year, rating: this.state.rating,
-        id: this.state.id, country: this.state.country, label: this.state.label,
-        format: this.state.format, genre: this.state.genre, style: this.state.style,
-        credits: this.state.credits, notes: this.state.notes
-      })
-      .end((err, res) => {
-        if (err) console.log(err);
-        alert('Form uploaded!');
-      })
-    } else { alert('Catalog# is required!')}
+      superagent.post('https://fierce-refuge-31884.herokuapp.com/upload/form')
+        .type('form')
+        .send({
+          cover: this.state.imageUrl, artist: this.state.artist,
+          title: this.state.title, year: this.state.year, rating: this.state.rating,
+          id: this.state.id, country: this.state.country, label: this.state.label,
+          format: this.state.format, genre: this.state.genre, style: this.state.style,
+          credits: this.state.credits, notes: this.state.notes
+        })
+        .end((err, res) => {
+          if (err) console.log(err);
+          alert('Form uploaded!');
+        })
+    } else { alert('Catalog# is required!') }
   }
 
   onMouseOver = (event) => {
@@ -85,26 +85,27 @@ class InputData extends Component {
   }
 
   handleOnUpdateRecord = (event) => {
-    if(!this.state.id){
-    superagent.put(`https://fierce-refuge-31884.herokuapp.com/loadrecord`)
-      .type('form')
-      .send({
-        cover: this.state.imageUrl, artist: this.state.artist,
-        title: this.state.title, year: this.state.year, rating: this.state.rating,
-        id: this.state.id, country: this.state.country, label: this.state.label,
-        format: this.state.format, genre: this.state.genre, style: this.state.style,
-        credits: this.state.credits, notes: this.state.notes
-      })
-      .end((err, res) => {
-        if (err) console.log(err);
-        alert(`Record ${this.state.id} updated!`);
-      })
-    } else { alert('Catalog# is required!')}
+    if (!this.state.id) {
+      superagent.put(`https://fierce-refuge-31884.herokuapp.com/loadrecord`)
+        .type('form')
+        .send({
+          cover: this.state.imageUrl, artist: this.state.artist,
+          title: this.state.title, year: this.state.year, rating: this.state.rating,
+          id: this.state.id, country: this.state.country, label: this.state.label,
+          format: this.state.format, genre: this.state.genre, style: this.state.style,
+          credits: this.state.credits, notes: this.state.notes
+        })
+        .end((err, res) => {
+          if (err) console.log(err);
+          alert(`Record ${this.state.id} updated!`);
+        })
+    } else { alert('Catalog# is required!') }
   }
 
   handleOnDeleteRecord = (event) => {
     superagent.delete(`https://fierce-refuge-31884.herokuapp.com/loadrecord`)
-        .send({ id: this.state.id })
+      .type('form')
+      .send({ id: this.state.id })
       .end((err, res) => {
         if (err) console.log(err);
         alert(`Record ${this.state.id} deleted!`);
