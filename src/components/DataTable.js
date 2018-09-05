@@ -8,6 +8,7 @@ import './styles/DataTable.css'
 
 
 class DataTable extends Component {
+
 	defaultPageLimit = 5
 
 	// options for pagination
@@ -160,7 +161,7 @@ class DataTable extends Component {
 	render() {
 
 		const { column, direction, activePage, totalPages } = this.state; //sort
-		let totalFound = flatten(this.pagedData).length
+		const totalFound = flatten(this.pagedData).length
 
 		// const for rendering table body
 		const renderBodyRow = ({ cover, artist, title, year, rating, id }, i) => ({
@@ -175,6 +176,7 @@ class DataTable extends Component {
 				{ content: id, width: '1', onClick: () => this.tableRowClickFunc(id) }
 			]
 		});
+
 		// const for rendering table header
 		const headerRow = [
 			{ key: 'header-1', content: 'Cover' },
@@ -206,7 +208,7 @@ class DataTable extends Component {
 					<div key="wrap-table-key">
 						<Table celled textAlign="center">
 							<TableBody>
-								<TableRow>
+								<TableRow key="input-table-row">
 									<TableCell>
 										<Input icon='search' value={this.state.query || ''} onChange={this.onSearch} placeholder='Search...' />
 									</TableCell>
@@ -257,6 +259,12 @@ class DataTable extends Component {
 		)
 	}
 }
+
+DataTable.propTypes = {
+	data: PropTypes.arrayOf(PropTypes.object),
+	renderBodyRow: PropTypes.func
+}
+
 export default DataTable
 
 
