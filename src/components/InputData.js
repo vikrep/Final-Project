@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import superagent from 'superagent'
-import { Table, Button, TableBody, TableRow, TableCell, TableHeader, Image, Form, Input, TableHeaderCell } from 'semantic-ui-react'
+import { Table, Button, TableBody, TableRow, TableCell, TableHeader, Image, Form, Input, TableHeaderCell, Divider } from 'semantic-ui-react'
+import InputTrackList from './InputTrackList.js';
 import './styles/InputData.css'
 
 class InputData extends Component {
@@ -10,7 +11,7 @@ class InputData extends Component {
     this.state = {
       files: [],
       disabled: true,
-      imageUrl: '',
+      cover: '',
       artist: '',
       title: '',
       year: '',
@@ -30,11 +31,11 @@ class InputData extends Component {
   handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
   handleKeyPressLoad = (target) => {
-    if(target.charCode === 13){
+    if (target.charCode === 13) {
       console.log("target", target.charCode)
       this.handleOnLoadRecord()
     }
-  } 
+  }
 
   onDrop = (files) => {
     this.setState({ files });
@@ -49,19 +50,16 @@ class InputData extends Component {
         if (err) console.log(err);
         alert('File uploaded!');
       })
-    this.setState({ imageUrl: `https://s3.eu-west-2.amazonaws.com/diskcovers/${this.state.files[0].name}` })
+    this.setState({ cover: `https://s3.eu-west-2.amazonaws.com/diskcovers/${this.state.files[0].name}` })
   }
 
   handleOnSubmitForm = (event) => {
+    const { cover, artis, title, year, rating, id, country, label, format, genre, style, credits, notes } = this.state
     if (this.state.id) {
       superagent.post('https://fierce-refuge-31884.herokuapp.com/upload/form')
         .type('form')
         .send({
-          cover: this.state.imageUrl, artist: this.state.artist,
-          title: this.state.title, year: this.state.year, rating: this.state.rating,
-          id: this.state.id, country: this.state.country, label: this.state.label,
-          format: this.state.format, genre: this.state.genre, style: this.state.style,
-          credits: this.state.credits, notes: this.state.notes
+          cover, artis, title, year, rating, id, country, label, format, genre, style, credits, notes
         })
         .end((err, res) => {
           if (err) console.log(err);
@@ -71,7 +69,6 @@ class InputData extends Component {
   }
 
   onMouseOver = (event) => {
-    console.log(this.state.imageUrl)
     this.setState({ disabled: !this.state.disabled })
   }
 
@@ -92,14 +89,11 @@ class InputData extends Component {
   }
 
   handleOnUpdateRecord = (event) => {
+    const { cover, artis, title, year, rating, id, country, label, format, genre, style, credits, notes } = this.state
     superagent.put(`https://fierce-refuge-31884.herokuapp.com/loadrecord`)
       .type('form')
       .send({
-        cover: this.state.imageUrl, artist: this.state.artist,
-        title: this.state.title, year: this.state.year, rating: this.state.rating,
-        id: this.state.id, country: this.state.country, label: this.state.label,
-        format: this.state.format, genre: this.state.genre, style: this.state.style,
-        credits: this.state.credits, notes: this.state.notes
+        cover, artis, title, year, rating, id, country, label, format, genre, style, credits, notes
       })
       .end((err, res) => {
         if (err) console.log(err);
@@ -135,13 +129,13 @@ class InputData extends Component {
                 <div className="dropzone" onMouseOver={this.onMouseOver}>
                   <Dropzone accept="image/jpeg" onDrop={this.onDrop} multiple={false}
                     className="dropzone-cell">
-                    {!this.state.imageUrl &&
+                    {!this.state.cover &&
                       <div className="dropzone-cell-div">
                         <h2>+</h2>
                         <h3>Upload image</h3>
                         <h4>Drag and drop file or clic to browse</h4>
                       </div>}
-                    <Image src={this.state.imageUrl} size="medium" bordered />
+                    <Image src={this.state.cover} size="medium" bordered />
                   </Dropzone>
                 </div>
                 <aside>
@@ -226,6 +220,8 @@ class InputData extends Component {
             </TableRow>
           </TableBody>
         </Table>
+        <Divider />
+        <InputTrackList />
       </div>
     );
   }
