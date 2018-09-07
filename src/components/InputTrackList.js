@@ -27,8 +27,11 @@ class InputTrackList extends Component {
             ]
         }
     }
+
+    // Handler for changing input form 
     handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
+    // Handler for changing tracklist form 
     handleChangeTrack = (e) => {
         e.preventDefault()
         let newstate = this.state.tracklist
@@ -36,16 +39,20 @@ class InputTrackList extends Component {
         this.setState({ tracklist: newstate })
     }
 
+    // Handler for activate form by press Enter
     handleKeyPressLoad = (target) => {
         if (target.charCode === 13) {
             this.handleOnLoadRecord()
         }
     }
+
+    // Handler for adding new tracklist row
     handleAddRow = () => {
         var newdata = { pos: '', track: '', time: '' }
         this.setState({ tracklist: this.state.tracklist.concat(newdata) });
     }
 
+    // Handler for deleting tracklist row
     handleDeleteRow = (i) => {
         this.setState((prevState) => ({ tracklist: prevState.tracklist.filter((item, index) => (i !== index)) }))
     }
@@ -80,7 +87,7 @@ class InputTrackList extends Component {
                                     <Form>
                                         <Form.Group unstackable widths='4'>
                                             <Form.Input id={i} width='2' type="number" min="1" max="20" label='Track #' placeholder='#' name='pos' onChange={this.handleChangeTrack} value={this.state.tracklist[i].pos} />
-                                            <Form.Input id={i} width='13' type="text" label='Title' placeholder='Title' name='track' onChange={this.handleChangeTrack} value={this.state.tracklist[i].track} />
+                                            <Form.Input id={i} width='12' type="text" label='Title' placeholder='Title' name='track' onChange={this.handleChangeTrack} value={this.state.tracklist[i].track} />
                                             <Form.Input id={i} width='2' type="text" label='Duration:' placeholder='0:00' name='time' onChange={this.handleChangeTrack} value={this.state.tracklist[i].time} />
                                             <Button icon onClick={() => this.handleDeleteRow(i)}><Icon name='trash alternate' /></Button>
                                         </Form.Group>
