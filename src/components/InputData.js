@@ -200,7 +200,7 @@ class InputData extends Component {
                 </Form>
               </TableCell>
             </TableRow>
-            <TableRow key="genre-style-credits">
+            <TableRow key="genre-style-notes">
               <TableCell>
                 <Form>
                   <Form.Group unstackable widths='3'>

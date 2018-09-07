@@ -12,17 +12,20 @@ class InputTrackList extends Component {
                 {
                     pos: '1',
                     track: '',
-                    time: ''
+                    time: '',
+                    credits: ''
                 },
                 {
                     pos: '2',
                     track: '',
-                    time: ''
+                    time: '',
+                    credits: ''
                 },
                 {
                     pos: '3',
                     track: '',
-                    time: ''
+                    time: '',
+                    credits: ''
                 }
             ]
         }
@@ -48,7 +51,7 @@ class InputTrackList extends Component {
 
     // Handler for adding new tracklist row
     handleAddRow = () => {
-        var newdata = { pos: '', track: '', time: '' }
+        var newdata = { pos: '', track: '', time: '', credits: '' }
         this.setState({ tracklist: this.state.tracklist.concat(newdata) });
     }
 
@@ -85,10 +88,11 @@ class InputTrackList extends Component {
                             <TableRow key={`track-row-${i}`}>
                                 <TableCell>
                                     <Form>
-                                        <Form.Group unstackable widths='4'>
-                                            <Form.Input id={i} width='2' type="number" min="1" max="20" label='Track #' placeholder='#' name='pos' onChange={this.handleChangeTrack} value={this.state.tracklist[i].pos} />
-                                            <Form.Input id={i} width='12' type="text" label='Title' placeholder='Title' name='track' onChange={this.handleChangeTrack} value={this.state.tracklist[i].track} />
-                                            <Form.Input id={i} width='2' type="text" label='Duration:' placeholder='0:00' name='time' onChange={this.handleChangeTrack} value={this.state.tracklist[i].time} />
+                                        <Form.Group unstackable widths='5'>
+                                            <Form.Input id={i} width='1' type="number" min="1" max="20" label='Track #' placeholder='#' name='pos' onChange={this.handleChangeTrack} value={this.state.tracklist[i].pos} />
+                                            <Form.Input id={i} width='9' type="text" label='Title' placeholder='Title' name='track' onChange={this.handleChangeTrack} value={this.state.tracklist[i].track} />
+                                            <Form.Input id={i} width='1' type="text" label='Duration:' placeholder='0:00' name='time' onChange={this.handleChangeTrack} value={this.state.tracklist[i].time} />
+                                            <Form.Input id={i} width='5' type="text" label='Credits' placeholder='Credits' name='credits' onChange={this.handleChangeTrack} value={this.state.tracklist[i].credits} />
                                             <Button icon onClick={() => this.handleDeleteRow(i)}><Icon name='trash alternate' /></Button>
                                         </Form.Group>
                                     </Form>
