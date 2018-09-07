@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import superagent from 'superagent'
-import { Table, Button, TableBody, TableRow, TableCell, TableHeader, Form, Input, TableHeaderCell } from 'semantic-ui-react'
+import { Table, Button, TableBody, TableRow, TableCell, TableHeader, Form, Input, TableHeaderCell, Icon } from 'semantic-ui-react'
 import './styles/InputTrackList.css'
 
 class InputTrackList extends Component {
@@ -46,6 +46,12 @@ class InputTrackList extends Component {
         this.setState({ tracklist: this.state.tracklist.concat(newdata) });
     }
 
+    handleDeleteRow = (i) => {
+        this.setState((prevState) => ({ tracklist: prevState.tracklist.filter((item, index) => (i !== index)) }))
+    }
+
+
+
     render() {
 
         return (
@@ -72,10 +78,11 @@ class InputTrackList extends Component {
                             <TableRow key={`track-row-${i}`}>
                                 <TableCell>
                                     <Form>
-                                        <Form.Group unstackable widths='3'>
+                                        <Form.Group unstackable widths='4'>
                                             <Form.Input id={i} width='2' type="number" min="1" max="20" label='Track #' placeholder='#' name='pos' onChange={this.handleChangeTrack} value={this.state.tracklist[i].pos} />
-                                            <Form.Input id={i} width='14' type="text" label='Title' placeholder='Title' name='track' onChange={this.handleChangeTrack} value={this.state.tracklist[i].track} />
+                                            <Form.Input id={i} width='13' type="text" label='Title' placeholder='Title' name='track' onChange={this.handleChangeTrack} value={this.state.tracklist[i].track} />
                                             <Form.Input id={i} width='2' type="text" label='Duration:' placeholder='0:00' name='time' onChange={this.handleChangeTrack} value={this.state.tracklist[i].time} />
+                                            <Button icon onClick={() => this.handleDeleteRow(i)}><Icon name='trash alternate' /></Button>
                                         </Form.Group>
                                     </Form>
                                 </TableCell>
