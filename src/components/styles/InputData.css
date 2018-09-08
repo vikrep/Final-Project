@@ -26,3 +26,6 @@ h2,h3,h4{
     margin: 0px;
     padding: 5px;
 }
+.ui.icon.button.download {
+    margin-left: 5px;
+  }

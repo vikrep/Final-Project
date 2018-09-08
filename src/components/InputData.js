@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import superagent from 'superagent'
-import { Table, Button, TableBody, TableRow, TableCell, TableHeader, Image, Form, Input, TableHeaderCell, Divider } from 'semantic-ui-react'
+import { Icon, Table, Button, TableBody, TableRow, TableCell, TableHeader, Image, Form, Input, TableHeaderCell, Divider } from 'semantic-ui-react'
 import InputTrackList from './InputTrackList.js';
 import './styles/InputData.css'
 
@@ -114,12 +114,13 @@ class InputData extends Component {
   render() {
     return (
       <div id="subform">
+      <Divider horizontal><h4>Upload Cover Image</h4></Divider>
         <Table className="subform-table">
           <TableHeader className="table-header-align-right" >
             <TableRow>
               <TableHeaderCell>
-                <Button color="blue">Save Draft</Button>
-                <Button color="green" onClick={this.handleOnSubmitImage}>Submit Image</Button>
+                {/* <Button icon color="blue"><Icon name="save outline" /></Button> */}
+                <Button icon color="green" onClick={this.handleOnSubmitImage}><Icon name="upload" /></Button>
               </TableHeaderCell>
             </TableRow>
           </TableHeader>
@@ -150,24 +151,20 @@ class InputData extends Component {
             </TableRow>
           </TableBody>
         </Table>
+        <Divider horizontal><h4>Main Table</h4></Divider>
         <Table>
           <TableHeader>
             <TableRow key='button-header'>
               <TableHeaderCell>
                 <Input placeholder='Enter record by Catalog#' name='idrecord' onKeyPress={this.handleKeyPressLoad} onChange={this.handleChange} value={this.state.idrecord} />
-                <Button color='grey' onClick={this.handleOnLoadRecord}>Load record</Button>
-                <Button floated='right' color='red' onClick={this.handleOnDeleteRecord}>Delete record</Button>
-                <Button floated='right' color='olive' onClick={this.handleOnUpdateRecord}>Update record</Button>
+                <Button icon className="download" color='grey' onClick={this.handleOnLoadRecord}><Icon name="download" /></Button>
+                <Button icon floated='right' color="green" onClick={this.handleOnSubmitForm}><Icon name="upload" /></Button>
+                <Button icon floated='right' color='red' onClick={this.handleOnDeleteRecord}><Icon name="trash alternate" /></Button>
+                <Button icon floated='right' color='olive' onClick={this.handleOnUpdateRecord}><Icon name="save outline" /></Button>
               </TableHeaderCell>
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow key='button-top'>
-              <TableCell>
-                <Button floated='right' color="green" onClick={this.handleOnSubmitForm}>Submit Form</Button>
-                <Button floated='right' color='blue'>Save Draft Form</Button>
-              </TableCell>
-            </TableRow>
             <TableRow key="artist-title">
               <TableCell>
                 <Form>
@@ -220,7 +217,7 @@ class InputData extends Component {
             </TableRow>
           </TableBody>
         </Table>
-        <Divider />
+        <Divider horizontal><h4>Track List</h4></Divider>
         <InputTrackList />
       </div>
     );

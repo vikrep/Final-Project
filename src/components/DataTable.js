@@ -154,8 +154,8 @@ class DataTable extends Component {
 	};
 
 	tableRowClickFunc = (rowid) => {
-	this.props.history.push(`/search/${rowid}`)
-		
+		this.props.history.push(`/search/${rowid}`)
+
 	}
 
 	render() {
@@ -168,8 +168,8 @@ class DataTable extends Component {
 			key: `result-row-${i}`,
 			cells: [
 				<td key='td-row-1' width="1" onClick={() => this.tableRowClickFunc(id)}><Image src={cover} size='tiny' verticalAlign='middle' bordered /></td>,
-				{ content: artist, width: '4', onClick: () => this.tableRowClickFunc(id)},
-				{ content: title, onClick: () => this.tableRowClickFunc(id)},
+				{ content: artist, width: '4', onClick: () => this.tableRowClickFunc(id) },
+				{ content: title, onClick: () => this.tableRowClickFunc(id) },
 				{ content: year, width: '1', onClick: () => this.tableRowClickFunc(id) },
 				<td key='td-row-2' width="1" onClick={() => this.tableRowClickFunc(id)}><Rating icon='star' rating={rating} maxRating={5}
 					size='small' disabled /></td>,
@@ -198,7 +198,11 @@ class DataTable extends Component {
 				onClick: this.handleSort('year'),
 				className: column === 'year' ? `sorted ${direction}` : `sorted ${null}`
 			},
-			{ key: 'header-5', content: 'Rating' },
+			{
+				key: 'header-5', content: 'Rating', orted: column === 'rating' ? direction : null,
+				onClick: this.handleSort('rating'),
+				className: column === 'rating' ? `sorted ${direction}` : `sorted ${null}`
+			},
 			{ key: 'header-6', content: 'Catalog #' }
 		]
 

@@ -71,29 +71,24 @@ class InputTrackList extends Component {
                         <TableRow>
                             <TableHeaderCell>
                                 <Input placeholder='TrackList by Catalog#' name='idrecord' onKeyPress={this.handleKeyPressLoad} onChange={this.handleChange} value={this.state.idrecord} />
-                                <Button color='grey' onClick={this.handleOnLoadTrackList}>Load Tracklist</Button>
-                                <Button floated='right' color='red' onClick={this.handleOnDeleteTrackList}>Delete TrackList</Button>
-                                <Button floated='right' color='olive' onClick={this.handleOnUpdateTrackList}>Update TrackList</Button>
+                                <Button icon className="download" color='grey' onClick={this.handleOnLoadTrackList}><Icon name="download" /></Button>
+                                <Button icon floated='right' color="green" onClick={this.handleOnSubmitTrackList}><Icon name="upload" /></Button>
+                                <Button icon floated='right' color='red' onClick={this.handleOnDeleteTrackList}><Icon name="trash alternate" /></Button>
+                                <Button icon floated='right' color='olive' onClick={this.handleOnUpdateTrackList}><Icon aria-label="Delete track" name="save outline" /></Button>
                             </TableHeaderCell>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        <TableRow>
-                            <TableCell>
-                                <Button floated='right' color="green" onClick={this.handleOnSubmitTrackList}>Submit TrackList</Button>
-                                <Button floated='right' color='blue'>Save Draft TrackList</Button>
-                            </TableCell>
-                        </TableRow>
                         {this.state.tracklist.map((newdata, i) =>
                             <TableRow key={`track-row-${i}`}>
                                 <TableCell>
                                     <Form>
-                                        <Form.Group unstackable widths='5'>
+                                        <Form.Group widths='5'>
                                             <Form.Input id={i} width='1' type="number" min="1" max="20" label='Track #' placeholder='#' name='pos' onChange={this.handleChangeTrack} value={this.state.tracklist[i].pos} />
                                             <Form.Input id={i} width='9' type="text" label='Title' placeholder='Title' name='track' onChange={this.handleChangeTrack} value={this.state.tracklist[i].track} />
                                             <Form.Input id={i} width='1' type="text" label='Duration:' placeholder='0:00' name='time' onChange={this.handleChangeTrack} value={this.state.tracklist[i].time} />
                                             <Form.Input id={i} width='5' type="text" label='Credits' placeholder='Credits' name='credits' onChange={this.handleChangeTrack} value={this.state.tracklist[i].credits} />
-                                            <Button icon onClick={() => this.handleDeleteRow(i)}><Icon name='trash alternate' /></Button>
+                                            <Button icon className="delete" onClick={() => this.handleDeleteRow(i)}><Icon name='trash alternate' /></Button>
                                         </Form.Group>
                                     </Form>
                                 </TableCell>
@@ -101,7 +96,7 @@ class InputTrackList extends Component {
                         }
                     </TableBody>
                 </Table>
-                <Button floated='right' color='olive' onClick={this.handleAddRow}>Add track</Button>
+                <Button icon className="plus-track" floated='right' color='olive' onClick={this.handleAddRow}><Icon name="plus square" /></Button>
             </div>
         )
     }
