@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Dropzone from 'react-dropzone';
 import superagent from 'superagent'
-import { Icon, Table, Button, TableBody, TableRow, TableCell, TableHeader, Image, Form, Input, TableHeaderCell, Divider } from 'semantic-ui-react'
+import { Icon, Table, Button, TableBody, TableRow, TableCell, TableHeader, Image, Form, Input, TableHeaderCell, Divider, Popup } from 'semantic-ui-react'
 import InputTrackList from './InputTrackList.js';
 import './styles/InputData.css'
 
@@ -114,13 +115,16 @@ class InputData extends Component {
   render() {
     return (
       <div id="subform">
-      <Divider horizontal><h4>Upload Cover Image</h4></Divider>
+        <Divider horizontal><h4>Upload Cover Image</h4></Divider>
         <Table className="subform-table">
           <TableHeader className="table-header-align-right" >
             <TableRow>
               <TableHeaderCell>
-                {/* <Button icon color="blue"><Icon name="save outline" /></Button> */}
-                <Button icon color="green" onClick={this.handleOnSubmitImage}><Icon name="upload" /></Button>
+                <Link to="/search"><Button floated="left" color="blue">Go to Main Page</Button></Link>
+                <Popup
+                trigger={<Button icon color="green" onClick={this.handleOnSubmitImage}><Icon name="upload" /></Button>}
+                content="Upload Cover Image to DataBase"
+                />
               </TableHeaderCell>
             </TableRow>
           </TableHeader>
@@ -157,10 +161,22 @@ class InputData extends Component {
             <TableRow key='button-header'>
               <TableHeaderCell>
                 <Input placeholder='Enter record by Catalog#' name='idrecord' onKeyPress={this.handleKeyPressLoad} onChange={this.handleChange} value={this.state.idrecord} />
-                <Button icon className="download" color='grey' onClick={this.handleOnLoadRecord}><Icon name="download" /></Button>
-                <Button icon floated='right' color="green" onClick={this.handleOnSubmitForm}><Icon name="upload" /></Button>
-                <Button icon floated='right' color='red' onClick={this.handleOnDeleteRecord}><Icon name="trash alternate" /></Button>
-                <Button icon floated='right' color='olive' onClick={this.handleOnUpdateRecord}><Icon name="save outline" /></Button>
+                <Popup
+                trigger={<Button icon className="download" color='grey' onClick={this.handleOnLoadRecord}><Icon name="download" /></Button>}
+                content="Download existing Record from DataBase"
+                />
+                <Popup
+                trigger={<Button icon floated='right' color="green" onClick={this.handleOnSubmitForm}><Icon name="upload" /></Button>}
+                content="Upload new Record to DataBase"
+                />
+                <Popup
+                trigger={<Button icon floated='right' color='red' onClick={this.handleOnDeleteRecord}><Icon name="trash alternate" /></Button>}
+                content="Delete current record"
+                />
+                <Popup
+                trigger={<Button icon floated='right' color='olive' onClick={this.handleOnUpdateRecord}><Icon name="save outline" /></Button>}
+                content="Update current Record"
+                />
               </TableHeaderCell>
             </TableRow>
           </TableHeader>

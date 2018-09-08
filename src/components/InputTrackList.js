@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import superagent from 'superagent'
-import { Table, Button, TableBody, TableRow, TableCell, TableHeader, Form, Input, TableHeaderCell, Icon } from 'semantic-ui-react'
+import { Table, Button, TableBody, TableRow, TableCell, TableHeader, Form, Input, TableHeaderCell, Icon, Popup } from 'semantic-ui-react'
 import './styles/InputTrackList.css'
 
 class InputTrackList extends Component {
@@ -71,10 +71,22 @@ class InputTrackList extends Component {
                         <TableRow>
                             <TableHeaderCell>
                                 <Input placeholder='TrackList by Catalog#' name='idrecord' onKeyPress={this.handleKeyPressLoad} onChange={this.handleChange} value={this.state.idrecord} />
-                                <Button icon className="download" color='grey' onClick={this.handleOnLoadTrackList}><Icon name="download" /></Button>
-                                <Button icon floated='right' color="green" onClick={this.handleOnSubmitTrackList}><Icon name="upload" /></Button>
-                                <Button icon floated='right' color='red' onClick={this.handleOnDeleteTrackList}><Icon name="trash alternate" /></Button>
-                                <Button icon floated='right' color='olive' onClick={this.handleOnUpdateTrackList}><Icon aria-label="Delete track" name="save outline" /></Button>
+                                <Popup
+                                    trigger={<Button icon className="download" color='grey' onClick={this.handleOnLoadTrackList}><Icon name="download" /></Button>}
+                                    content="Download existing TrackList"
+                                />
+                                <Popup
+                                    trigger={<Button icon floated='right' color="green" onClick={this.handleOnSubmitTrackList}><Icon name="upload" /></Button>}
+                                    content="Upload new TrackList to DataBase"
+                                />
+                                <Popup
+                                    trigger={<Button icon floated='right' color='red' onClick={this.handleOnDeleteTrackList}><Icon name="trash alternate" /></Button>}
+                                    content="Delete current TrackList"
+                                />
+                                <Popup
+                                    trigger={<Button icon floated='right' color='olive' onClick={this.handleOnUpdateTrackList}><Icon aria-label="Delete track" name="save outline" /></Button>}
+                                    content="Update current TrackList"
+                                />
                             </TableHeaderCell>
                         </TableRow>
                     </TableHeader>
@@ -88,7 +100,10 @@ class InputTrackList extends Component {
                                             <Form.Input id={i} width='9' type="text" label='Title' placeholder='Title' name='track' onChange={this.handleChangeTrack} value={this.state.tracklist[i].track} />
                                             <Form.Input id={i} width='1' type="text" label='Duration:' placeholder='0:00' name='time' onChange={this.handleChangeTrack} value={this.state.tracklist[i].time} />
                                             <Form.Input id={i} width='5' type="text" label='Credits' placeholder='Credits' name='credits' onChange={this.handleChangeTrack} value={this.state.tracklist[i].credits} />
-                                            <Button icon className="delete" onClick={() => this.handleDeleteRow(i)}><Icon name='trash alternate' /></Button>
+                                            <Popup
+                                                trigger={<Button icon className="delete" onClick={() => this.handleDeleteRow(i)}><Icon name='trash alternate' /></Button>}
+                                                content="Delete this track"
+                                            />
                                         </Form.Group>
                                     </Form>
                                 </TableCell>
@@ -96,7 +111,12 @@ class InputTrackList extends Component {
                         }
                     </TableBody>
                 </Table>
-                <Button icon className="plus-track" floated='right' color='olive' onClick={this.handleAddRow}><Icon name="plus square" /></Button>
+                <Popup
+                    trigger={<Button icon className="plus-track" floated='right' color='olive' onClick={this.handleAddRow}><Icon name="plus square" /></Button>}
+                    content="Add new track"
+                />
+
+
             </div>
         )
     }
