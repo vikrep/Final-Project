@@ -1,38 +1,15 @@
 import React, { Component } from 'react';
 // import superagent from 'superagent'
-import { Table, Button, TableBody, TableRow, TableCell, TableHeader, Form, Input, TableHeaderCell, Icon, Popup } from 'semantic-ui-react'
+import { Table, Button, TableBody, TableRow, TableCell, Form, Icon, Popup } from 'semantic-ui-react'
 import './styles/InputTrackList.css'
 
 class InputTrackList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            idrecord: '',
-            tracklist: [
-                {
-                    pos: '1',
-                    track: '',
-                    time: '',
-                    credits: ''
-                },
-                {
-                    pos: '2',
-                    track: '',
-                    time: '',
-                    credits: ''
-                },
-                {
-                    pos: '3',
-                    track: '',
-                    time: '',
-                    credits: ''
-                }
-            ]
+            tracklist: []
         }
     }
-
-    // Handler for changing input form 
-    handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
     // Handler for changing tracklist form 
     handleChangeTrack = (e) => {
@@ -51,8 +28,10 @@ class InputTrackList extends Component {
 
     // Handler for adding new tracklist row
     handleAddRow = () => {
-        var newdata = { pos: '', track: '', time: '', credits: '' }
-        this.setState({ tracklist: this.state.tracklist.concat(newdata) });
+        if(this.props.albumNum){
+        var newdata = { pos: '', track: '', time: '', credits: '',  disk: '', idrecord: this.props.albumNum }
+        this.setState({ tracklist: this.state.tracklist.concat(newdata) });}
+        else { alert('!!! Enter Catalog# before create new track !!!')}
     }
 
     // Handler for deleting tracklist row
@@ -60,36 +39,11 @@ class InputTrackList extends Component {
         this.setState((prevState) => ({ tracklist: prevState.tracklist.filter((item, index) => (i !== index)) }))
     }
 
-
-
     render() {
 
         return (
             <div>
                 <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHeaderCell>
-                                <Input placeholder='TrackList by Catalog#' name='idrecord' onKeyPress={this.handleKeyPressLoad} onChange={this.handleChange} value={this.state.idrecord} />
-                                <Popup
-                                    trigger={<Button icon className="download" color='grey' onClick={this.handleOnLoadTrackList}><Icon name="download" /></Button>}
-                                    content="Download existing TrackList"
-                                />
-                                <Popup
-                                    trigger={<Button icon floated='right' color="green" onClick={this.handleOnSubmitTrackList}><Icon name="upload" /></Button>}
-                                    content="Upload new TrackList to DataBase"
-                                />
-                                <Popup
-                                    trigger={<Button icon floated='right' color='red' onClick={this.handleOnDeleteTrackList}><Icon name="trash alternate" /></Button>}
-                                    content="Delete current TrackList"
-                                />
-                                <Popup
-                                    trigger={<Button icon floated='right' color='olive' onClick={this.handleOnUpdateTrackList}><Icon aria-label="Delete track" name="save outline" /></Button>}
-                                    content="Update current TrackList"
-                                />
-                            </TableHeaderCell>
-                        </TableRow>
-                    </TableHeader>
                     <TableBody>
                         {this.state.tracklist.map((newdata, i) =>
                             <TableRow key={`track-row-${i}`}>

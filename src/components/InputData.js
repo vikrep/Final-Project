@@ -24,8 +24,7 @@ class InputData extends Component {
       genre: '',
       style: '',
       credits: '',
-      notes: '',
-      idrecord: ''
+      notes: ''
     };
   }
 
@@ -69,12 +68,9 @@ class InputData extends Component {
     } else { alert('Catalog# is required!') }
   }
 
-  onMouseOver = (event) => {
-    this.setState({ disabled: !this.state.disabled })
-  }
 
   handleOnLoadRecord = (event) => {
-    superagent.get(`https://fierce-refuge-31884.herokuapp.com/loadrecord/${this.state.idrecord}`)
+    superagent.get(`https://fierce-refuge-31884.herokuapp.com/loadrecord/${this.state.id}`)
       .end((err, res) => {
         if (!err && res) {
           const data = res.body[0];
@@ -160,7 +156,7 @@ class InputData extends Component {
           <TableHeader>
             <TableRow key='button-header'>
               <TableHeaderCell>
-                <Input placeholder='Enter record by Catalog#' name='idrecord' onKeyPress={this.handleKeyPressLoad} onChange={this.handleChange} value={this.state.idrecord} />
+                <Input placeholder='Enter record by Catalog#' name='id' onKeyPress={this.handleKeyPressLoad} onChange={this.handleChange} value={this.state.id} />
                 <Popup
                 trigger={<Button icon className="download" color='grey' onClick={this.handleOnLoadRecord}><Icon name="download" /></Button>}
                 content="Download existing Record from DataBase"
@@ -234,7 +230,7 @@ class InputData extends Component {
           </TableBody>
         </Table>
         <Divider horizontal><h4>Track List</h4></Divider>
-        <InputTrackList />
+        <InputTrackList albumNum={this.state.id} />
       </div>
     );
   }
