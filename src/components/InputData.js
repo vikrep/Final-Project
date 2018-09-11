@@ -11,6 +11,7 @@ class InputData extends Component {
     super(props);
     this.state = {
       files: [],
+      tracklist: [],
       disabled: true,
       cover: '',
       artist: '',
@@ -29,6 +30,28 @@ class InputData extends Component {
   }
 
   handleChange = (e, { name, value }) => this.setState({ [name]: value })
+
+  // Handler for changing tracklist form 
+  handleChangeTrack = (e) => {
+    e.preventDefault()
+    let newstate = this.state.tracklist
+    newstate[e.target.id][e.target.name] = e.target.value
+    this.setState({ tracklist: newstate })
+  }
+
+  // Handler for adding new tracklist row
+  handleAddRow = () => {
+    if (this.state.id) {
+      var newdata = { pos: '', track: '', time: '', disk_credits: '', disk_id: this.state.id }
+      this.setState({ tracklist: this.state.tracklist.concat(newdata) });
+    }
+    else { alert('!!! Enter Catalog# before create new track !!!') }
+  }
+
+  // Handler for deleting tracklist row
+  handleDeleteRow = (i) => {
+    this.setState((prevState) => ({ tracklist: prevState.tracklist.filter((item, index) => (i !== index)) }))
+  }
 
   handleKeyPressLoad = (target) => {
     if (target.charCode === 13) {
@@ -68,16 +91,16 @@ class InputData extends Component {
     } else { alert('Catalog# is required!') }
   }
 
-
   handleOnLoadRecord = (event) => {
     superagent.get(`https://fierce-refuge-31884.herokuapp.com/loadrecord/${this.state.id}`)
       .end((err, res) => {
         if (!err && res) {
+
           const data = res.body[0];
           this.setState({
             artist: data.artist, title: data.title, year: data.year, rating: data.rating,
             id: data.id, country: data.country, label: data.label, format: data.format, genre: data.genre,
-            style: data.style, credits: data.credits, notes: data.notes
+            style: data.style, credits: data.credits, notes: data.notes, tracklist: res.body
           })
         } else {
           console.log('There was an error fetching from Database', err)
@@ -118,8 +141,8 @@ class InputData extends Component {
               <TableHeaderCell>
                 <Link to="/search"><Button floated="left" color="blue">Go to Main Page</Button></Link>
                 <Popup
-                trigger={<Button icon color="green" onClick={this.handleOnSubmitImage}><Icon name="upload" /></Button>}
-                content="Upload Cover Image to DataBase"
+                  trigger={<Button icon color="green" onClick={this.handleOnSubmitImage}><Icon name="upload" /></Button>}
+                  content="Upload Cover Image to DataBase"
                 />
               </TableHeaderCell>
             </TableRow>
@@ -158,20 +181,20 @@ class InputData extends Component {
               <TableHeaderCell>
                 <Input placeholder='Enter record by Catalog#' name='id' onKeyPress={this.handleKeyPressLoad} onChange={this.handleChange} value={this.state.id} />
                 <Popup
-                trigger={<Button icon className="download" color='grey' onClick={this.handleOnLoadRecord}><Icon name="download" /></Button>}
-                content="Download existing Record from DataBase"
+                  trigger={<Button icon className="download" color='grey' onClick={this.handleOnLoadRecord}><Icon name="download" /></Button>}
+                  content="Download existing Record from DataBase"
                 />
                 <Popup
-                trigger={<Button icon floated='right' color="green" onClick={this.handleOnSubmitForm}><Icon name="upload" /></Button>}
-                content="Upload new Record to DataBase"
+                  trigger={<Button icon floated='right' color="green" onClick={this.handleOnSubmitForm}><Icon name="upload" /></Button>}
+                  content="Upload new Record to DataBase"
                 />
                 <Popup
-                trigger={<Button icon floated='right' color='red' onClick={this.handleOnDeleteRecord}><Icon name="trash alternate" /></Button>}
-                content="Delete current record"
+                  trigger={<Button icon floated='right' color='red' onClick={this.handleOnDeleteRecord}><Icon name="trash alternate" /></Button>}
+                  content="Delete current record"
                 />
                 <Popup
-                trigger={<Button icon floated='right' color='olive' onClick={this.handleOnUpdateRecord}><Icon name="save outline" /></Button>}
-                content="Update current Record"
+                  trigger={<Button icon floated='right' color='olive' onClick={this.handleOnUpdateRecord}><Icon name="save outline" /></Button>}
+                  content="Update current Record"
                 />
               </TableHeaderCell>
             </TableRow>
@@ -230,7 +253,7 @@ class InputData extends Component {
           </TableBody>
         </Table>
         <Divider horizontal><h4>Track List</h4></Divider>
-        <InputTrackList albumNum={this.state.id} />
+        <InputTrackList handleDeleteRow={this.handleDeleteRow} handleAddRow={this.handleAddRow} tracklist={this.state.tracklist} changeTrack={this.handleChangeTrack} />
       </div>
     );
   }
