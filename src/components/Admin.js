@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import firebase from "firebase"
+import superagent from 'superagent'
+// import firebase from "firebase"
 import './styles/Admin.css'
 
 // let config = {
@@ -11,16 +12,16 @@ import './styles/Admin.css'
 // messagingSenderId: "775971698132"
 // };
 
-let config = {
-    apiKey: "AIzaSyCIINtFQvyR8V2uXTsw8Zd4wa4Oa0p5fgQ",
-    authDomain: "final-project-53d92.firebaseapp.com",
-    databaseURL: "https://final-project-53d92.firebaseio.com",
-    projectId: "final-project-53d92",
-    storageBucket: "final-project-53d92.appspot.com",
-    messagingSenderId: "445822412503"
-};
+// let config = {
+//     apiKey: "AIzaSyCIINtFQvyR8V2uXTsw8Zd4wa4Oa0p5fgQ",
+//     authDomain: "final-project-53d92.firebaseapp.com",
+//     databaseURL: "https://final-project-53d92.firebaseio.com",
+//     projectId: "final-project-53d92",
+//     storageBucket: "final-project-53d92.appspot.com",
+//     messagingSenderId: "445822412503"
+// };
 
-firebase.initializeApp(config);
+// firebase.initializeApp(config);
 
 class Authen extends Component {
     state = {
@@ -36,30 +37,46 @@ class Authen extends Component {
         };
       } ;
 
-    login = () => {
-        const email = this.state.email;
+    login = (event) => {
+        const username = this.state.email;
         const password = this.state.password;
-        const auth = firebase.auth();
-        const promise = auth.signInWithEmailAndPassword(email, password);
-        promise.then(user => {
-            let message = 'Welcome, you are now logged in!';
-            this.setState({ err: message, isLoggedIn: true });
-            firebase.auth().onAuthStateChanged(user => {
-                if (user) {
-                    this.props.onLogin({
-                        username: 'this.state.email',
-                        password: 'this.state.password'
-                    });
-                    // window.location = 'input'; //After successful login, user will be redirected to search
-                }
-            });
+        // const auth = firebase.auth();
+        // const promise = auth.signInWithEmailAndPassword(email, password);
+        
+            if (this.state.email && this.state.password) {
+              superagent.post('http://localhost:5000/admin')
+                .type('form')
+                .send({
+                  username, password
+                })
+                .end((err, res) => {
+                  if (err) console.log(err);
+                  this.props.onLogin({
+                    username: 'this.state.email',
+                    password: 'this.state.password'
+                });
+                }) 
+          }
 
-        });
+        // promise.then(user => {
+        //     let message = 'Welcome, you are now logged in!';
+        //     this.setState({ err: message, isLoggedIn: true });
+        //     firebase.auth().onAuthStateChanged(user => {
+        //         if (user) {
+        //             this.props.onLogin({
+        //                 username: 'this.state.email',
+        //                 password: 'this.state.password'
+        //             });
+        //             // window.location = 'input'; //After successful login, user will be redirected to search
+        //         }
+        //     });
 
-        promise.catch(e => {
-            let err = e.message;
-            this.setState({ err });
-        })
+        // });
+
+        // promise.catch(e => {
+        //     let err = e.message;
+        //     this.setState({ err });
+        // })
     };
 
     
