@@ -67,7 +67,7 @@ class InputData extends Component {
   // http://localhost:5000/upload
 
   handleOnSubmitImage = (event) => {
-    superagent.post('https://fierce-refuge-31884.herokuapp.com/upload')
+    superagent.post('http://localhost:5000/upload')
       .attach('imageFile', this.state.files[0])
       .end((err, res) => {
         if (err) console.log(err);
@@ -79,7 +79,7 @@ class InputData extends Component {
   handleOnSubmitForm = (event) => {
     const { cover, artis, title, year, rating, id, country, label, format, genre, style, credits, notes } = this.state
     if (this.state.id) {
-      superagent.post('https://fierce-refuge-31884.herokuapp.com/upload/form')
+      superagent.post('http://localhost:5000/upload/form')
         .type('form')
         .send({
           cover, artis, title, year, rating, id, country, label, format, genre, style, credits, notes
@@ -92,7 +92,7 @@ class InputData extends Component {
   }
 
   handleOnLoadRecord = (event) => {
-    superagent.get(`https://fierce-refuge-31884.herokuapp.com/loadrecord/${this.state.id}`)
+    superagent.get(`http://localhost:5000/loadrecord/${this.state.id}`)
       .end((err, res) => {
         if (!err && res) {
 
@@ -110,7 +110,7 @@ class InputData extends Component {
 
   handleOnUpdateRecord = (event) => {
     const { cover, artis, title, year, rating, id, country, label, format, genre, style, credits, notes } = this.state
-    superagent.put(`https://fierce-refuge-31884.herokuapp.com/loadrecord`)
+    superagent.put(`http://localhost:5000/loadrecord`)
       .type('form')
       .send({
         cover, artis, title, year, rating, id, country, label, format, genre, style, credits, notes
@@ -122,7 +122,7 @@ class InputData extends Component {
   }
 
   handleOnDeleteRecord = (event) => {
-    superagent.delete(`https://fierce-refuge-31884.herokuapp.com/loadrecord`)
+    superagent.delete(`http://localhost:5000/loadrecord`)
       .type('form')
       .send({ id: this.state.id })
       .end((err, res) => {
